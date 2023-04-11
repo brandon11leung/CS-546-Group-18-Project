@@ -1,21 +1,40 @@
-{
-  "name": "cs-546-group-18-project",
-  "version": "1.0.0",
-  "description": "CS546 Final Project",
-  "main": "app.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/brandon11leung/CS-546-Group-18-Project.git"
-  },
-  "author": "Various",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/brandon11leung/CS-546-Group-18-Project/issues"
-  },
-  "homepage": "https://github.com/brandon11leung/CS-546-Group-18-Project#readme"
-}
+    {
+    "name": "cs-546-group-18-project",
+    "version": "1.0.0",
+    "description": "Final Project for CS 546: Joystick Junction",
+    "main": "app.js",
+    "type": "module",
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "contributors": [
+        {
+            "name": "Luke Bianchi"
+        },
+        {
+            "name": "Joesph Grosso"
+        },
+        {
+            "name": "Brandon Leung"
+        },
+        {
+            "name": "Luke Muhnicky"
+        }
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.2",
+        "mongodb": "^5.1.0",
+        "express-handlebars": "^7.0.4",
+        "handlebars": "^4.7.7"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/brandon11leung/CS-546-Group-18-Project.git"
+    },
+    "bugs": {
+        "url": "https://github.com/brandon11leung/CS-546-Group-18-Project/issues"
+    },
+    "homepage": "https://github.com/brandon11leung/CS-546-Group-18-Project#readme"
+    }
