@@ -1,4 +1,4 @@
-    {
+{
     "name": "cs-546-group-18-project",
     "version": "1.0.0",
     "description": "Final Project for CS 546: Joystick Junction",
@@ -24,10 +24,11 @@
     ],
     "license": "MIT",
     "dependencies": {
+        "bcryptjs": "^2.4.3",
         "express": "^4.18.2",
-        "mongodb": "^5.1.0",
         "express-handlebars": "^7.0.4",
-        "handlebars": "^4.7.7"
+        "handlebars": "^4.7.7",
+        "mongodb": "^5.1.0"
     },
     "repository": {
         "type": "git",
@@ -37,4 +38,4 @@
         "url": "https://github.com/brandon11leung/CS-546-Group-18-Project/issues"
     },
     "homepage": "https://github.com/brandon11leung/CS-546-Group-18-Project#readme"
-    }
+}

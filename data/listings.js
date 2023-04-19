@@ -1,18 +1,75 @@
-/*******************************************************************************
- * Name        : bands.js (data)
+/************************************************************************************
+ * Name        : listings.js (data)
  * Author      : Brandon Leung
- * Date        : March 25, 2023
- * Description : Lab 6 bands data function implementation.
+ * Date        : April 17, 2023
+ * Description : Final Project listings data function implementation.
  * Pledge      : I pledge my honor that I have abided by the Stevens Honor System.
- ******************************************************************************/
+ ***********************************************************************************/
 // This data file should export all functions using the ES6 standard as shown in the lecture code
-import {bands} from '../config/mongoCollections.js';
+import {listings} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 
-export const create = async (name, genre, website, recordCompany, groupMembers, yearBandWasFormed) => {
-	helpers.isValidString(name);
-	helpers.isValidString(website);
+// {
+//     "_id": ObjectId("6423820abc55383093f595fd"),
+//     "posterId": ObjectId("6423820abc55383093f595fa"),
+//     "open": true,
+//     "listingType": [
+//     "Sell",
+//     "Trade"
+//     ],
+//     "title": "Pokemon Soulsilver Big Box with Pokewalker CIB",
+//     "timestamps": {
+//     "datePosted": "03/25/2023",
+//     "timePosted": "15:21:32",
+//     "dateUpdated": "03/30/2023",
+//     "timeUpdated": "17:03:42"
+//     },
+//     "mainCondition": "Used",
+//     "secondaryCondition": [
+//     "Cartridge",
+//     "Box",
+//     "Game Manual",
+//     "Inserts",
+//     "Pokewalker & clip",
+//     "Pokewalker Cardboard Insert",
+//     "Outer Box",
+//     "Plastic Case for Outer Box"
+//     ],
+//     "price": 290,
+//     "tradeWants": [
+//     "Pokemon Heartgold Big Box with Pokewalker CIB",,
+//     "Rhythm Thief & the Emperor's Treasure CIB"
+//     ],
+//     "attachments": [
+//     "https://i.imgur.com/RUG7UTW.jpeg",
+//     "https://i.imgur.com/iBy6UNA.png",
+//     "https://i.imgur.com/qcmgHj4.png",
+//     "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+//     ],
+//     "shippingPrice": 10,
+//     "shippingMethods": [
+//     "USPS Priority Mail",
+//     "Local Meetup"
+//     ],
+//     "description": "Comes with everything except for Pokewalker manual and
+//     Pokewalker sleeves.",
+//     "returnPolicy": "Returns accepted within 30 days. Buyer must pay for return
+//     shipping.",
+//     "rejectionOfferValue": 270,
+//     "currency": "United States Dollar",
+//     "acceptedPaymentMethods": [
+//     "Paypal G&S",
+//     "Paypal F&F"
+//     ],
+//     "offers": {...},
+//     "comments" : {...}
+//     }
+
+export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, shippingPrice, shippingMethods, description, returnPolicy, rejectionOfferValue, currency, acceptedPaymentMethods) => {
+	helpers.isValidID(posterId);
+    helpers.isValidString(title);
+	helpers.isValidString(listingType);
 	helpers.isValidString(recordCompany);
 	helpers.isValidURL(website);
 	helpers.isValidArray(genre);
