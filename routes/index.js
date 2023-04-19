@@ -6,13 +6,10 @@
     - All other enpoints should respond with a 404 as shown in the lecture code
 */
 
-import bandsRoutes from './bands.js';
-import albumsRoutes from './albums.js';
+import mainpage from './main.js';
 
 const constructorMethod = (app) => {
-  app.use('/bands', bandsRoutes);
-  app.use('/albums', albumsRoutes);
-
+  app.use('/', mainpage)
   app.use('*', (req, res) => {
     res.status(404).json({error: 'Route Not found'});
   });

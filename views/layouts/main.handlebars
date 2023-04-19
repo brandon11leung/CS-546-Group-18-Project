@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/public/css/main-styles.css">
+</head>
+<body>
+    <main>
+        <h1 class="JJ">Joystick Junction</h1>
+        <nav>
+            <div class="btn-group" style="width:100%">
+                <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/'">Homepage</button>
+                <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/listings'">Lisitngs</button>
+                <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/account'">Account</button>
+                <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/aboutUs'">About Us</button>
+            </div>
+        </nav>
+        <div class="main">
+            {{{body}}}
+        </div>
+    </main>
+</body>
+</html>
