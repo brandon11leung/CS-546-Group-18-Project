@@ -1,17 +1,21 @@
-/*******************************************************************************
- * Name        : app.js
- * Author      : Brandon Leung
- * Date        : March 25, 2023
- * Description : Lab 6 starter file implementation.
- * Pledge      : I pledge my honor that I have abided by the Stevens Honor System.
- ******************************************************************************/
-// This file should set up the express server as shown in the lecture code
 
 import express from 'express';
 const app = express();
 import configRoutes from './routes/index.js';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
+import exphbs from 'express-handlebars';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
+const staticDir = express.static(__dirname + '/public');
+
+app.use('/public', staticDir);
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 configRoutes(app);
 

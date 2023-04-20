@@ -1,0 +1,47 @@
+.JJ {
+    text-align: center;
+    text-decoration: solid; 
+    text-decoration: underline;
+    color: rgb(255, 255, 255);
+    background-color: #8b0806; 
+    text-shadow: 2px 2px 2px rgb(26, 25, 25);
+    font-size: 200%;
+    font-family: 'Times New Roman', Times, serif;
+    margin: auto;
+}
+
+h1{
+    text-align: center;
+    text-decoration: solid; 
+    text-decoration: underline;
+    font-family: 'Times New Roman', Times, serif;
+    margin: auto;
+}
+
+.main {
+    border: 2px solid black;
+    margin: auto;
+}
+
+.btn-group button {
+    background-color: #8b0806; 
+    border: 1px solid rgb(37, 37, 37); 
+    color: white;
+    padding: 10px 24px; 
+    cursor: pointer; 
+    float: left; 
+  }
+  
+  .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .btn-group button:not(:last-child) {
+    border-right: none;
+  }
+  
+  .btn-group button:hover {
+    background-color: #520505;
+  }
