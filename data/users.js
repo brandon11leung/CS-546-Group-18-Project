@@ -199,3 +199,41 @@ export const createUser = async (
     }
     
   };
+
+export const getAllUsers = async () => {
+
+  const userData = await users();
+
+  let userList = await userData.find({}).toArray();
+
+  if (!userList) { throw new Error ('Unable to find all users'); }
+
+  userList = userList.map((item) =>  { 
+  item._id = item._id.toString(); 
+  return item; });
+  return userList;
+};
+
+export const getUserById = async () => {
+
+  if (!id) { throw new Error('Missing ID parameter'); }
+
+  if (typeof id !== 'string' || id.trim().length === 0) {
+    throw new Error('ID parameter is invalid');
+  }
+
+  id = id.trim();
+
+  if (!ObjectId.isValid(id)) {
+    throw new Error('Invalid object ID');
+  }
+
+  const userData = await users();
+  let user = await userData.findOne({_id: new ObjectId(id)});
+
+  if (user === null) { throw new Error('User not found in database'); }
+  user._id = user._id.toString();
+
+  return user;
+
+}
