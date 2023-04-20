@@ -26,7 +26,7 @@ router.route('/account').get(async (req, res) => {
 
 router.route('/listings').get(async (req, res) => {
     try {
-        res.render('listings', {title: "Lisitngs Station"});
+        res.render('listings', {title: "Listings Station"});
         } catch (e) {
         res.status(500).json({error: e});
     }});
