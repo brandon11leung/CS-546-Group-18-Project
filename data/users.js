@@ -7,12 +7,12 @@ export const createUser = async (
     firstName, //error checked
     lastName, //error checked
     emailAddress, //error checked
-    username,
-    age,
-    dob,
+    username, //error checked
+    age, //error checked
+    dob, //error checked
     password, //error checked
-    city,
-    state,
+    city, //error checked
+    state, //error checked
   ) => {
     if ((!firstName) || (!lastName) || (!emailAddress) || (!password) || (!username) || (!age) || (!dob) || (!city) || (state)) {
       throw new Error ('All fields need to have valid values');
@@ -69,6 +69,40 @@ export const createUser = async (
       throw new Error ('invalid password');
     }
     const hash = await bcrypt.hash(password, saltRounds);
+
+    //Check username
+    if ((typeof username !== "string") || (!(firstName.replace(/\s/g, '').length))) {
+        throw new Error ('username field is invalid');
+    }
+
+    //Check age
+    let ageo = parseInt(age);
+    if (ageo < 18 || ageo > 100) {
+        throw new Error ('age is invalid')
+    }
+
+    //Check dob
+    if (isNaN(dob.getTime())) {
+        throw new Error ('dob invalid');
+    };
+
+    //Check city
+    if ((typeof city !== "string") || (!(city.replace(/\s/g, '').length)) || (city.length < 2)) {
+        throw new Error ('firstName field is invalid');
+      }
+    findNum = city.match(/[^a-zA-Z]+/g);
+    if (findNum !== null) {
+        throw new Error ('city contains a number or special character');
+    }
+
+    //Check state
+    if ((typeof state !== "string") || (!(state.replace(/\s/g, '').length)) || (state.length < 2)) {
+        throw new Error ('firstName field is invalid');
+      }
+    findNum = state.match(/[^a-zA-Z]+/g);
+    if (findNum !== null) {
+        throw new Error ('state contains a number or special character');
+    }
   
     //end of error checking
 
@@ -83,7 +117,7 @@ export const createUser = async (
       firstName: firstName,
       lastName: lastName,
       emailAddress: emailAddress,
-      age: age,
+      age: ageo,
       dob: dob,
       doc: doc,
       username: username,
