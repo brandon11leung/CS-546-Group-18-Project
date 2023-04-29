@@ -244,3 +244,5 @@ export const getUserById = async () => {
   return user;
 
 }
+
+export default {getAllUsers, getUserById, checkUser, createUser};
