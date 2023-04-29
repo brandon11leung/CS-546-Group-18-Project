@@ -14,6 +14,8 @@ export const createUser = async (
     city, //error checked
     state, //error checked
   ) => {
+    const userCollection = await users();
+
     if ((!firstName) || (!lastName) || (!emailAddress) || (!password) || (!username) || (!age) || (!dob) || (!city) || (state)) {
       throw new Error ('All fields need to have valid values');
     }
@@ -56,6 +58,11 @@ export const createUser = async (
     let index = emailAddress.indexOf('@');
     if (emailAddress[index+1] === '.') {
       throw new Error ('invalid email');
+    }
+    //See if email already exists in DB
+    const existingUser = await userCollection.findOne({emailAddress: emailAddress});
+    if (existingUser) {
+      throw new Error ('Email address is already associated with a user');
     }
   
     //Check password
@@ -132,7 +139,7 @@ export const createUser = async (
       watchedListings: [],
       overallRating: 0,
     };
-    const userCollection = await users();
+    
     const insertInfo = await userCollection.insertOne(newUser);
     if (!insertInfo.acknowledged || !insertInfo.insertedId) {
       throw new Error ('Could not add user');
