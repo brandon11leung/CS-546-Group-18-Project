@@ -16,7 +16,8 @@ export const createUser = async (
   ) => {
     const userCollection = await users();
 
-    if ((!firstName) || (!lastName) || (!emailAddress) || (!password) || (!username) || (!age) || (!dob) || (!city) || (state)) {
+    if ((!firstName) || (!lastName) || (!emailAddress) || (!username) || (!age) || (!dob) || (!password) || (!city) || (!state)) {
+      console.log(firstName, lastName, emailAddress, username, age, dob, password, city, state);
       throw new Error ('All fields need to have valid values');
     }
   
