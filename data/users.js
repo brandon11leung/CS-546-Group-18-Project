@@ -1,7 +1,7 @@
 import {users} from "./../config/mongoCollections.js";
 import {MongoClient, ObjectId} from 'mongodb';
 import bcrypt from 'bcrypt';
-const saltRounds = 16;
+const saltRounds = 12;
 
 export const createUser = async (
     firstName, //error checked
@@ -77,6 +77,8 @@ export const createUser = async (
     let upper = /[A-Z]/;
     let nums = /\d/;
     let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    let letters = /[A-Za-z]/;
+
     if (!upper.test(password) || !nums.test(password) || !specials.test(password)) {
       throw new Error ('Password must contain at least one uppercase letter, at least one number, and at least one special character.');
     }
@@ -87,9 +89,12 @@ export const createUser = async (
     const hash = await bcrypt.hash(password, saltRounds);
 
     //Check username
-    if ((typeof username !== "string") || (!(firstName.replace(/\s/g, '').length))) {
-        throw new Error ('username field is invalid');
+    if ((typeof username !== "string") || (!(firstName.replace(/\s/g, '').length) || username.length < 6)) {
+        throw new Error ('Username field must be a valid username of at least size 6');
     }
+
+    if (!letters.test(username) || username.includes(' ')) { throw new Error ('Username must include at least one letter and cannot include spaces.'); }
+    
 
     //Check age
     let ageo = parseInt(age);

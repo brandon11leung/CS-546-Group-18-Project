@@ -149,10 +149,31 @@ try {
 }
 
 try {
-    const badPassword5 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "    Stevens123*   ", "Cranford", "NJ");
+    const badPassword5 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "    Stevens123   ", "Cranford", "NJ");
 } catch (e) {
     console.log(e.message);
 }
+
+
+console.log("\n\n-----------\n\n");
+
+
+/* Invalid username */
+
+try {
+    const badUsername1 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM", 20, "06/02/2002", "Stevens997*", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const badUsername2 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "   LukeM 602   ", 20, "06/02/2002", "Stevens997*", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+
+
 
 // const haken = await bands.create("Haken", ["Progressive Metal", "Progressive Rock"], "http://www.hakenmusic.com", "Inside Out", ["Ross Jennings", "Richard Henshall", "Raymond Hearne", "Charles Griffiths", "Conner Green", "Peter Jones"], 2007);
 // const hakenId = haken._id.toString();
