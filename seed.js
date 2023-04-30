@@ -298,6 +298,21 @@ try {
 console.log("\n---ATTEMPTS TO DUPLICATE USERNAMES AND EMAIL ADDRESSES---\n");
 
 
+try {
+    const lukeFraud = console.log(await users.createUser("Luke", "Muhnicky", " LMUHNICK@STEVENS.EDU ", "DifferentName!", 20, "06/02/2002", "Stevens997*", "Cranford", "NJ"));
+} catch (e) {
+    console.log(e.message);
+}
+
+
+try {
+    const sameUsername = console.log(await users.createUser("Trickster", "User", " Tricky@gmail.com ", "   trickshot12345678910", 18, "12/31/2004", "We0123$!", "Anchorage", "AK"));
+} catch (e) {
+    console.log(e.message);
+}
+
+
+
 
 // try {
 //     const patrick = console.log(await users.createUser(" Patrick    ", " Hill ", " phill@stevens.edu", " phill1 ", 47, "01/01/1975", "1ErrorCheck!", "Vernon", "NJ"));
