@@ -19,7 +19,7 @@ try {
     console.log(e.message);
 }
 
-
+console.log("\n\n-----------\n\n");
 /* Invalid first name */
 
 try {
@@ -53,8 +53,7 @@ try {
     console.log(e.message);
 }
 
-
-
+console.log("\n\n-----------\n\n");
 
 
 /* Invalid last name */
@@ -89,11 +88,71 @@ try {
     console.log(e.message);
 }
 
+console.log("\n\n-----------\n\n");
+/* Invalid email */
 
+try {
+    const badEmail1 = await users.createUser("Luke", "Muhnicky", "lmuhnickstevens.edu", "LukeM602", 20, "06/02/2002", "Stevens100", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
 
+try {
+    const badEmail2 = await users.createUser("Luke", "Muhnicky", "lmuhnick@ stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens100", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
 
+try {
+    const badEmail3 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.luk", "LukeM602", 20, "06/02/2002", "Stevens100", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
 
+try {
+    const badEmail4 = await users.createUser("Luke", "Muhnicky", "lmuhnick@.edu", "LukeM602", 20, "06/02/2002", "Stevens100", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
 
+try {
+    const badEmail5 = await users.createUser("Luke", "Muhnicky", "@.com", "LukeM602", 20, "06/02/2002", "Stevens100", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+console.log("\n\n-----------\n\n");
+/* Invalid password */
+
+try {
+    const badPassword1 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const badPassword2 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", " Stevens12 *", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const badPassword3 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "stevens12*", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const badPassword4 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "stevens**", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const badPassword5 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "    Stevens123*   ", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
 
 // const haken = await bands.create("Haken", ["Progressive Metal", "Progressive Rock"], "http://www.hakenmusic.com", "Inside Out", ["Ross Jennings", "Richard Henshall", "Raymond Hearne", "Charles Griffiths", "Conner Green", "Peter Jones"], 2007);
 // const hakenId = haken._id.toString();
@@ -119,6 +178,8 @@ try {
 //   console.log(await albums.remove(mouid))
 //  console.log(await albums.remove(vecid))
 //  console.log(await bands.remove(hakenId))
+
+console.log("\n\n-----------\n\n");
 
 console.log('Done seeding database');
 

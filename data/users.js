@@ -17,16 +17,19 @@ export const createUser = async (
     const userCollection = await users();
 
     if ((!firstName) || (!lastName) || (!emailAddress) || (!username) || (!age) || (!dob) || (!password) || (!city) || (!state)) {
-      console.log(firstName, lastName, emailAddress, username, age, dob, password, city, state);
       throw new Error ('All fields need to have valid values');
     }
   
+    if (typeof firstName !== 'string' || typeof lastName !== 'string' || typeof emailAddress !== 'string' || typeof password !== 'string') {
+      throw new Error ('parameters must be of string type');
+    }
+
     firstName = firstName.trim();
     lastName = lastName.trim();
-    emailAddress = emailAddress.toLowerCase();
+    emailAddress = emailAddress.toLowerCase().trim();
   
     //Check firstName
-    if ((typeof firstName !== "string") || (!(firstName.replace(/\s/g, '').length)) || (firstName.length < 2) || (firstName.length > 25)) {
+    if ((!(firstName.replace(/\s/g, '').length)) || (firstName.length < 2) || (firstName.length > 25)) {
       throw new Error ('firstName field is invalid');
     }
     let findNum = firstName.match(/[^a-zA-Z]+/g);
@@ -35,7 +38,7 @@ export const createUser = async (
     }
   
     //Check lastName
-    if ((typeof lastName !== "string") || (!(lastName.replace(/\s/g, '').length)) || (lastName.length < 2) || (lastName.length > 25)) {
+    if ((!(lastName.replace(/\s/g, '').length)) || (lastName.length < 2) || (lastName.length > 25)) {
       throw new Error ('lastName field is invalid');
     }
     findNum = lastName.match(/[^a-zA-Z]+/g);
@@ -45,20 +48,20 @@ export const createUser = async (
   
     //Check email
     if (!emailAddress.includes('@')) {
-      throw new Error ('invalid email');
+      throw new Error ('Email cannot include @');
     }
     if (emailAddress.includes(' ')) {
-      throw new Error ('invalid email');
+      throw new Error ('Email cannot include spaces');
     }
     if ((!emailAddress.endsWith('.com')) && (!emailAddress.endsWith('.edu')) && (!emailAddress.endsWith('.org')) && (!emailAddress.endsWith('.net')) && (!emailAddress.endsWith('.int')) && (!emailAddress.endsWith('.gov')) && (!emailAddress.endsWith('.mil'))) {
-      throw new Error ('invalid email');
+      throw new Error ('Domain ending for the email address is invalid');
     }
     if (emailAddress[0] === '@') {
       throw new Error ('invalid email');
     }
     let index = emailAddress.indexOf('@');
     if (emailAddress[index+1] === '.') {
-      throw new Error ('invalid email');
+      throw new Error ('Email must include domain name');
     }
     //See if email already exists in DB
     const existingUser = await userCollection.findOne({emailAddress: emailAddress});
@@ -66,16 +69,21 @@ export const createUser = async (
       throw new Error ('Email address is already associated with a user');
     }
   
+    password = password.trim();
     //Check password
-    if ((typeof password !== 'string') || (!(password.replace(/\s/g, '').length)) || (password.length < 8)) {
+    if ((!(password.replace(/\s/g, '').length)) || (password.length < 8)) {
       throw new Error ('invalid password');
     }
     let upper = /[A-Z]/;
     let nums = /\d/;
     let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     if (!upper.test(password) || !nums.test(password) || !specials.test(password)) {
-      throw new Error ('invalid password');
+      throw new Error ('Password must contain at least one uppercase letter, at least one number, and at least one special character.');
     }
+    
+    if (password.includes(' ')) { throw new Error ('Password cannot include spaces.'); }
+
+
     const hash = await bcrypt.hash(password, saltRounds);
 
     //Check username
