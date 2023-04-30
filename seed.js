@@ -172,8 +172,138 @@ try {
     console.log(e.message);
 }
 
+console.log("\n\n-----------\n\n");
+
+/* Invalid age */
+
+try {
+    const tooYoung = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 17, "06/02/2002", "Stevens997*", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const tooOld = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 101, "06/02/2002", "Stevens997*", "Cranford", "NJ");
+} catch (e) {
+    console.log(e.message);
+}
 
 
+console.log("\n\n-----------\n\n");
+
+/* Invalid city */
+
+try {
+    const numberCity = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens997*", "Cranford1", "NJ");
+} catch (e) {
+    console.log(e.message);
+} 
+
+
+try {
+    const symbolCity = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens997*", "Cranford*", "NJ");
+} catch (e) {
+    console.log(e.message);
+} 
+
+
+console.log("\n\n-----------\n\n");
+
+/* Invalid state */
+
+try {
+    const fullState = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens997*", "Cranford", "New Jersey");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const numberState = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens997*", "Cranford", "12");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const fakeState = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens997*", "Cranford", "NN");
+} catch (e) {
+    console.log(e.message);
+}
+
+
+console.log("\n\n---END OF PARAMETER CHECKING FOR CREATE USER---\n\n");
+console.log("\n---BEGINNING SEEDING PROCESS FOR CREATE USER---\n");
+
+try {
+    const luke = console.log(await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", 20, "06/02/2002", "Stevens997*", "Cranford", "NJ"));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const patrick = console.log(await users.createUser(" Patrick    ", " Hill ", " phill@stevens.edu", " phill1 ", 47, "01/01/1975", "1ErrorCheck!", "Vernon", "NJ"));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const ark = console.log(await users.createUser("Arkansas", "Apprentice", "aapp1123@gmail.com", " arkman", 18, "02/06/2004", "passWord'56", "Little Rock", "AR"));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const mrKing = console.log(await users.createUser("mister", "king", " 1coolkid!@gmail.com", " notanarcissist1 ", 21, "04/29/2002", "  'yeehaW123  ", "San Francisco " , "CA"));
+} catch (e) {
+    console.log(e.message);
+}
+
+
+try {
+    const gamer = console.log(await users.createUser("   gamer    ", "man", "      PHILLISTHEBEST@STEVENS.EDU   ", "games4thwin", 69, "04/20/1954", " i<3Hilll", "    Des Moines  ", "IA"));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const albertEinstein = console.log(await users.createUser(" albert   ", " einstein ", " 1einstein1@yahoo.com ", " Einstein ", 99, "01/01/1924", "The*Genius123 ", " jackson  ", "    ms   "));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const handymanny = console.log(await users.createUser("    Handy    ", " Manny   ", "  h@m.net", "handymanny", 40, "10/31/1982", "i%T12ool", "  san antonio ", "   tx   "));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const trickyUser = console.log(await users.createUser(" tRiCksTeR    ", " uSeR ", " TRICKY@Stevens.edu", " Trickshot12345678910 ", 18, "12/31/2004", "T3094dwkj2()", "Anchorage", "AK"));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const alien = console.log(await users.createUser("Zeep", "Zorp", "123zorp1@yes.org", "Beep12", 52, "11/22/1970", "oiei32@(!H", "Reno", "NV"));
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const finalUser = console.log(await users.createUser("Barack", "Obama", "presidentobama@something.mil", "ObamaMama<3", 52, "08/04/1961", "Obama804*", "Honolulu", "HI"));
+} catch (e) {
+    console.log(e.message);
+}
+
+
+console.log("\n---ATTEMPTS TO DUPLICATE USERNAMES AND EMAIL ADDRESSES---\n");
+
+
+
+// try {
+//     const patrick = console.log(await users.createUser(" Patrick    ", " Hill ", " phill@stevens.edu", " phill1 ", 47, "01/01/1975", "1ErrorCheck!", "Vernon", "NJ"));
+// } catch (e) {
+//     console.log(e.message);
+// }
 
 // const haken = await bands.create("Haken", ["Progressive Metal", "Progressive Rock"], "http://www.hakenmusic.com", "Inside Out", ["Ross Jennings", "Richard Henshall", "Raymond Hearne", "Charles Griffiths", "Conner Green", "Peter Jones"], 2007);
 // const hakenId = haken._id.toString();

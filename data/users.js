@@ -89,12 +89,17 @@ export const createUser = async (
     const hash = await bcrypt.hash(password, saltRounds);
 
     //Check username
-    if ((typeof username !== "string") || (!(firstName.replace(/\s/g, '').length) || username.length < 6)) {
+    if ((typeof username !== "string") || (!(firstName.replace(/\s/g, '').length) || username.trim().length < 6)) {
         throw new Error ('Username field must be a valid username of at least size 6');
     }
 
-    if (!letters.test(username) || username.includes(' ')) { throw new Error ('Username must include at least one letter and cannot include spaces.'); }
+    username = username.trim();
+    if (!letters.test(username) || username.indexOf(' ') >= 0) { throw new Error ('Username must include at least one letter and cannot include spaces.'); }
     
+    const sameUsername = await userCollection.findOne({username: username});
+    if (existingUser) {
+      throw new Error ('Username is already associated with a user');
+    }
 
     //Check age
     let ageo = parseInt(age);
@@ -102,32 +107,39 @@ export const createUser = async (
         throw new Error ('age is invalid')
     }
 
-    //Check dob
-    if (isNaN(dob.getTime())) {
-        throw new Error ('dob invalid');
-    };
+    // if (typeof dob !== 'string') { throw new Error ('Date of birth must be a string'); }
+
+    // let splitDate = dob.split('-');
+
+    // if (splitDate.length !== 3) { throw new Error ('Date of birth in invalid format'); }
 
     //Check city
-    if ((typeof city !== "string") || (!(city.replace(/\s/g, '').length)) || (city.length < 2)) {
-        throw new Error ('firstName field is invalid');
-      }
-    findNum = city.match(/[^a-zA-Z]+/g);
-    if (findNum !== null) {
-        throw new Error ('city contains a number or special character');
+    if ((typeof city !== "string") || (!(city.replace(/\s/g, '').length)) || (city.trim().length < 2)) {
+        throw new Error ('City field is invalid');
     }
 
+    city = city.trim();
+
+    if (nums.test(city) || specials.test(city)) { throw new Error ('City cannot contain numbers or special characters'); }
+
+    const stateArray = ['AL','AK','AZ','AR','CA','CO','CT', 'DC', 'DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA', 'PR', 'RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
     //Check state
-    if ((typeof state !== "string") || (!(state.replace(/\s/g, '').length)) || (state.length < 2)) {
-        throw new Error ('firstName field is invalid');
-      }
+    if ((typeof state !== "string") || (!(state.replace(/\s/g, '').length)) || (state.trim().length != 2)) {
+        throw new Error ('State must be in format of two characters');
+    }
+
+    state = state.trim().toUpperCase();
+
     findNum = state.match(/[^a-zA-Z]+/g);
     if (findNum !== null) {
         throw new Error ('state contains a number or special character');
     }
+
+    if (!stateArray.includes(state)) { throw new Error ('Not a valid state'); }
   
     //end of error checking
 
-    //Creat doc
+    //Create doc
     const currentDate = new Date();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
@@ -139,7 +151,7 @@ export const createUser = async (
       lastName: lastName,
       emailAddress: emailAddress,
       age: ageo,
-      dob: dob,
+      //dob: dob,
       doc: doc,
       username: username,
       password: hash,
