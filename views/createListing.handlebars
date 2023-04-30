@@ -1,0 +1,37 @@
+<h1>Listing Creation</h1>
+        <div id="error">
+            {{#if error}}
+            <p>{{error}}</p>
+            {{else}}
+            <p></p>
+            {{/if}}
+        </div>
+        <div>
+            <form  method="POST" id="registration-form" action="">
+                <label for="TitleInput">Enter Listing Title:</label>
+                <input id="TitleInput" type="text" name="TitleInput"><br>
+
+                <label for="conditionInput">Enter Listing's Condition:</label>
+                <input id="conditionInput" type="text" name="conditionInput"><br>
+                
+                <label for="priceInput">Enter Price:</label>
+                <input id="priceInput" type="number" name="priceInput"><br>
+
+                <label for="shippingPriceInput">Enter Shipping Price:</label>
+                <input id="shippingPriceInput" type="number" name="shippingPriceInput"><br>
+                
+                <label for="descriptionInput">Description:</label>
+                <textarea id="descriptionInput" type="text" name="descriptionInput"><br>
+
+                <label for="returnPolicyInput">Return Policy:</label>
+                <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"><br>
+
+                <label for="roleInput">Choose a Listing type: </label>
+                <select id="roleInput" name="roleInput">
+                    <option value="Sell">Sell</option>
+                    <option value="Trade">Trade</option>
+                </select>
+
+                <button type="submit">Register</button>
+            </form>
+        </div>
