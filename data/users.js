@@ -178,6 +178,11 @@ export const createUser = async (
     if ((!emailAddress) || (!password)) {
       throw new Error ('All fields need to have valid values');
     }
+
+    if (typeof emailAddress !== 'string' || typeof password !== 'string') {
+      throw new Error ('Both parameters must be of type string');
+    }
+
     emailAddress = emailAddress.toLowerCase();
     emailAddress = emailAddress.trim();
   

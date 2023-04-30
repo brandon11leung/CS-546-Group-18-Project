@@ -252,7 +252,7 @@ try {
 }
 
 try {
-    const mrKing = console.log(await users.createUser("mister", "king", " 1coolkid!@gmail.com", " notanarcissist1 ", 21, "04/29/2002", "  'yeehaW123  ", "San Francisco " , "CA"));
+    const mrKing = console.log(await users.createUser("mister", "king", " 1coolkid!@gmail.com", " notanarcissist1 ", 21, "04/29/2002", "'yeehaW123", "San Francisco " , "CA"));
 } catch (e) {
     console.log(e.message);
 }
@@ -265,7 +265,7 @@ try {
 }
 
 try {
-    const albertEinstein = console.log(await users.createUser(" albert   ", " einstein ", " 1einstein1@yahoo.com ", " Einstein ", 99, "01/01/1924", "The*Genius123 ", " jackson  ", "    ms   "));
+    const albertEinstein = console.log(await users.createUser(" albert   ", " einstein ", " 1einstein1@yahoo.com ", " Einstein ", 99, "01/01/1924", "The*Genius123", " jackson  ", "    ms   "));
 } catch (e) {
     console.log(e.message);
 }
@@ -312,6 +312,42 @@ try {
 }
 
 
+console.log("\n---MOVING ONTO CHECKUSER ERROR CHECKING---\n");
+
+
+try {
+    const noParam = await users.checkUser();
+} catch (e) {
+    console.log(e.message);
+}
+
+
+
+try {
+    const wrongParams = await users.checkUser(123, 456);
+} catch (e) {
+    console.log(e.message);
+}
+
+
+try {
+    const wrongEmail = await users.checkUser("lmuhnickk@stevens.edu", "Stevens997*");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const wrongPassword = await users.checkUser("lmuhnick@stevens.edu", "Stevens996*");
+} catch (e) {
+    console.log(e.message);
+}
+
+
+try {
+    const validUser = console.log(await users.checkUser("  LMUHNICK@STEVENS.EDU   ", "Stevens997*"))
+} catch (e) {
+    console.log(e.message);
+}
 
 
 // try {
