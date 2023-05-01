@@ -45,6 +45,8 @@ const validEmail = (email) => {
     if (emailAddress[index+1] === '.') {
         return false;
     }
+
+    return true;
 } 
 
 
@@ -53,6 +55,8 @@ const validUsername = (username) => {
     if ((typeof username !== "string") || (!(username.replace(/\s/g, '').length) || username.trim().length < 6)) {
        return false;
     }
+
+    return true;
 }
 
 
@@ -81,6 +85,8 @@ const validCity = (city) => {
     city = city.trim();
 
     if (nums.test(city) || specials.test(city)) { return false; }
+
+    return true;
 }
 
 
@@ -96,10 +102,12 @@ const validState = (state) => {
 
     findNum = state.match(/[^a-zA-Z]+/g);
     if (findNum !== null) {
-        throw new Error ('state contains a number or special character');
+        return false;
     }
 
-    if (!stateArray.includes(state)) { throw new Error ('Not a valid state'); }
+    if (!stateArray.includes(state)) { return false; }
+
+    return true;
 
 }
 
