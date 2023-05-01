@@ -69,11 +69,11 @@ export const createUser = async (
       throw new Error ('Email address is already associated with a user');
     }
   
-    password = password.trim();
     //Check password
     if ((!(password.replace(/\s/g, '').length)) || (password.length < 8)) {
       throw new Error ('invalid password');
     }
+    
     let upper = /[A-Z]/;
     let nums = /\d/;
     let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
@@ -95,6 +95,7 @@ export const createUser = async (
 
     username = username.trim().toLowerCase();
     if (!letters.test(username) || username.indexOf(' ') >= 0) { throw new Error ('Username must include at least one letter and cannot include spaces.'); }
+    
     
     const sameUsername = await userCollection.findOne({username: username});
     if (sameUsername) {
@@ -231,7 +232,7 @@ export const createUser = async (
     }
   
     if (compareToMatch) {
-      return [userro.firstName, userro.lastName, userro.emailAddress, userro.role];
+      return [userro.firstName, userro.lastName, userro.emailAddress, userro.password];
     } else {
       throw new Error ('Either the email address or password is invalid');
     }
@@ -252,7 +253,7 @@ export const getAllUsers = async () => {
   return userList;
 };
 
-export const getUserById = async () => {
+export const getUserById = async (id) => {
 
   if (!id) { throw new Error('Missing ID parameter'); }
 
