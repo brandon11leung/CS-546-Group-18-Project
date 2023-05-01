@@ -117,6 +117,16 @@ let city = document.getElementById('firstNameInput');
 let state = document.getElementById('stateInput');
 
 
+let errorFirstName = document.getElementById('errorFirstName');
+let errorLastName = document.getElementById('errorLastName');
+let errorEmail = document.getElementById('errorEmail');
+let errorUsername = document.getElementById('errorUsername');
+let errorPassword = document.getElementById('errorPassword');
+let errorConfirm = document.getElementById('errorConfirm');
+let errorCity = document.getElementById('errorCity');
+let errorState = document.getElementById('errorState');
+
+
 
 /* The plan is to have multiple error lines so that way it would alert
    the user for each invalid input instead of just the first one. */
@@ -126,8 +136,43 @@ if (form) {
     form.addEventListener('submit', (event) => {
         if (!validName(firstName.value)) {
             event.preventDefault();
-            error.innerHTML = 'First name must be between 2 and 25 characters, only letters and no spaces.';
-            return;
+            errorFirstName.innerHTML = 'First name must be between 2 and 25 characters, only letters and no spaces.';
         }
+
+        if (!validName(lastName.value)) {
+            event.preventDefault();
+            errorLastName.innerHTML = 'Last name must be between 2 and 25 characters, only letters and no spaces.';
+        }
+
+        if (!validEmail(emailAddress.value)) {
+            event.preventDefault();
+            errorEmail.innerHTML = 'Email must be in email format and contain a valid prefix and domain.';
+        }
+
+        if (!validUsername(username.value)) {
+            event.preventDefault();
+            errorEmail.innerHTML = 'Username must be at least six characters and contain at least one letter and no spaces.';
+        }
+
+        if (!validPassword(password.value)) {
+            event.preventDefault();
+            errorPassword.innerHTML = 'Password must contain at least eight characters, have at least one uppercase letter, at least one number, and at least one special character. No spaces.';
+        }
+
+        if (password.value !== confirmPassword.value) {
+            event.preventDefault();
+            errorConfirm.innerHTML = 'Both password fields must match.'
+        }
+
+        if (!validCity(city.value)) {
+            event.preventDefault();
+            errorCity.innerHTML = 'City must contain at least two characters and cannot contain numbers or special characters.'
+        }
+
+        if (!validState(state.value)) {
+            event.preventDefault();
+            errorState.innerHTML = 'State must be a valid abbreviated state.'
+        }
+    
     });
 }
