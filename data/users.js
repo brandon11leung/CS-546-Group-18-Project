@@ -251,7 +251,7 @@ export const getAllUsers = async () => {
   return userList;
 };
 
-export const getUserById = async () => {
+export const getUserById = async (id) => {
 
   if (!id) { throw new Error('Missing ID parameter'); }
 
