@@ -3,12 +3,11 @@ import {MongoClient, ObjectId} from 'mongodb';
 import bcrypt from 'bcrypt';
 const saltRounds = 12;
 
-const createUser = async (
+export const createUser = async (
     firstName, //error checked
     lastName, //error checked
     emailAddress, //error checked
     username, //error checked
-    age, //error checked
     dob, //error checked
     password, //error checked
     city, //error checked
@@ -16,7 +15,7 @@ const createUser = async (
   ) => {
     const userCollection = await users();
 
-    if ((!firstName) || (!lastName) || (!emailAddress) || (!username) || (!age) || (!dob) || (!password) || (!city) || (!state)) {
+    if ((!firstName) || (!lastName) || (!emailAddress) || (!username)  || (!dob) || (!password) || (!city) || (!state)) {
       throw new Error ('All fields need to have valid values');
     }
   
@@ -103,10 +102,10 @@ const createUser = async (
     }
 
     //Check age
-    let ageo = parseInt(age);
-    if (ageo < 18 || ageo > 100) {
-        throw new Error ('age is invalid')
-    }
+    // let ageo = parseInt(age);
+    // if (ageo < 18 || ageo > 100) {
+    //     throw new Error ('age is invalid')
+    // }
 
     // if (typeof dob !== 'string') { throw new Error ('Date of birth must be a string'); }
 
@@ -151,7 +150,6 @@ const createUser = async (
       firstName: firstName,
       lastName: lastName,
       emailAddress: emailAddress,
-      age: ageo,
       //dob: dob,
       doc: doc,
       username: username,
@@ -174,7 +172,7 @@ const createUser = async (
     return {insertedUser: true};
   };
   
-const checkUser = async (emailAddress, password) => {
+export const checkUser = async (emailAddress, password) => {
     if ((!emailAddress) || (!password)) {
       throw new Error ('All fields need to have valid values');
     }
@@ -238,7 +236,7 @@ const checkUser = async (emailAddress, password) => {
     
   };
 
-const getAllUsers = async () => {
+export const getAllUsers = async () => {
 
   const userData = await users();
 
@@ -252,7 +250,7 @@ const getAllUsers = async () => {
   return userList;
 };
 
-const getUserById = async (id) => {
+export const getUserById = async (id) => {
 
   if (!id) { throw new Error('Missing ID parameter'); }
 
@@ -276,7 +274,7 @@ const getUserById = async (id) => {
 
 }
 
-const removeUser = async (id) => {
+export const removeUser = async (id) => {
   if (!id) {
     throw new Error ('needs an id parameter');
   }
@@ -295,5 +293,3 @@ const removeUser = async (id) => {
   }
   return `${deletionInfo.value.name} has been successfully deleted!`;
 };
-
-export default {getAllUsers, getUserById, checkUser, createUser, removeUser};
