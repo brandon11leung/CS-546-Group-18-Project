@@ -1,5 +1,5 @@
 /* Luke Bianchi */
-import {users} from "./../config/mongoCollections.js";
+import {reviews} from "./../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import * as userjs from './users.js';
 
@@ -9,6 +9,7 @@ export const create = async (
     reviewBody,
     rating
 ) => {
+    const reviewCollection = await reviews();
     if ((!userFrom) || (!userAbout) || (!reviewBody) || (!rating)) {
         throw new Error ('All fields need to have values');
     }
@@ -37,17 +38,20 @@ export const create = async (
         reviewBody: reviewBody,
         rating: rating
     }
-    const userCollection = await users();
-    await userCollection.updateOne({_id: new ObjectId(userAbout)}, {$push: {reviews:newReview}});
-
-    return await get(newReview._id.toString());
+    
+    const insertInfo = await reviewCollection.insertOne(newReview);
+    if (!insertInfo.acknowledged || !insertInfo.insertedId) {
+      throw new Error ('Could not add user');
+    }
+  
+    return {insertedUser: true};
 }
 
 const arrayEquals = (a, b) => {
     return a.every((val, index) => val === b[index])
 }
   
-export const get = async (reviewId) => {
+const get = async (reviewId) => {
     if (!reviewId) {
       throw new Error ('please include reviewId');
     }
@@ -57,23 +61,29 @@ export const get = async (reviewId) => {
     if (!ObjectId.isValid(reviewId)) throw 'invalid object ID';
     reviewId = reviewId.trim();
   
-    const allReviews = await userjs.getAllUsers();
-    let theReview = null;
+
+    const reviewData = await reviews();
+    let review = await reviewData.findOne({_id: new ObjectId(id)});
   
-    allReviews.forEach((user) => {
-        user.reviews.forEach((review) => {
-            if(arrayEquals([...review._id.toString()], [...reviewId])) {
-                theReview = review
-            }
-        })
-    })
+    if (review === null) { throw new Error('Review not found in database'); }
+    review._id = review._id.toString();
   
-    if (theReview !== null) {
-        return theReview;
-    } else {
-        throw new Error('Review not found.')
-    }
+    return review;
   
 };
 
-export default {create, get}
+const getAllReviews = async () => {
+
+    const reviewData = await reviews();
+  
+    let reviewList = await reviewData.find({}).toArray();
+  
+    if (!reviewList) { throw new Error ('Unable to find all users'); }
+  
+    reviewList = reviewList.map((item) =>  { 
+    item._id = item._id.toString(); 
+    return item; });
+    return userList;
+  };
+
+export default {create, get, getAllReviews}
