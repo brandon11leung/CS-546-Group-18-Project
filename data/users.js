@@ -3,7 +3,7 @@ import {MongoClient, ObjectId} from 'mongodb';
 import bcrypt from 'bcrypt';
 const saltRounds = 12;
 
-export const createUser = async (
+const createUser = async (
     firstName, //error checked
     lastName, //error checked
     emailAddress, //error checked
@@ -174,7 +174,7 @@ export const createUser = async (
     return {insertedUser: true};
   };
   
-  export const checkUser = async (emailAddress, password) => {
+const checkUser = async (emailAddress, password) => {
     if ((!emailAddress) || (!password)) {
       throw new Error ('All fields need to have valid values');
     }
@@ -238,7 +238,7 @@ export const createUser = async (
     
   };
 
-export const getAllUsers = async () => {
+const getAllUsers = async () => {
 
   const userData = await users();
 
@@ -252,7 +252,7 @@ export const getAllUsers = async () => {
   return userList;
 };
 
-export const getUserById = async (id) => {
+const getUserById = async (id) => {
 
   if (!id) { throw new Error('Missing ID parameter'); }
 
@@ -276,4 +276,24 @@ export const getUserById = async (id) => {
 
 }
 
-export default {getAllUsers, getUserById, checkUser, createUser};
+const removeUser = async (id) => {
+  if (!id) {
+    throw new Error ('needs an id parameter');
+  }
+  if (typeof id !== "string" || !(id.replace(/\s/g, '').length)) {
+    throw new Error ('id must be a nonempty string');
+  }
+  id = id.trim();
+  if (!ObjectId.isValid(id)) throw 'invalid object ID';
+  const userCollection = await users();
+  const deletionInfo = await userCollection.findOneAndDelete({
+    _id: new ObjectId(id)
+  });
+
+  if (deletionInfo.lastErrorObject.n === 0) {
+    throw `Could not delete user with id of ${id}`;
+  }
+  return `${deletionInfo.value.name} has been successfully deleted!`;
+};
+
+export default {getAllUsers, getUserById, checkUser, createUser, removeUser};

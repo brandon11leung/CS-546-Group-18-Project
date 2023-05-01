@@ -3,7 +3,7 @@ import {reviews} from "./../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import * as userjs from './users.js';
 
-export const create = async (
+export const createReview = async (
     userFrom,
     userAbout,
     reviewBody,
@@ -46,12 +46,8 @@ export const create = async (
   
     return {insertedUser: true};
 }
-
-const arrayEquals = (a, b) => {
-    return a.every((val, index) => val === b[index])
-}
   
-const get = async (reviewId) => {
+const getReview = async (reviewId) => {
     if (!reviewId) {
       throw new Error ('please include reviewId');
     }
@@ -86,4 +82,24 @@ const getAllReviews = async () => {
     return userList;
   };
 
-export default {create, get, getAllReviews}
+const removeReview = async (id) => {
+    if (!id) {
+      throw new Error ('needs an id parameter');
+    }
+    if (typeof id !== "string" || !(id.replace(/\s/g, '').length)) {
+      throw new Error ('id must be a nonempty string');
+    }
+    id = id.trim();
+    if (!ObjectId.isValid(id)) throw 'invalid object ID';
+    const reviewCollection = await reviews();
+    const deletionInfo = await reviewCollection.findOneAndDelete({
+      _id: new ObjectId(id)
+    });
+  
+    if (deletionInfo.lastErrorObject.n === 0) {
+      throw `Could not delete review with id of ${id}`;
+    }
+    return `${deletionInfo.value.name} has been successfully deleted!`;
+  };
+
+export default {createReview, getReview, getAllReviews, removeReview}
