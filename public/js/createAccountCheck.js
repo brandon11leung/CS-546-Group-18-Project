@@ -105,9 +105,6 @@ const validState = (state) => {
 
 
 
-
-
-
 let form = document.getElementById('registration-form');
 
 let firstName = document.getElementById('firstNameInput');
@@ -125,11 +122,12 @@ let state = document.getElementById('stateInput');
    the user for each invalid input instead of just the first one. */
 
 
-// if (form) {
-//     form.addEventListener('submit', (event) => {
-
-
-
-
-//     }
-// }
+if (form) {
+    form.addEventListener('submit', (event) => {
+        if (!validName(firstName.value)) {
+            event.preventDefault();
+            error.innerHTML = 'First name must be between 2 and 25 characters, only letters and no spaces.';
+            return;
+        }
+    });
+}
