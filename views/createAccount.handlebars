@@ -1,0 +1,41 @@
+<h1>User registration</h1>
+        <div id="error">
+            {{#if error}}
+            <p>{{error}}</p>
+            {{else}}
+            <p></p>
+            {{/if}}
+        </div>
+        <div>
+            <form  method="POST" id="registration-form" action="">
+                <label for="firstNameInput">Enter Your First Name:</label>
+                <input id="firstNameInput" type="text" name="firstNameInput" placeholder="ex: John"><br>
+
+                <label for="lastNameInput">Enter Your Last Name:</label>
+                <input id="lastNameInput" type="text" name="lastNameInput" placeholder="ex: Doe"><br>
+                
+                <label for="emailAddressInput">Enter Your Email:</label>
+                <input id="emailAddressInput" type="email" name="emailAddressInput" placeholder="ex: JDoe@gmail.com"><br>
+                
+                <label for="usernameInput">Enter Your Username:</label>
+                <input id="usernameInput" type="text" name="usernameInput" placeholder="ex: JohnTheDoeMan"><br>
+                
+                <label for="passwordInput">Enter Your Password:</label>
+                <input id="passwordInput" type="password" name="passwordInput"><br>
+                
+                <label for="confirmPasswordInput">Confirm Your Password:</label>
+                <input id="confirmPasswordInput" type="password" name="confirmPasswordInput"><br>
+
+                <label for="DOBInput">Date of Birth:</label>
+                <input id="DOBInput" type="date" name="DOBInput" placeholder="YYYY-MM-DD"><br>
+                
+                <label for="cityInput">City:</label>
+                <input id="cityInput" type="text" name="cityInput"><br>
+
+                <label for="stateInput">State:</label>
+                <input id="stateInput" type="text" name="stateInput"><br>
+
+                <button type="submit">Register</button>
+            </form>
+           <a href="http://localhost:3000/login">Already have an account? Click here to log-in</a>
+        </div>
