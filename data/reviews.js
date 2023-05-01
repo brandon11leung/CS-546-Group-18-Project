@@ -1,7 +1,6 @@
 /* Luke Bianchi */
 import {reviews} from "./../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
-import * as userjs from './users.js';
 
 export const createReview = async (
     userFrom,

@@ -31,4 +31,11 @@ router.route('/listings').get(async (req, res) => {
         res.status(500).json({error: e});
     }});
 
+router.route('/transaction').get(async (req, res) => {
+    try {
+        res.render('transaction', {title: "Checkout", pic: 'public/images/Credit-Card-Logos-high-resolution.png'});
+    } catch (e) {
+        res.status(500).json({error: e});
+    }});
+
  export default router;
