@@ -45,3 +45,8 @@ h1{
   .btn-group button:hover {
     background-color: #520505;
   }
+
+  #creditCard {
+    width: 300px; 
+    height: auto;
+  }
