@@ -103,13 +103,14 @@ const validState = (state) => {
 
     state = state.trim().toUpperCase();
 
-    findNum = state.match(/[^a-zA-Z]+/g);
+    let findNum = state.match(/[^a-zA-Z]+/g);
     if (findNum !== null) {
         return false;
     }
 
     if (!stateArray.includes(state)) { return false; }
 
+    
     return true;
 
 }
