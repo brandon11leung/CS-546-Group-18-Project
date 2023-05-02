@@ -34,6 +34,12 @@ export const createReview = async (
     }
     reviewBody = reviewBody.trim();
 
+    //Check if user already reviewed person
+    const val = await checkIfAlrReviewed(userFrom, userAbout);
+    if (val === true) {
+      throw new Error('User already has reviewed this person');
+    }
+
     const newReview = {
         _id: new ObjectId(),
         userFrom: userFrom,
