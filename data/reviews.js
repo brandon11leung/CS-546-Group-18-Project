@@ -105,6 +105,23 @@ const removeReview = async (id) => {
     return `${deletionInfo.value.name} has been successfully deleted!`;
   };
 
+const checkIfAlrReviewed = async (from, about) => {
+    if (!from || !about) {
+      throw new Error ('needs from and about parameters');
+    }
+    if (typeof from !== "string" || !(from.replace(/\s/g, '').length)) {
+      throw new Error ('about must be a nonempty string');
+    }
+    if (typeof about !== "string" || !(about.replace(/\s/g, '').length)) {
+      throw new Error ('about must be a nonempty string');
+    }
+    from = from.trim();
+    about = about.trim();
+    if (!ObjectId.isValid(from)) throw 'invalid object ID';
+    if (!ObjectId.isValid(about)) throw 'invalid object ID';
+    const reviewCollection = await reviews();
+}
 
 
-export default {createReview, getReview, getAllReviews, removeReview}
+
+export default {createReview, getReview, getAllReviews, removeReview, checkIfAlrReviewed}
