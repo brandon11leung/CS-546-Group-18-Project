@@ -11,7 +11,7 @@ import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 import timestamp from "time-stamp";
 
-export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, shippingPrice, shippingMethods, description, returnPolicy, rejectionOfferValue, currency) => {
+export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
 	posterId = helpers.isValidID(posterId);
     title = helpers.isValidString(title);
 	listingType = helpers.isValidString(listingType);
@@ -29,14 +29,12 @@ export const create = async (posterId, title, listingType, mainCondition, second
     description = helpers.isValidString(description);
     currency = helpers.isValidString(currency);
 	
-    if (listingType == "Sell") {
-        helpers.isValidArray(attachments);
-        returnPolicy = helpers.isValidString(returnPolicy);
-        helpers.isValidPrice(shippingPrice);
-    } else {
-        attachments = null;
-        returnPolicy = null;
-        shippingPrice = null;
+    helpers.isValidArray(attachments);
+    returnPolicy = helpers.isValidString(returnPolicy);
+    helpers.isValidPrice(shippingPrice);
+
+    if (listingType == "Buy") {
+        shippingPrice = 0;
     }
 
 	let newListing = {
@@ -96,7 +94,7 @@ export const remove = async (id) => {
 	return `${deletionInfo.value.name} has been successfully deleted!`;
 };
 
-export const update = async (id, open, title, listingType, mainCondition, secondaryCondition, price, attachments, shippingPrice, shippingMethods, description, returnPolicy, rejectionOfferValue, currency) => {
+export const update = async (id, open, title, listingType, mainCondition, secondaryCondition, price, attachments, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
 	if (typeof(open) !== "boolean") {throw new Error("Error: invalid open type.")}
 	id = helpers.isValidID(id);
     title = helpers.isValidString(title);
@@ -119,14 +117,11 @@ export const update = async (id, open, title, listingType, mainCondition, second
     const listingCollection = await listings();
     const originalInfo = await listingCollection.findOne({_id: new ObjectId(id)});
     console.log(originalInfo)
-    if (originalInfo.listingType == "Sell") {
-        helpers.isValidArray(attachments);
-        returnPolicy = helpers.isValidString(returnPolicy);
-        helpers.isValidPrice(shippingPrice);
-    } else {
-        attachments = null;
-        returnPolicy = null;
-        shippingPrice = null;
+    helpers.isValidArray(attachments);
+    returnPolicy = helpers.isValidString(returnPolicy);
+    helpers.isValidPrice(shippingPrice);
+    if (originalInfo.listingType.toLowerCase() == "buy") {
+        shippingPrice = 0;
     }
 
 	const updatedListing = {
@@ -141,7 +136,6 @@ export const update = async (id, open, title, listingType, mainCondition, second
 		shippingMethods: shippingMethods,
 		description: description,
 		returnPolicy: returnPolicy,
-		rejectionOfferValue: rejectionOfferValue,
 		currency: currency
 	};
 	const updatedInfo = await listingCollection.findOneAndUpdate(
