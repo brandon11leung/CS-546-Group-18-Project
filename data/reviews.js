@@ -120,8 +120,17 @@ const checkIfAlrReviewed = async (from, about) => {
     if (!ObjectId.isValid(from)) throw 'invalid object ID';
     if (!ObjectId.isValid(about)) throw 'invalid object ID';
     const reviewCollection = await reviews();
-}
+    let reviewList = await reviewCollection.find({}).toArray();
+    // console.log(reviewList);
 
+    let found = false;
+    reviewList.forEach(review => {
+      if (from === review.userFrom && about === review.userAbout) {
+        found = true;
+      };
+    })
+    return found;
+}
 
 
 export default {createReview, getReview, getAllReviews, removeReview, checkIfAlrReviewed}
