@@ -70,7 +70,7 @@ export const createUser = async (
   
     //Check password
     if ((!(password.replace(/\s/g, '').length)) || (password.length < 8)) {
-      throw new Error ('invalid password');
+      throw new Error ('invalid password'); 
     }
     
     let upper = /[A-Z]/;
