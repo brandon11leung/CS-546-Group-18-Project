@@ -1,3 +1,4 @@
+let letters = /[A-Za-z]/;
 let upper = /[A-Z]/;
 let nums = /\d/;
 let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
@@ -8,6 +9,9 @@ const validUsername = (username) => {
        return false;
     }
 
+    if (username.includes(' ')) { return false; }
+
+    if (!letters.test(username)) { return false; }
     return true;
 }
 
@@ -28,20 +32,26 @@ const validPassword = (password) => {
 
 
 
-let form = document.getElementById('user-form');
+let form = document.getElementById('login-form');
 let username = document.getElementById('usernameInput');
 let password = document.getElementById('passwordInput');
 
+let errorUsername = document.getElementById('errorUsername');
+let errorPassword = document.getElementById('errorPassword');
 
 if (form) {
     form.addEventListener('submit', (event) => {
+        errorUsername.hidden = true;
+        errorPassword.hidden = true;
         if (!validUsername(username.value)) {
             event.preventDefault();
-            errorEmail.innerHTML = 'Username must be at least six characters and contain at least one letter and no spaces.';
+            errorUsername.hidden = false;
+            errorUsername.innerHTML = 'Username must be at least six characters and contain at least one letter and no spaces.';
         }
 
         if (!validPassword(password.value)) {
             event.preventDefault();
+            errorPassword.hidden = false;
             errorPassword.innerHTML = 'Password must contain at least eight characters, have at least one uppercase letter, at least one number, and at least one special character. No spaces.';
         }
     });

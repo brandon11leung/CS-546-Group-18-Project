@@ -69,6 +69,8 @@ export const validUsername = (username) => {
 
     if (!letters.test(username)) { return false; }
 
+    if (username.includes(' ')) { return false; }
+
     return true;
 }
 

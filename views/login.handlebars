@@ -1,6 +1,6 @@
 <h1>User login</h1>
         <div id="error">
-            <p></p>
+            <p>{{error}}</p>
         </div>
         <div>
             <form action="/login" method="POST" id="login-form">
@@ -12,3 +12,7 @@
             </form>
             <a href="http://localhost:3000/signup">Click here to register!</a>
         </div>
+<p id="errorUsername" hidden></p>
+<p id="errorPassword" hidden></p>
+
+<script src = '../public/js/loginCheck.js'></script>
