@@ -46,6 +46,14 @@ router.route('/signup').get(async (req, res) => {
     }
 });
 
+router.route('/login').get(async (req, res) => {
+    try {
+        res.render('login', {title: 'Login'})
+    } catch (e) {
+        res.status(500).json({error: e});
+    }
+})
+
 router.route('/transaction').get(async (req, res) => {
     try {
         res.render('transaction', {title: "Checkout", pic: 'public/images/Credit-Card-Logos-high-resolution.png'});
