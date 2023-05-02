@@ -8,7 +8,7 @@
         "start": "node app.js",
         "seed": "node seed.js",
         "test": "echo \"Error: no test specified\" && exit 1"
-    }, 
+    },
     "contributors": [
         {
             "name": "Luke Bianchi"

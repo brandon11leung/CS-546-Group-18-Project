@@ -1,4 +1,5 @@
 let upper = /[A-Z]/;
+let letters = /[A-Za-z]/;
 let nums = /\d/;
 let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
@@ -41,10 +42,10 @@ const validEmail = (email) => {
         return false;
     }
 
-    let index = emailAddress.indexOf('@');
-    if (emailAddress[index+1] === '.') {
-        return false;
-    }
+    // let index = emailAddress.indexOf('@');
+    // if (emailAddress[index+1] === '.') {
+    //     return false;
+    // }
 
     return true;
 } 
@@ -55,6 +56,8 @@ const validUsername = (username) => {
     if ((typeof username !== "string") || (!(username.replace(/\s/g, '').length) || username.trim().length < 6)) {
        return false;
     }
+
+    if (!letters.test(username)) { return false; }
 
     return true;
 }
@@ -121,7 +124,7 @@ let emailAddress = document.getElementById('emailAddressInput');
 let username = document.getElementById('usernameInput');
 let password = document.getElementById('passwordInput');
 let confirmPassword = document.getElementById('confirmPasswordInput');
-let city = document.getElementById('firstNameInput');
+let city = document.getElementById('cityInput');
 let state = document.getElementById('stateInput');
 
 
@@ -141,44 +144,64 @@ let errorState = document.getElementById('errorState');
 
 
 if (form) {
+    
+
     form.addEventListener('submit', (event) => {
+
+        errorFirstName.hidden = true;
+        errorLastName.hidden = true;
+        errorEmail.hidden = true;
+        errorUsername.hidden = true;
+        errorPassword.hidden = true;
+        errorConfirm.hidden = true;
+        errorCity.hidden = true;
+        errorState.hidden = true;
+
         if (!validName(firstName.value)) {
             event.preventDefault();
+            errorFirstName.hidden = false;
             errorFirstName.innerHTML = 'First name must be between 2 and 25 characters, only letters and no spaces.';
         }
 
         if (!validName(lastName.value)) {
             event.preventDefault();
+            errorLastName.hidden = false;
             errorLastName.innerHTML = 'Last name must be between 2 and 25 characters, only letters and no spaces.';
         }
 
         if (!validEmail(emailAddress.value)) {
             event.preventDefault();
+            errorEmail.hidden = false;
             errorEmail.innerHTML = 'Email must be in email format and contain a valid prefix and domain.';
         }
 
         if (!validUsername(username.value)) {
             event.preventDefault();
-            errorEmail.innerHTML = 'Username must be at least six characters and contain at least one letter and no spaces.';
+            errorUsername.hidden = false;
+            errorUsername.innerHTML = 'Username must be at least six characters and contain at least one letter and no spaces.';
         }
 
         if (!validPassword(password.value)) {
             event.preventDefault();
+            errorPassword.hidden = false;
             errorPassword.innerHTML = 'Password must contain at least eight characters, have at least one uppercase letter, at least one number, and at least one special character. No spaces.';
         }
 
         if (password.value !== confirmPassword.value) {
             event.preventDefault();
+            errorConfirm.hidden = false;
             errorConfirm.innerHTML = 'Both password fields must match.'
         }
 
         if (!validCity(city.value)) {
             event.preventDefault();
+            errorCity.hidden = false;
             errorCity.innerHTML = 'City must contain at least two characters and cannot contain numbers or special characters.'
         }
 
         if (!validState(state.value)) {
             event.preventDefault();
+            errorState.hidden = false;
             errorState.innerHTML = 'State must be a valid abbreviated state.'
         }
     

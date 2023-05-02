@@ -28,6 +28,10 @@ export const createReview = async (
     }
     userFrom = userFrom.trim();
     userAbout = userAbout.trim();
+
+    if (reviewBody.length < 50 || reviewBody.length > 1500) {
+      throw new Error ('Ratin')
+    }
     reviewBody = reviewBody.trim();
 
     const newReview = {
@@ -100,5 +104,7 @@ const removeReview = async (id) => {
     }
     return `${deletionInfo.value.name} has been successfully deleted!`;
   };
+
+
 
 export default {createReview, getReview, getAllReviews, removeReview}

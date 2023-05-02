@@ -33,12 +33,17 @@ router.route('/listings').get(async (req, res) => {
 
 router.route('/signup').get(async (req, res) => {
     try {
-
+        res.render('createAccount', {title: 'Create an Account'})
     } catch (e) {
         res.status(500).json({error: e});
     }
-
-
+})
+.post(async (req, res) => {
+    try {
+        res.status(200).json({key: 'Post request hit'})
+    } catch (e) {
+        res.status(500).json({error: e});
+    }
 });
 
 router.route('/transaction').get(async (req, res) => {
