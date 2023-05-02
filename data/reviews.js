@@ -34,6 +34,12 @@ export const createReview = async (
     }
     reviewBody = reviewBody.trim();
 
+    //Check if user already reviewed person
+    const val = await checkIfAlrReviewed(userFrom, userAbout);
+    if (val === true) {
+      throw new Error('User already has reviewed this person');
+    }
+
     const newReview = {
         _id: new ObjectId(),
         userFrom: userFrom,
@@ -105,6 +111,32 @@ const removeReview = async (id) => {
     return `${deletionInfo.value.name} has been successfully deleted!`;
   };
 
+const checkIfAlrReviewed = async (from, about) => {
+    if (!from || !about) {
+      throw new Error ('needs from and about parameters');
+    }
+    if (typeof from !== "string" || !(from.replace(/\s/g, '').length)) {
+      throw new Error ('about must be a nonempty string');
+    }
+    if (typeof about !== "string" || !(about.replace(/\s/g, '').length)) {
+      throw new Error ('about must be a nonempty string');
+    }
+    from = from.trim();
+    about = about.trim();
+    if (!ObjectId.isValid(from)) throw 'invalid object ID';
+    if (!ObjectId.isValid(about)) throw 'invalid object ID';
+    const reviewCollection = await reviews();
+    let reviewList = await reviewCollection.find({}).toArray();
+    // console.log(reviewList);
+
+    let found = false;
+    reviewList.forEach(review => {
+      if (from === review.userFrom && about === review.userAbout) {
+        found = true;
+      };
+    })
+    return found;
+}
 
 
-export default {createReview, getReview, getAllReviews, removeReview}
+export default {createReview, getReview, getAllReviews, removeReview, checkIfAlrReviewed}

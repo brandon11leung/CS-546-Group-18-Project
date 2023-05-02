@@ -377,6 +377,17 @@ try {
 
 console.log("\n\n-----------\n\n");
 
+
+console.log("Start seeding Reviews");
+//Working example
+try {
+    const goodReview = await (reviews.createReview('64518a9e9046cbbd433f633c', '64518a9d9046cbbd433f633b', 'This is a test Review. This is a test Review. This is a test Review. This is a test Review', 5));
+    console.log(goodReview);
+} catch(e) {
+    console.log(e);
+}
+
+
 console.log('Done seeding database');
 
 await closeConnection();
