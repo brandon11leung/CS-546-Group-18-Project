@@ -34,6 +34,12 @@ export const createReview = async (
     }
     reviewBody = reviewBody.trim();
 
+    //Check if user already reviewed person
+    const val = await checkIfAlrReviewed(userFrom, userAbout);
+    if (val === true) {
+      throw new Error('User already has reviewed this person');
+    }
+
     const newReview = {
         _id: new ObjectId(),
         userFrom: userFrom,
@@ -120,8 +126,17 @@ const checkIfAlrReviewed = async (from, about) => {
     if (!ObjectId.isValid(from)) throw 'invalid object ID';
     if (!ObjectId.isValid(about)) throw 'invalid object ID';
     const reviewCollection = await reviews();
-}
+    let reviewList = await reviewCollection.find({}).toArray();
+    // console.log(reviewList);
 
+    let found = false;
+    reviewList.forEach(review => {
+      if (from === review.userFrom && about === review.userAbout) {
+        found = true;
+      };
+    })
+    return found;
+}
 
 
 export default {createReview, getReview, getAllReviews, removeReview, checkIfAlrReviewed}
