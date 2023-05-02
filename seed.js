@@ -1,6 +1,7 @@
 
 import {dbConnection, closeConnection} from './config/mongoConnection.js';
 import * as users from './data/users.js'
+import * as listings from './data/listings.js'
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -325,6 +326,21 @@ try {
     const validUser = console.log(await users.checkUser("  LMUHNICK@STEVENS.EDU   ", "Stevens997*"))
 } catch (e) {
     console.log(e.message);
+}
+
+
+try {
+    const validListing = await listings.create("644ff220e48b8901e0211642", "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 165, ["image0.png", "image1.png"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", 140, "USD")
+    const validListing2 = await listings.create("644ff220e48b8901e0211642", "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["image0.png", "image1.png"], 0, ["USPS Priority"], "Looking for a clean copy of this game CIB", "No returns", 260, "USD")
+
+    const ssID = validListing._id.toString();
+    console.log("get\n")
+    console.log(await listings.get(ssID))
+    console.log(await listings.update(ssID, true, "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 185, ["image0.png", "image1.png"], 10, ["USPS Priority"], "Good condition copy.", "No returns", 140, "USD"))
+    console.log("getAll\n")
+    console.log(await listings.getAll())
+} catch (e) {
+    console.log(e)
 }
 
 
