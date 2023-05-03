@@ -50,3 +50,35 @@ h1{
     width: 300px; 
     height: auto;
   }
+
+  ul li {
+    border: 1px solid rgb(0, 0, 0);
+    display: inline-block;
+    position: absolute;
+  }
+
+.items {
+  background-color: #8b0806;
+  border: 15px #8b0806;
+  display: inline-block;
+  padding: 50px;
+  margin: 20px;
+}
+
+.listing {
+  list-style-type: none;
+}
+
+.item {
+  font-size: 150%;
+  color: rgb(255, 255, 255);
+}
+
+.itemName {
+  font-size: 150%;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  text-decoration: solid; 
+  text-decoration: underline;
+  text-shadow: 2px 2px 2px rgb(26, 25, 25);
+}
