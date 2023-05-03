@@ -8,29 +8,26 @@
         </div>
         <div>
             <form method="POST" id="registration-form" action="">
-                <label for="TitleInput">Enter Listing Title:</label>
+                <label for="TitleInput">Listing Title:</label>
                 <input id="TitleInput" type="text" name="TitleInput"><br>
 
-                <label for="conditionInput">Enter Listing's Condition:</label>
+                <label for="conditionInput">Listing's Condition:</label>
                 <input id="conditionInput" type="text" name="conditionInput"><br>
                 
-                <label for="priceInput">Enter Price:</label>
+                <label for="priceInput">Price:</label>
                 <input id="priceInput" type="number" name="priceInput"><br>
 
-                <label for="shippingPriceInput">Enter Shipping Price:</label>
+                <label for="shippingPriceInput">Shipping Price:</label>
                 <input id="shippingPriceInput" type="number" name="shippingPriceInput"><br>
                 
                 <label for="descriptionInput">Description:</label>
-                <textarea id="descriptionInput" type="text" name="descriptionInput"><br>
+                <textarea id="descriptionInput" type="text" name="descriptionInput"></textarea><br>
 
                 <label for="returnPolicyInput">Return Policy:</label>
-                <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"><br>
+                <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"></textarea><br>
 
-                <label for="roleInput">Choose a Listing type: </label>
-                <select id="roleInput" name="roleInput">
-                    <option value="Sell">Sell</option>
-                    <option value="Trade">Trade</option>
-                </select>
+                <label for="imageInput">Submit images here:</label>
+                <input type="file" id="imageInput" name="imageInput" multiple><br><br>
 
                 <button type="submit">Register</button>
             </form>

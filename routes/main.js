@@ -98,7 +98,8 @@ router.route('/login').get(async (req, res) => {
 
     try {
         const authenticated = await users.checkUser(req.body.emailAddressInput, req.body.passwordInput);
-        res.render('createListing', {title: 'Create Listing'});
+        req.session.user = {firstName: authenticated.firstName, lastName: authenticated.lastName, emailAddress: authenticated.emailAddress, username: authenticated.username};
+        res.redirect('/');
     } catch (e) {
         console.log(e.message);
         res.status(500).render('login', {title: 'Login', error: 'Either the email or password are incorrect'})
@@ -108,6 +109,13 @@ router.route('/login').get(async (req, res) => {
 router.route('/transaction').get(async (req, res) => {
     try {
         res.render('transaction', {title: "Checkout", pic: 'public/images/Credit-Card-Logos-high-resolution.png'});
+    } catch (e) {
+        res.status(500).json({error: e});
+    }});
+
+router.route('/createListing').get(async (req, res) => {
+    try {
+        res.render('createListing', {title: 'Create a Lisitng'});
     } catch (e) {
         res.status(500).json({error: e});
     }});
