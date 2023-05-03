@@ -262,7 +262,7 @@ export const checkUser = async (emailAddress, password) => {
     }
   
     if (compareToMatch) {
-      return [userro.firstName, userro.lastName, userro.emailAddress, userro.password];
+      return [userro.firstName, userro.lastName, userro.emailAddress, userro.password, userro.username, userro._id];
     } else {
       throw new Error ('Either the email address or password is invalid');
     }

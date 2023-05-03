@@ -1,4 +1,13 @@
 <h1>Listings Station</h1>
-    <p>
-        Listings Will Go Here and there will be forms for filters and everything like that
-    </p> 
+    {{#each listings}}
+                <div class="items">
+                <h2 class="itemName">Item: {{title}}</h2>
+                <p class="item">Condition: {{mainCondition}}</p>
+                <p class="item">description: {{description}}</p>
+                <p class="item">Price: ${{price}}</p>
+                <P class="item">Shipping: ${{shippingPrice}}</P>
+                <p class="item">Last time updated: {{timeStampUpdated}}</p>
+                <button onclick="window.location.href = 'http://localhost:3000/listinga/{{_id}}'">More Details</button>
+                </div>
+                
+    {{/each}}
