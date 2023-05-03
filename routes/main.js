@@ -34,19 +34,12 @@ router.route('/listings').get(async (req, res) => {
 
 router.route('/signup').get(async (req, res) => {
     try {
-        res.render('createAccount', {title: 'Create an Account'})
+        res.render('createAccount', {title: 'Create an Account'});
     } catch (e) {
         res.status(500).json({error: e});
     }
 })
 .post(async (req, res) => {
-    // try {
-    //     res.status(200).json({key: 'Post request hit'})
-    // } catch (e) {
-    //     res.status(500).json({error: e});
-    // }
-
-    
     if (!helpers.validName(req.body.firstNameInput)) {
         res.status(400).render('createAccount', {title: 'Create an Account', error: 'Invalid first name'});
     }
@@ -77,7 +70,7 @@ router.route('/signup').get(async (req, res) => {
 
     console.log(req.body.DOBInput);
     console.log(typeof req.body.DOBInput);
-    
+
     try {
         await users.createUser(req.body.firstNameInput, req.body.lastNameInput, req.body.emailAddressInput, req.body.usernameInput, req.body.DOBInput, req.body.passwordInput, req.body.cityInput, req.body.stateInput);
         res.redirect('/login');
@@ -94,7 +87,23 @@ router.route('/login').get(async (req, res) => {
     } catch (e) {
         res.status(500).json({error: e});
     }
-})
+}).post(async (req, res) => {
+    if (!helpers.validEmail(req.body.emailAddressInput)) {
+        res.status(400).render('login', {title: 'Login', error: 'Invalid email address'})
+    }
+
+    if (!helpers.validPassword(req.body.passwordInput)) {
+        res.status(400).render('login', {title: 'Login', error: 'Invalid password'})
+    }
+
+    try {
+        const authenticated = await users.checkUser(req.body.emailAddressInput, req.body.passwordInput);
+        res.render('createListing', {title: 'Create Listing'});
+    } catch (e) {
+        console.log(e.message);
+        res.status(500).render('login', {title: 'Login', error: 'Either the email or password are incorrect'})
+    }
+});
 
 router.route('/transaction').get(async (req, res) => {
     try {

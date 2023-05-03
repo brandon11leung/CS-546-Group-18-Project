@@ -3,19 +3,37 @@ let upper = /[A-Z]/;
 let nums = /\d/;
 let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-/* Valid username */
-const validUsername = (username) => {
-    if ((typeof username !== "string") || (!(username.replace(/\s/g, '').length) || username.trim().length < 6)) {
-       return false;
+
+const validEmail = (email) => {
+
+    if (typeof email !== 'string') { return false; }
+
+    email = email.trim().toLowerCase();
+
+    if (!email.includes('@')) {
+        return false;
     }
 
-    if (username.includes(' ')) { return false; }
+    if (email.includes(' ')) {
+        return false;
+    }
 
-    if (!letters.test(username)) { return false; }
+    if ((!email.endsWith('.com')) && (!email.endsWith('.edu')) && (!email.endsWith('.org')) && (!email.endsWith('.net')) && (!email.endsWith('.int')) && (!email.endsWith('.gov')) && (!email.endsWith('.mil'))) {
+        return false;
+    }
+
+    if (email[0] === '@') {
+        return false;
+    }
+
+    let index = email.indexOf('@');
+    if (email[index+1] === '.') {
+        return false;
+    }
+
     return true;
-}
+}  
 
-/* Valid password */
 const validPassword = (password) => {
     if (typeof password !== 'string') { return false; }
     //Check password
@@ -31,22 +49,23 @@ const validPassword = (password) => {
 }
 
 
-
 let form = document.getElementById('login-form');
-let username = document.getElementById('usernameInput');
+let email = document.getElementById('emailAddressInput');
 let password = document.getElementById('passwordInput');
 
-let errorUsername = document.getElementById('errorUsername');
+let errorEmail = document.getElementById('errorEmail');
 let errorPassword = document.getElementById('errorPassword');
+
+
 
 if (form) {
     form.addEventListener('submit', (event) => {
-        errorUsername.hidden = true;
+        errorEmail.hidden = true;
         errorPassword.hidden = true;
-        if (!validUsername(username.value)) {
+        if (!validEmail(email.value)) {
             event.preventDefault();
-            errorUsername.hidden = false;
-            errorUsername.innerHTML = 'Username must be at least six characters and contain at least one letter and no spaces.';
+            errorEmail.hidden = false;
+            errorEmail.innerHTML = 'Email must be in email address format, containing a valid prefix and domain.';
         }
 
         if (!validPassword(password.value)) {

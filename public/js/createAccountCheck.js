@@ -3,7 +3,7 @@ let letters = /[A-Za-z]/;
 let nums = /\d/;
 let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-/* Valid name */
+
 const validName = (name) => {
     if (typeof name !== 'string') { return false; }
 
@@ -16,15 +16,16 @@ const validName = (name) => {
         return false; 
     }
 
-    
     return true; /* Name is valid */
-
 }
+
 
 /* Valid email */
 const validEmail = (email) => {
 
     if (typeof email !== 'string') { return false; }
+
+    email = email.trim().toLowerCase();
 
     if (!email.includes('@')) {
         return false;
@@ -38,17 +39,17 @@ const validEmail = (email) => {
         return false;
     }
 
-    if (emailAddress[0] === '@') {
+    if (email[0] === '@') {
         return false;
     }
 
-    // let index = emailAddress.indexOf('@');
-    // if (emailAddress[index+1] === '.') {
-    //     return false;
-    // }
-
+    let index = email.indexOf('@');
+    if (email[index+1] === '.') {
+        return false;
+    }
+ 
     return true;
-} 
+}  
 
 
 /* Valid username */
@@ -58,6 +59,8 @@ const validUsername = (username) => {
     }
 
     if (!letters.test(username)) { return false; }
+
+    if (username.includes(' ')) { return false; }
 
     return true;
 }
@@ -78,6 +81,52 @@ const validPassword = (password) => {
     return true;
 }
 
+const validDOB = (dob) => {
+    if (typeof dob !== 'string') { return false; }
+
+    let splitDate = dob.split('-');
+    if (splitDate.length !== 3) { return false; }
+    
+
+    /* Parse arguments first */
+    let yearDate = parseInt(splitDate[0]);
+    let monthDate = parseInt(splitDate[1]);
+    let dayDate = parseInt(splitDate[2]);
+
+    /* Check ages */
+    if (yearDate < 1922 || yearDate > 2005) { return false; }
+
+    /* Then check months */
+    if (monthDate < 1 || monthDate > 12) { return false; }
+    let monthArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    /* ...don't forget leap years! */
+    if (monthDate === 2 && yearDate % 4 === 0) {
+      monthArr[monthDate - 1] = 29;
+    }
+
+    /* Check the days */
+    if (dayDate < 1 || dayDate > monthArr[monthDate - 1]) { return false; }
+
+    const currDate = new Date();
+    let currDay = currDate.getDate();
+    let currMonth = currDate.getMonth() + 1;
+
+    /* Edge cases */
+
+    if (yearDate === 1922) {
+      if ((monthDate === currMonth && dayDate <= currDay) || (monthDate < currMonth)) {
+        return false;
+      }
+    }
+    if (yearDate === 2005) {
+      if ((monthDate === currMonth && dayDate > currDay) || (monthDate > currMonth)) {
+        return false;
+      }
+    }
+
+    return true;
+}
 
 /* Valid city */
 const validCity = (city) => {
@@ -110,12 +159,9 @@ const validState = (state) => {
 
     if (!stateArray.includes(state)) { return false; }
 
-    
     return true;
-
-}
-
-
+ 
+} 
 
 let form = document.getElementById('registration-form');
 
@@ -125,6 +171,7 @@ let emailAddress = document.getElementById('emailAddressInput');
 let username = document.getElementById('usernameInput');
 let password = document.getElementById('passwordInput');
 let confirmPassword = document.getElementById('confirmPasswordInput');
+let dob = document.getElementById('DOBInput');
 let city = document.getElementById('cityInput');
 let state = document.getElementById('stateInput');
 
@@ -135,6 +182,7 @@ let errorEmail = document.getElementById('errorEmail');
 let errorUsername = document.getElementById('errorUsername');
 let errorPassword = document.getElementById('errorPassword');
 let errorConfirm = document.getElementById('errorConfirm');
+let errorDOB = document.getElementById('errorDOB');
 let errorCity = document.getElementById('errorCity');
 let errorState = document.getElementById('errorState');
 
@@ -155,6 +203,7 @@ if (form) {
         errorUsername.hidden = true;
         errorPassword.hidden = true;
         errorConfirm.hidden = true;
+        errorDOB.hidden = true;
         errorCity.hidden = true;
         errorState.hidden = true;
 
@@ -192,6 +241,12 @@ if (form) {
             event.preventDefault();
             errorConfirm.hidden = false;
             errorConfirm.innerHTML = 'Both password fields must match.'
+        }
+
+        if (!validDOB(dob.value)) {
+            event.preventDefault();
+            errorDOB.hidden = false;
+            errorDOB.innerHTML = 'Birthdays must be in valid range.'
         }
 
         if (!validCity(city.value)) {

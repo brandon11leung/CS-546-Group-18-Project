@@ -101,17 +101,50 @@ export const createUser = async (
       throw new Error ('Username is already associated with a user');
     }
 
-    //Check age
-    // let ageo = parseInt(age);
-    // if (ageo < 18 || ageo > 100) {
-    //     throw new Error ('age is invalid')
-    // }
+    if (typeof dob !== 'string') { throw new Error ('Date of birth must be a string'); }
 
-    // if (typeof dob !== 'string') { throw new Error ('Date of birth must be a string'); }
+    let splitDate = dob.split('-');
+    if (splitDate.length !== 3) { throw new Error ('Date of birth is in invalid format'); }
+    
 
-    // let splitDate = dob.split('-');
+    /* Parse arguments first */
+    let yearDate = parseInt(splitDate[0]);
+    let monthDate = parseInt(splitDate[1]);
+    let dayDate = parseInt(splitDate[2]);
 
-    // if (splitDate.length !== 3) { throw new Error ('Date of birth in invalid format'); }
+    /* Check ages */
+    if (yearDate < 1922 || yearDate > 2005) {
+      throw new Error ('Age must be between 18 and 100.')
+    }
+
+    /* Then check months */
+    if (monthDate < 1 || monthDate > 12) { throw new Error ('Invalid month'); }
+    let monthArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    /* ...don't forget leap years! */
+    if (monthDate === 2 && yearDate % 4 === 0) {
+      monthArr[monthDate - 1] = 29;
+    }
+
+    /* Check the days */
+    if (dayDate < 1 || dayDate > monthArr[monthDate - 1]) { throw new Error ('Invalid day'); }
+
+    const currDate = new Date();
+    let currDay = currDate.getDate();
+    let currMonth = currDate.getMonth() + 1;
+
+    /* Edge cases */
+
+    if (yearDate === 1922) {
+      if ((monthDate === currMonth && dayDate <= currDay) || (monthDate < currMonth)) {
+        throw new Error ('Age must be between 18 and 100.');
+      }
+    }
+    if (yearDate === 2005) {
+      if ((monthDate === currMonth && dayDate > currDay) || (monthDate > currMonth)) {
+        throw new Error ('Age must be between 18 and 100.');
+      }
+    }
 
     //Check city
     if ((typeof city !== "string") || (!(city.replace(/\s/g, '').length)) || (city.trim().length < 2)) {
@@ -150,7 +183,7 @@ export const createUser = async (
       firstName: firstName,
       lastName: lastName,
       emailAddress: emailAddress,
-      //dob: dob,
+      dob: dob,
       doc: doc,
       username: username,
       password: hash,
@@ -169,14 +202,13 @@ export const createUser = async (
       throw new Error ('Could not add user');
     }
   
-    return {insertedUser: true};
+    return await getUserById(insertInfo.insertedId.toString());
   };
   
 export const checkUser = async (emailAddress, password) => {
     if ((!emailAddress) || (!password)) {
       throw new Error ('All fields need to have valid values');
     }
-
     if (typeof emailAddress !== 'string' || typeof password !== 'string') {
       throw new Error ('Both parameters must be of type string');
     }
@@ -184,6 +216,7 @@ export const checkUser = async (emailAddress, password) => {
     emailAddress = emailAddress.toLowerCase();
     emailAddress = emailAddress.trim();
   
+
     //Check email
     if (!emailAddress.includes('@')) {
       throw new Error ('invalid email');
@@ -196,12 +229,12 @@ export const checkUser = async (emailAddress, password) => {
     }
     if (emailAddress[0] === '@') {
       throw new Error ('invalid email');
-    }
+    } 
     let index = emailAddress.indexOf('@');
     if (emailAddress[index+1] === '.') {
       throw new Error ('invalid email');
     }
-  
+    
     //Check password
     if ((typeof password !== 'string') || (!(password.replace(/\s/g, '').length)) || (password.length < 8)) {
       throw new Error ('invalid password');

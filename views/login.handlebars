@@ -4,15 +4,15 @@
         </div>
         <div>
             <form action="/login" method="POST" id="login-form">
-                <label for="usernameInput">Enter Your Username:</label>
-                <input id="usernameInput" type="text" name="usernameInput" ><br>
+                <label for="emailAddressInput">Enter Your Email:</label>
+                <input id="emailAddressInput" type="email" name="emailAddressInput" ><br>
                 <label for="passwordInput">Enter Your Password:</label>
                 <input id="passwordInput" type="password" name="passwordInput" ><br>
                 <button type="submit">Log in</button>
             </form>
             <a href="http://localhost:3000/signup">Click here to register!</a>
         </div>
-<p id="errorUsername" hidden></p>
+<p id="errorEmail" hidden></p>
 <p id="errorPassword" hidden></p>
 
 <script src = '../public/js/loginCheck.js'></script>

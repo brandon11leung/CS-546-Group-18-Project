@@ -36,6 +36,8 @@ export const validEmail = (email) => {
 
     if (typeof email !== 'string') { return false; }
 
+    email = email.trim().toLowerCase();
+
     if (!email.includes('@')) {
         return false;
     }
@@ -90,6 +92,52 @@ export const validPassword = (password) => {
     return true;
 }
 
+export const validDOB = (dob) => {
+    if (typeof dob !== 'string') { return false; }
+
+    let splitDate = dob.split('-');
+    if (splitDate.length !== 3) { return false; }
+    
+
+    /* Parse arguments first */
+    let yearDate = parseInt(splitDate[0]);
+    let monthDate = parseInt(splitDate[1]);
+    let dayDate = parseInt(splitDate[2]);
+
+    /* Check ages */
+    if (yearDate < 1922 || yearDate > 2005) { return false; }
+
+    /* Then check months */
+    if (monthDate < 1 || monthDate > 12) { return false; }
+    let monthArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    /* ...don't forget leap years! */
+    if (monthDate === 2 && yearDate % 4 === 0) {
+      monthArr[monthDate - 1] = 29;
+    }
+
+    /* Check the days */
+    if (dayDate < 1 || dayDate > monthArr[monthDate - 1]) { return false; }
+
+    const currDate = new Date();
+    let currDay = currDate.getDate();
+    let currMonth = currDate.getMonth() + 1;
+
+    /* Edge cases */
+
+    if (yearDate === 1922) {
+      if ((monthDate === currMonth && dayDate <= currDay) || (monthDate < currMonth)) {
+        return false;
+      }
+    }
+    if (yearDate === 2005) {
+      if ((monthDate === currMonth && dayDate > currDay) || (monthDate > currMonth)) {
+        return false;
+      }
+    }
+
+    return true;
+}
 
 /* Valid city */
 export const validCity = (city) => {
@@ -124,11 +172,7 @@ export const validState = (state) => {
 
     return true;
  
-}
-
-
-
-
+} 
 
 export const isValidString = (arg, argName) => { // Universal
     if (!isValidString) {throw new Error(`Error: the ${argName} parameter does not exist.`)}
