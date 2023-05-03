@@ -3,6 +3,7 @@ const router = Router();
 // import {userDataFunctions} from '../data/index.js';
 import * as helpers from '../helpers.js';
 import * as users from '../data/users.js'
+import * as listings from '../data/listings.js'
 
 router.route('/').get(async (req, res) => {
     try {
@@ -28,7 +29,8 @@ router.route('/account').get(async (req, res) => {
 
 router.route('/listings').get(async (req, res) => {
     try {
-        res.render('listings', {title: "Listings Station"});
+        let allListings = await listings.getAll(); 
+        res.render('listings', {title: "Listings Station",listings: allListings});
         } catch (e) {
         res.status(500).json({error: e});
     }});
