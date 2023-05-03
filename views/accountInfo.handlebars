@@ -1,4 +1,34 @@
-<h1>Your Account Information</h1>
-    <p>
-        Account Information Goes Here
-    </p>
+<h1>{{user.firstName}} {{user.lastName}}'s Account Information</h1>
+    <div>
+        <p>Full Name: {{user.firstName}} {{user.lastName}}</p>
+        <p>Email: {{user.emailAddress}}</p>
+        <p>Username: {{user.username}}</p>
+        <p>Date of Birth: {{user.dob}}</p>
+        <p>Date the account was created: {{user.doc}}</p>
+        <p>City: {{user.city}}</p>
+        <p>State: {{user.state}}</p>
+        <div>
+            <h3>Purchase History</h3>
+            <ul>
+        {{#each user.purchaseHistory}}
+            <li>
+                <p>Item: {{listingName}}</p>
+                <p>Price: {{price}}</p>
+            </li>
+        {{/each}}
+            </ul>
+            <h3>Sales History</h3>
+            <ul>
+        {{#each user.salesHistory}}
+            <li>
+                <p>Item: {{listingName}}</p>
+                <p>Price: {{price}}</p>
+            </li>
+        {{/each}}
+            </ul>
+        </div>
+        <h2>Overall Rating: {{user.overallRating}}</h2>
+    </div>
+    
+
+    <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/createListing'">Create Listing</button>
