@@ -20,7 +20,8 @@ router.route('/aboutUs').get(async (req, res) => {
 
 router.route('/account').get(async (req, res) => {
     try {
-        res.render('accountInfo', {title: "Account"});
+        let user = await users.getUserById(req.session.user.id);
+        res.render('accountInfo', {title: "Account", user: user});
         } catch (e) {
         res.status(500).json({error: e});
     }});
@@ -98,7 +99,7 @@ router.route('/login').get(async (req, res) => {
 
     try {
         const authenticated = await users.checkUser(req.body.emailAddressInput, req.body.passwordInput);
-        req.session.user = {firstName: authenticated.firstName, lastName: authenticated.lastName, emailAddress: authenticated.emailAddress, username: authenticated.username};
+        req.session.user = {firstName: authenticated[0], lastName: authenticated[1], emailAddress: authenticated[2], username: authenticated[4], id: authenticated[5]};
         res.redirect('/');
     } catch (e) {
         console.log(e.message);
