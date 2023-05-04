@@ -164,7 +164,7 @@ if (form) {
 
         //Check State
         if (state === 'Select a state') {
-            error = 'Error: Select a state'
+            error = 'Error: Select a state';
             errorState.hidden = false;
             errorState.innerHTML = error;
         }

@@ -376,17 +376,20 @@ try {
     console.log(e.message);
 }
 
+
+const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
+const goodComment2 = console.log(await comments.createComment(validListing2._id.toString(), ark._id.toString(), "I never heard of this game before. It looks really good though."));
+
+console.log("\n---REMOVE ONE COMMENT---");
+
+console.log(goodComment.listingId);
 try {
-    const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
+    const removeComment = console.log(await comments.removeComment(validListing._id.toString(), goodComment._id.toString()));
 } catch (e) {
     console.log(e.message);
 }
 
-try {
-    const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
-} catch (e) {
-    console.log(e.message);
-}
+
 
 console.log("\n\n-----INSERTING REVIEWS-----\n\n");
 //Working example
@@ -396,6 +399,8 @@ try {
 } catch(e) {
     console.log(e.message);
 }
+
+
 
 
 console.log('Done seeding database');

@@ -118,7 +118,7 @@ router.route('/transaction').get(async (req, res) => {
 
 router.route('/createListing').get(async (req, res) => {
     try {
-        res.render('createListing', {title: 'Create a Lisitng'});
+        res.render('createListing', {title: 'Create a Listing'});
     } catch (e) {
         res.status(500).json({error: e});
     }});
