@@ -32,6 +32,24 @@ app.use('/account',async (req, res, next) => {
   }
 });
 
+app.use('/signup', async (req, res, next) => {
+  if (req.session.user) {
+    res.redirect('/listings');
+  } else {
+    next();
+  }
+})
+
+app.use('/login', async (req, res, next) => {
+  if (req.session.user) {
+    res.redirect('/listings');
+  } else {
+    next();
+  }
+})
+
+
+
 configRoutes(app);
 
 app.listen(3000, () => {
