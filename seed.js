@@ -3,6 +3,7 @@ import {dbConnection, closeConnection} from './config/mongoConnection.js';
 import * as users from './data/users.js'
 import * as listings from './data/listings.js'
 import * as reviews from './data/reviews.js'
+import * as comments from './data/comments.js'
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -235,23 +236,15 @@ try {
 console.log("\n\n---END OF PARAMETER CHECKING FOR CREATE USER---\n\n");
 console.log("\n---BEGINNING SEEDING PROCESS FOR CREATE USER---\n");
 
-try {
-    const luke = console.log(await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002-06-02", "Stevens997*", "Cranford", "NJ"));
-} catch (e) {
-    console.log(e.message);
-}
 
-try {
-    const patrick = console.log(await users.createUser(" Patrick    ", " Hill ", " phill@stevens.edu", " phill1 ", "1975-01-01", "1ErrorCheck!", "Vernon", "NJ"));
-} catch (e) {
-    console.log(e.message);
-}
+const luke = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002-06-02", "Stevens997*", "Cranford", "NJ");
+console.log(luke);
 
-try {
-    const ark = console.log(await users.createUser("Arkansas", "Apprentice", "aapp1123@gmail.com", " arkman", "2004-02-06", "passWord'56", "Little Rock", "AR"));
-} catch (e) {
-    console.log(e.message);
-}
+const patrick = await users.createUser(" Patrick    ", " Hill ", " phill@stevens.edu", " phill1 ", "1975-01-01", "1ErrorCheck!", "Vernon", "NJ");
+console.log(patrick);
+
+const ark = await users.createUser("Arkansas", "Apprentice", "aapp1123@gmail.com", " arkman", "2004-02-06", "passWord'56", "Little Rock", "AR");
+console.log(ark);
 
 try {
     const mrKing = console.log(await users.createUser("mister", "king", " 1coolkid!@gmail.com", " notanarcissist1 ", "2002-04-29", "'yeehaW123", "San Francisco " , "CA"));
@@ -352,10 +345,11 @@ try {
 }
 
 
-try {
-    const validListing = await listings.create("644ff220e48b8901e0211642", "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 165, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD")
-    const validListing2 = await listings.create("644ff220e48b8901e0211642", "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD")
 
+const validListing = await listings.create("644ff220e48b8901e0211642", "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 165, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD")
+const validListing2 = await listings.create("644ff220e48b8901e0211642", "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD");
+
+try {
     const ssID = validListing._id.toString();
     console.log("get\n")
     console.log(await listings.get(ssID))
@@ -363,20 +357,44 @@ try {
     console.log("getAll\n")
     console.log(await listings.getAll())
 } catch (e) {
-    console.log(e)
+    console.log(e.message)
 }
 
 
-console.log("\n\n-----------\n\n");
+console.log("\n\n-----INSERTING COMMENTS------\n\n");
 
 
-console.log("Start seeding Reviews");
+try {
+    const noParams = await comments.createComment();
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const badId = await comments.createComment(validListing._id.toString(), '100', "I'm going to try and break this");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
+} catch (e) {
+    console.log(e.message);
+}
+
+console.log("\n\n-----INSERTING REVIEWS-----\n\n");
 //Working example
 try {
     const goodReview = await (reviews.createReview('64518a9e9046cbbd433f633c', '64518a9d9046cbbd433f633b', 'This is a test Review. This is a test Review. This is a test Review. This is a test Review', 5));
     console.log(goodReview);
 } catch(e) {
-    console.log(e);
+    console.log(e.message);
 }
 
 
