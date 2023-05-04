@@ -1,0 +1,22 @@
+<h1>{{listings.title}}</h1>  
+{{#each listings.attachments}}
+    <img alt="img" src="{{this}}">
+{{/each}}              
+<p >Condition: {{listings.mainCondition}}</p>
+<p >Description: {{listings.description}}</p>
+<p >Price: ${{listings.price}}</p>
+<P >Shipping: ${{listings.shippingPrice}}</P>
+<p >Return Policy: {{listings.returnPolicy}}</p>
+<p >Last time updated: {{listings.timeStampUpdated}}</p><br>
+
+
+{{#if listings.comments}}
+    <h3>Comments</h3>
+    {{#each listings.comments}}
+        <p >Username: {{this.content}}</p>
+    {{/each}}
+{{else}}
+    <h3>No Comments</h3>
+{{/if}}
+
+                        
