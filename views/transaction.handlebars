@@ -77,21 +77,8 @@
       <option value="US">United States</option>
     </select>
     <br>
-    <input type="submit" value="Approve Address">
-</form>
-<p id="errorName" hidden></p>
-<p id="errorEmail" hidden></p>
-<p id="errorAddress" hidden></p>
-<p id="errorCity" hidden></p>
-<p id="errorZip" hidden></p>
-<p id="errorCountry" hidden></p>
-<p id="errorMissings" hidden></p>
-<p id="errorState" hidden></p>
 
-<br>
-
-<h3>Credit Card Information:</h3>
-<form action="/transaction" method="POST" id="payment-form">
+    <h3>Credit Card Information:</h3>
     <label for="cardholder">Cardholder Name:</label>
     <input type="text" id="cardholder" name="cardholder" required>
     <br>
@@ -104,8 +91,19 @@
     <label for="cvv">CVV:</label>
     <input type="number" id="cvv" name="cvv" required>
     <br>
-    <input type="submit" value="Submit Payment">
+    <input type="submit" value="Place Order!">
 </form>
+<p id="errorName" hidden></p>
+<p id="errorEmail" hidden></p>
+<p id="errorAddress" hidden></p>
+<p id="errorCity" hidden></p>
+<p id="errorZip" hidden></p>
+<p id="errorCountry" hidden></p>
+<p id="errorMissings" hidden></p>
+<p id="errorState" hidden></p>
+
+<br>
+
 <p id="errorCardholder" hidden></p>
 <p id="errorCardnumber" hidden></p>
 <p id="errorExpiration" hidden></p>

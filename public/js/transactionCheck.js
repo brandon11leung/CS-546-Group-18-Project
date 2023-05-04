@@ -46,6 +46,11 @@ let errorZip = document.getElementById('errorZip');
 let errorCountry = document.getElementById('errorCountry');
 let errorMissings = document.getElementById('errorMissings');
 
+let errorCardholder = document.getElementById('errorCardholder');
+let errorCardnumber = document.getElementById('errorCardnumber');
+let errorExpiration = document.getElementById('errorExpiration');
+let errorCvv = document.getElementById('errorCvv');
+
 if (form) {
     form.addEventListener('submit', (event) => {
         let name = document.getElementById('name');
@@ -56,6 +61,7 @@ if (form) {
         let zip = document.getElementById('zip');
         let country = document.getElementById('country');
         let error;
+        let thereIsAnError = false;
 
         errorName.hidden = true;
         errorEmail.hidden = true;
@@ -72,35 +78,25 @@ if (form) {
         country = country.value
         state = state.value;
 
+        let cardholder = document.getElementById('cardholder');
+        let cardnumber = document.getElementById('cardnumber');
+        let expiration = document.getElementById('expiration');
+        let cvv = document.getElementById('cvv');
+
+        errorCardholder.hidden = true;
+        errorCardnumber.hidden = true;
+        errorExpiration.hidden = true;
+        errorCvv.hidden = true;
+
+        cardholder = cardholder.value.trim();
+        cardnumber = cardnumber.value.trim();
+        expiration = expiration.value.trim();
+        cvv = cvv.value.trim();
+
         event.preventDefault();
 
-        if (!validEmail(email)) {
-            errorEmail.hidden = false;
-            errorEmail.innerHTML = 'Error: Email must be in email address format, containing a valid prefix and domain.';
-        }
-
-        //Check Name
-        if ((!(name.replace(/\s/g, '').length)) || (name.length < 2) || (name.length > 25)) {
-            error = 'Error: Name either an empty space(s) or does not meet the length specifications'
-            errorName.hidden = false;
-            errorName.innerHTML = error;
-        }
-        let findNum = name.match(/[^a-zA-Z\s]+/g);
-        if (findNum !== null) {
-            error = 'Error: Name contains a number or special character'
-            errorName.hidden = false;
-            errorName.innerHTML = error;
-        }
-
-        //Check country
-        if (country === 'Select a country') {
-            error = 'Error: Select a country'
-            errorCountry.hidden = false;
-            errorCountry.innerHTML = error;
-        }
-
         //Check missings
-        let notThere = {name: false, email: false, address: false, city: false, zip: false}
+        let notThere = {name: false, email: false, address: false, city: false, zip: false, cardholder: false, cardnumber: false, expiration: false, cvv: false}
         if (name === '') {
             notThere.name = true;
         }
@@ -116,6 +112,18 @@ if (form) {
         if (zip === '') {
             notThere.zip = true;
         }
+        if (cardholder === '') {
+            notThere.cardholder = true;
+        }
+        if (cardnumber === '') {
+            notThere.cardnumber = true;
+        }
+        if (expiration === '') {
+            notThere.expiration = true;
+        }
+        if (cvv === '') {
+            notThere.cvv = true;
+        }
         error = 'Error the following fields are missing: ';
         let errorHelp2 = false;
         for (let key in notThere) {
@@ -128,19 +136,60 @@ if (form) {
         if (errorHelp2) {
             errorMissings.hidden = false;
             errorMissings.innerHTML = error;
+            thereIsAnError = true;
+        }
+
+        //Check email
+        if (!validEmail(email)) {
+            errorEmail.hidden = false;
+            errorEmail.innerHTML = 'Error: Email must be in email address format, containing a valid prefix and domain.';
+            thereIsAnError = true;
+        }
+
+        //Check Name
+        if ((!(name.replace(/\s/g, '').length)) || (name.length < 2) || (name.length > 25)) {
+            error = 'Error: Name either an empty space(s) or does not meet the length specifications'
+            errorName.hidden = false;
+            errorName.innerHTML = error;
+            thereIsAnError = true;
+        }
+        let findNum1 = name.match(/[^a-zA-Z\s]+/g);
+        if (findNum1 !== null) {
+            error = 'Error: Name contains a number or special character'
+            errorName.hidden = false;
+            errorName.innerHTML = error;
+            thereIsAnError = true;
+        }
+
+        //Check Address
+        if (nums.test(address) === false || lower.test(address) === false || citySpecials.test(address) === true) {
+            error = 'Error: Address is invalid'
+            errorAddress.hidden = false;
+            errorAddress.innerHTML = error;
+            thereIsAnError = true;
+        }
+
+        //Check country
+        if (country === 'Select a country') {
+            error = 'Error: Select a country'
+            errorCountry.hidden = false;
+            errorCountry.innerHTML = error;
+            thereIsAnError = true;
         }
 
         //Check zipcode
         if ((!(zip.replace(/\s/g, '').length)) || (zip.length < 5) || (zip.length > 5)) {
-            error = 'Error: invalid zipcode';
+            error = 'Error: Invalid zipcode';
             errorZip.hidden = false;
             errorZip.innerHTML = error;
+            thereIsAnError = true;
         }
-        findNum = zip.match(/[a-zA-Z]+/g);
-        if (findNum !== null) {
-            error = 'Error: invalid zipcode';
+        findNum1 = zip.match(/[a-zA-Z]+/g);
+        if (findNum1 !== null) {
+            error = 'Error: Invalid zipcode';
             errorZip.hidden = false;
             errorZip.innerHTML = error;
+            thereIsAnError = true;
         }
 
         //Check City
@@ -148,12 +197,14 @@ if (form) {
             error = 'Error: invalid City';
             errorCity.hidden = false;
             errorCity.innerHTML = error;
+            thereIsAnError = true;
         }
         let findInvalidSpecial = city.match(citySpecials);
         if (findInvalidSpecial !== null) {
             error = 'Error: City contains an invalid special character'
             errorCity.hidden = false;
             errorCity.innerHTML = error;
+            thereIsAnError = true;
         }
 
         let findNUMS = city.match(nums);
@@ -161,6 +212,7 @@ if (form) {
             error = 'Error: City contains a number'
             errorCity.hidden = false;
             errorCity.innerHTML = error;
+            thereIsAnError = true;
         }
 
         //Check State
@@ -168,72 +220,50 @@ if (form) {
             error = 'Error: Select a state'
             errorState.hidden = false;
             errorState.innerHTML = error;
+            thereIsAnError = true;
         }
-    })
-}
-
-let form2 = document.getElementById('payment-form');
-
-let errorCardholder = document.getElementById('errorCardholder');
-let errorCardnumber = document.getElementById('errorCardnumber');
-let errorExpiration = document.getElementById('errorExpiration');
-let errorCvv = document.getElementById('errorCvv');
-
-if (form2) {
-    form2.addEventListener('submit', (event) => {
-        let cardholder = document.getElementById('cardholder');
-        let cardnumber = document.getElementById('cardnumber');
-        let expiration = document.getElementById('expiration');
-        let cvv = document.getElementById('cvv');
-        let error;
-
-        errorCardholder.hidden = true;
-        errorCardnumber.hidden = true;
-        errorExpiration.hidden = true;
-        errorCvv.hidden = true;
-
-        cardholder = cardholder.value.trim();
-        cardnumber = cardnumber.value.trim();
-        expiration = expiration.value.trim();
-        cvv = cvv.value.trim();
-
-        event.preventDefault();
 
         //Check Name
         if ((!(cardholder.replace(/\s/g, '').length)) || (cardholder.length < 2) || (cardholder.length > 25)) {
             error = 'Error: Name either an empty space(s) or does not meet the length specifications'
             errorCardholder.hidden = false;
             errorCardholder.innerHTML = error;
+            thereIsAnError = true;
         }
         let findNum = cardholder.match(/[^a-zA-Z\s]+/g);
         if (findNum !== null) {
             error = 'Error: Name contains a number or special character'
             errorCardholder.hidden = false;
             errorCardholder.innerHTML = error;
+            thereIsAnError = true;
         }
 
         //Check cardnumber
-        if (cardnumber.match(upper) !== null || cardnumber.match(lower) !== null || cardnumber.match(specials)) {
+        if (cardnumber.includes(' ') || cardnumber.match(upper) !== null || cardnumber.match(lower) !== null || cardnumber.match(specials)) {
             error = 'Error: Invalid cardnumber'
             errorCardnumber.hidden = false;
             errorCardnumber.innerHTML = error;
+            thereIsAnError = true;
         }
         if (cardnumber.length < 13 || cardnumber.length > 16) {
             error = 'Error: Invalid cardnumber'
             errorCardnumber.hidden = false;
             errorCardnumber.innerHTML = error;
+            thereIsAnError = true;
         }
 
         //Check cvv
-        if (cvv.match(upper) !== null || cvv.match(lower) !== null || cvv.match(specials)) {
+        if (cvv.includes(' ') || cvv.match(upper) !== null || cvv.match(lower) !== null || cvv.match(specials)) {
             error = 'Error: Invalid cvv'
-            errorCardnumber.hidden = false;
-            errorCardnumber.innerHTML = error;
+            errorCvv.hidden = false;
+            errorCvv.innerHTML = error;
+            thereIsAnError = true;
         }
         if (cvv.length < 3 || cvv.length > 4) {
             error = 'Error: Invalid cvv'
-            errorCardnumber.hidden = false;
-            errorCardnumber.innerHTML = error;
+            errorCvv.hidden = false;
+            errorCvv.innerHTML = error;
+            thereIsAnError = true;
         }
 
         //Check Expiration
@@ -244,21 +274,25 @@ if (form2) {
             error = 'Error: Invalid expiration date'
             errorExpiration.hidden = false;
             errorExpiration.innerHTML = error;
+            thereIsAnError = true;
         }
         if (mid.match(/[/]/) === null) {
             error = 'Error: Invalid expiration date'
             errorExpiration.hidden = false;
             errorExpiration.innerHTML = error;
+            thereIsAnError = true;
         }
         if (end.match(nums) === null) {
             error = 'Error: Invalid expiration date'
             errorExpiration.hidden = false;
             errorExpiration.innerHTML = error;
+            thereIsAnError = true;
         }
         if (end.length !== 2) {
             error = 'Error: Invalid expiration date'
             errorExpiration.hidden = false;
             errorExpiration.innerHTML = error;
+            thereIsAnError = true;
         }
             //Check the year
         let validYears = [];
@@ -276,12 +310,14 @@ if (form2) {
             error = 'Error: Invalid expiration date'
             errorExpiration.hidden = false;
             errorExpiration.innerHTML = error;
+            thereIsAnError = true;
         }
             //Check the month
         if (validMonths.includes(beg) === false) {
             error = 'Error: Invalid expiration date'
             errorExpiration.hidden = false;
             errorExpiration.innerHTML = error;
+            thereIsAnError = true;
         }
         const checkMnth = parseInt(beg);
         let currentMonth = currentDate.getMonth();
@@ -290,6 +326,11 @@ if (form2) {
             error = 'Error: Invalid expiration date'
             errorExpiration.hidden = false;
             errorExpiration.innerHTML = error;
+            thereIsAnError = true;
+        }
+
+        if (thereIsAnError === false) {
+            HTMLFormElement.prototype.submit.call(form);
         }
     })
 }
