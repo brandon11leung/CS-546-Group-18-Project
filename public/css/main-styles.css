@@ -18,6 +18,15 @@ h1{
     margin: auto;
 }
 
+h3{
+  text-align: center;
+  font-size: 150%;
+  text-decoration: solid; 
+  text-decoration: underline;
+  font-family: 'Times New Roman', Times, serif;
+  margin: auto;
+}
+
 .main {
     border: 2px solid black;
     margin: auto;
@@ -81,4 +90,16 @@ h1{
   text-decoration: solid; 
   text-decoration: underline;
   text-shadow: 2px 2px 2px rgb(26, 25, 25);
+}
+
+img {
+  margin: auto;
+    width:  300px;
+    height: 300px;
+    background-size: cover;
+}
+
+p {
+  color: black;
+  font-size: 150%;
 }
