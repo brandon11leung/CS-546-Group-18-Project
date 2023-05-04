@@ -77,7 +77,21 @@
       <option value="US">United States</option>
     </select>
     <br>
-    <input type="submit" value="Approve Address">
+
+    <h3>Credit Card Information:</h3>
+    <label for="cardholder">Cardholder Name:</label>
+    <input type="text" id="cardholder" name="cardholder" required>
+    <br>
+    <label for="cardnumber">Card Number:</label>
+    <input type="text" id="cardnumber" name="cardnumber" required>
+    <br>
+    <label for="expiration">Expiration Date:</label>
+    <input type="text" id="expiration" name="expiration" placeholder="MM/YY" required>
+    <br>
+    <label for="cvv">CVV:</label>
+    <input type="number" id="cvv" name="cvv" required>
+    <br>
+    <input type="submit" value="Place Order!">
 </form>
 <p id="errorName" hidden></p>
 <p id="errorEmail" hidden></p>
@@ -90,22 +104,11 @@
 
 <br>
 
-<h3>Credit Card Information:</h3>
-<form>
-    <label for="cardholder">Cardholder Name:</label>
-    <input type="text" id="cardholder" name="cardholder" required>
-    <br>
-    <label for="cardnumber">Card Number:</label>
-    <input type="text" id="cardnumber" name="cardnumber" required>
-    <br>
-    <label for="expiry">Expiration Date:</label>
-    <input type="text" id="expiration" name="expiration" placeholder="MM/YY" required>
-    <br>
-    <label for="cvv">CVV:</label>
-    <input type="number" id="cvv" name="cvv" required>
-    <br>
-    <input type="submit" value="Submit Payment">
-</form>
+<p id="errorCardholder" hidden></p>
+<p id="errorCardnumber" hidden></p>
+<p id="errorExpiration" hidden></p>
+<p id="errorCvv" hidden></p>
+
 <br>
 <img id='creditCard' alt="Credit Cards" src="{{pic}}">
 
