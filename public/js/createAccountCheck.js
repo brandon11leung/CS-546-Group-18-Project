@@ -3,6 +3,12 @@ let letters = /[A-Za-z]/;
 let nums = /\d/;
 let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
+const validBio = (bio) => {
+    if (typeof bio !== 'string') { return false; }
+    bio = bio.trim();
+    if (bio.length === 0) { return false; }
+    return true;
+}
 
 const validName = (name) => {
     if (typeof name !== 'string') { return false; }
@@ -174,6 +180,7 @@ let confirmPassword = document.getElementById('confirmPasswordInput');
 let dob = document.getElementById('DOBInput');
 let city = document.getElementById('cityInput');
 let state = document.getElementById('stateInput');
+let bio = document.getElementById('bioInput');
 
 
 let errorFirstName = document.getElementById('errorFirstName');
@@ -185,7 +192,7 @@ let errorConfirm = document.getElementById('errorConfirm');
 let errorDOB = document.getElementById('errorDOB');
 let errorCity = document.getElementById('errorCity');
 let errorState = document.getElementById('errorState');
-
+let errorBiography = document.getElementById('errorBio');
 
 
 /* The plan is to have multiple error lines so that way it would alert
@@ -260,6 +267,5 @@ if (form) {
             errorState.hidden = false;
             errorState.innerHTML = 'State must be a valid abbreviated state.'
         }
-    
     });
 }

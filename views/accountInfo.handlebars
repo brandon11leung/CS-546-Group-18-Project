@@ -7,10 +7,11 @@
         <p>Date the account was created: {{user.doc}}</p>
         <p>City: {{user.city}}</p>
         <p>State: {{user.state}}</p>
+        <p>Biography: {{user.biography}}</p>
         <div>
             <h3>Purchase History</h3>
             <ul>
-        {{#each user.purchaseHistory}}
+        {{#each user.purchaseHistory}} 
             <li>
                 <p>Item: {{listingName}}</p>
                 <p>Price: {{price}}</p>

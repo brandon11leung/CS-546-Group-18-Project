@@ -24,37 +24,43 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.use('/account',async (req, res, next) => {
-  if (req.session.user) {
-    next();
-  } else {
+
+app.use('/account', async (req, res, next) => {
+  if (!req.session.user) {
     return res.redirect('/login');
+  } else {
+    next(); 
   }
 });
 
-app.use('/signup', async (req, res, next) => {
-  if (req.session.user) {
-    res.redirect('/listings');
-  } else {
-    next();
-  }
-})
 
-app.use('/login', async (req, res, next) => {
-  if (req.session.user) {
-    res.redirect('/listings');
-  } else {
-    next();
-  }
-})
 
-app.use('/createListing', async(req, res, next) => {
-  if (req.session.user) {
-    res.redirect('/login')
-  } else {
-    next();
-  }
-});
+// app.use('/createListing', async(req, res, next) => {
+//   if (req.session.user) {
+//     res.redirect('/login')
+//   } else {
+//     next();
+//   }
+// });
+
+// app.use('/login', async (req, res, next) => {
+//   if (req.session.user) {
+//     res.redirect('/listings');
+//   } else {
+//     next();
+//   }
+// });
+
+// app.use('/signup', async (req, res, next) => {
+//   if (req.session.user) {
+//     res.redirect('/listings');
+//   } else {
+//     next();
+//   }
+// })
+
+
+
 
 
 

@@ -71,12 +71,14 @@ router.route('/signup').get(async (req, res) => {
         res.status(400).render('createAccount', {title: 'Create an Account', error: 'Invalid state'});
     }
 
-    console.log(req.body.DOBInput);
-    console.log(typeof req.body.DOBInput);
-
-    try {
-        await users.createUser(req.body.firstNameInput, req.body.lastNameInput, req.body.emailAddressInput, req.body.usernameInput, req.body.DOBInput, req.body.passwordInput, req.body.cityInput, req.body.stateInput);
-        res.redirect('/login');
+    try { 
+        if (req.body.bioInput) {
+            await users.createUser(req.body.firstNameInput, req.body.lastNameInput, req.body.emailAddressInput, req.body.usernameInput, req.body.DOBInput, req.body.passwordInput, req.body.cityInput, req.body.stateInput, req.body.bioInput);
+        }
+        else {
+            await users.createUser(req.body.firstNameInput, req.body.lastNameInput, req.body.emailAddressInput, req.body.usernameInput, req.body.DOBInput, req.body.passwordInput, req.body.cityInput, req.body.stateInput);
+        }
+        res.redirect('/login'); 
     } catch (e) {
         console.log(e.message);
         res.status(500).render('createAccount', {title: 'Create an Account', error: e});

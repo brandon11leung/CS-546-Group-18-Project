@@ -12,6 +12,7 @@ export const createUser = async (
     password, //error checked
     city, //error checked
     state, //error checked
+    biography //optional parameter
   ) => {
     const userCollection = await users();
 
@@ -33,7 +34,7 @@ export const createUser = async (
     }
     let findNum = firstName.match(/[^a-zA-Z]+/g);
     if (findNum !== null) {
-      throw new Error ('firstName contains a number or special character');
+      throw new Error ('firstName contains a number or special character'); 
     }
   
     //Check lastName
@@ -186,14 +187,14 @@ export const createUser = async (
       dob: dob,
       doc: doc,
       username: username,
-      password: hash,
+      password: hash, 
+      biography: biography,
       city: city,
       state: state,
-      // reviews: [],
+      reviews: [],
       purchaseHistory: {},
       salesHistory: {},
       currentListings: [],
-      watchedListings: [],
       overallRating: 0,
     };
     
@@ -326,3 +327,4 @@ export const removeUser = async (id) => {
   }
   return `${deletionInfo.value.name} has been successfully deleted!`;
 };
+
