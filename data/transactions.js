@@ -2,7 +2,7 @@
 import {listings, transactions} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import timestamp from "time-stamp";
-import * as listings from "./listings.js";
+// import * as listings from "./listings.js";
 
 export const createTransaction = async (
     listingId,
@@ -29,11 +29,10 @@ export const createTransaction = async (
     if (!ObjectId.isValid(buyerOrSeller)) throw 'invalid object ID on listingId';
 
     //Find listing
-    let listing = null;
-    listing = await listingCollection.findOne({_id: new ObjectId(listingId)});
+    let listing = await listingCollection.findOne({_id: new ObjectId(listingId)});
     if (listing === null) { throw new Error('Review not found in database'); }
 
-    console.log(listing);
+    // console.log(listing);
 
     if (listing.listingType === 'Sell') {
         var newTransaction = {
@@ -66,4 +65,6 @@ export const createTransaction = async (
 
 }
 
-await createTransaction('64553137fd5c573cad641310', '64553134fd5c573cad641306');
+export default {createTransaction}
+
+// await createTransaction('64553137fd5c573cad641310', '64553134fd5c573cad641306');

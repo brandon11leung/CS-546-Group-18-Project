@@ -5,6 +5,7 @@ import * as listings from './data/listings.js';
 import * as reviews from './data/reviews.js';
 import * as comments from './data/comments.js';
 import * as offers from './data/offers.js';
+import * as transactions from './data/transactions.js';
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -406,6 +407,17 @@ console.log("\n\n-----INSERTING REVIEWS-----\n\n");
 try {
     const goodReview = await (reviews.createReview('64518a9e9046cbbd433f633c', '64518a9d9046cbbd433f633b', 'This is a test Review. This is a test Review. This is a test Review. This is a test Review', 5));
     console.log(goodReview);
+} catch(e) {
+    console.log(e.message);
+}
+
+
+
+console.log("\n\n-----INSERTING TRANSACTIONS-----\n\n");
+//Working example (ONLY WITH A LISTING ID THAT YOU KNOW WILL BE IN THERE)
+try {
+    const goodTransaction = await (transactions.createTransaction('64555cb2fe2aaa6c77dfa54b', '64555caefe2aaa6c77dfa541'));
+    console.log(goodTransaction);
 } catch(e) {
     console.log(e.message);
 }
