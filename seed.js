@@ -1,9 +1,10 @@
 
 import {dbConnection, closeConnection} from './config/mongoConnection.js';
-import * as users from './data/users.js'
-import * as listings from './data/listings.js'
-import * as reviews from './data/reviews.js'
-import * as comments from './data/comments.js'
+import * as users from './data/users.js';
+import * as listings from './data/listings.js';
+import * as reviews from './data/reviews.js';
+import * as comments from './data/comments.js';
+import * as offers from './data/offers.js';
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -344,18 +345,29 @@ try {
     console.log(e.message);
 }
 
-
-
-const validListing = await listings.create("644ff220e48b8901e0211642", "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 165, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD")
-const validListing2 = await listings.create("644ff220e48b8901e0211642", "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD");
+console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
 try {
+    const validListing = await listings.create("644ff220e48b8901e0211642", "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 165, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD")
+    const validListing2 = await listings.create("644ff220e48b8901e0211642", "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD");
     const ssID = validListing._id.toString();
     console.log("get\n")
     console.log(await listings.get(ssID))
-    console.log(await listings.update(ssID, true, "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 185, ["image0.png", "image1.png"], 10, ["USPS Priority"], "Good condition copy.", "No returns", "USD"))
+    console.log(await listings.update(ssID, true, "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 185, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], [],  10, ["USPS Priority"], "Good condition copy.", "No returns", "USD"))
     console.log("getAll\n")
     console.log(await listings.getAll())
+
+    console.log("\n\n-----INSERTING OFFERS------\n\n");
+
+    const validMoneyOffer1 = await offers.create(ssID, "644ff220e48b8901e0211642", 0, 145, "", []);
+    console.log(validMoneyOffer1);
+    const validTradeOffer1 = await offers.create(ssID, "644ff220e48b8901e0211643", 1, 0, "Pokemon HeartGold CIB", ["https://u-mercari-images.mercdn.net/photos/m26281566540_1.jpg?1677724813"]);
+    console.log(validTradeOffer1);
+    const validMixedOffer1 = await offers.create(ssID, "644ff220e48b8901e0211644", 2, 145, "Pokemon HeartGold Loose", []);
+    console.log(validMixedOffer1);
+    await offers.remove(validMixedOffer1._id.toString())
+    console.log(await offers.getAll(ssID))
+    
 } catch (e) {
     console.log(e.message)
 }
@@ -376,20 +388,17 @@ try {
     console.log(e.message);
 }
 
-
-const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
-const goodComment2 = console.log(await comments.createComment(validListing2._id.toString(), ark._id.toString(), "I never heard of this game before. It looks really good though."));
-
-console.log("\n---REMOVE ONE COMMENT---");
-
-console.log(goodComment.listingId);
 try {
-    const removeComment = console.log(await comments.removeComment(validListing._id.toString(), goodComment._id.toString()));
+    const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
 } catch (e) {
     console.log(e.message);
 }
 
-
+try {
+    const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
+} catch (e) {
+    console.log(e.message);
+}
 
 console.log("\n\n-----INSERTING REVIEWS-----\n\n");
 //Working example
@@ -401,19 +410,6 @@ try {
 }
 
 
-
-
 console.log('Done seeding database');
 
 await closeConnection();
-
-
-
-
-
-
-
-
-
-    
-

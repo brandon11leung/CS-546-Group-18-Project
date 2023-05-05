@@ -202,6 +202,12 @@ export const isValidArray = (arg, argName) => { // Universal
     
 }
 
+export const isValidTradeArray = (arg, argName) => { // Universal
+    if (!arg) {throw new Error(`Error: the ${argName} parameter does not exist.`)}
+    if (typeof arg === "undefined") {throw new Error(`Error: the ${argName} is undefined.`)}
+    if (Array.isArray(arg) == false) {throw new Error(`Error: the ${argName} is not a valid array`)}
+}
+
 export const isValidPrice = (arg, argName) => {
     isValidNumber(arg);
     if (Number(arg.toFixed(2)) !== arg) {throw new Error(`Error: the ${argName} parameter is not a valid price`)}

@@ -11,13 +11,16 @@ import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 import timestamp from "time-stamp";
 
-export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
+export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
 	posterId = helpers.isValidID(posterId);
     title = helpers.isValidString(title);
 	listingType = helpers.isValidString(listingType);
 	mainCondition = helpers.isValidString(mainCondition);
-	
-    helpers.isValidArray(secondaryCondition);
+	helpers.isValidTradeArray(trades);
+	for (let i = 0; i < trades.length; i++) {
+		trades[i] = helpers.isValidString(trades[i])
+	}
+	helpers.isValidArray(secondaryCondition);
 	for (let i = 0; i < secondaryCondition.length; i++) {
 		secondaryCondition[i] = helpers.isValidString(secondaryCondition[i]);
 	}
@@ -28,7 +31,6 @@ export const create = async (posterId, title, listingType, mainCondition, second
     }
     description = helpers.isValidString(description);
     currency = helpers.isValidString(currency);
-	
     helpers.isValidArray(attachments);
     returnPolicy = helpers.isValidString(returnPolicy);
     helpers.isValidPrice(shippingPrice);
@@ -48,6 +50,7 @@ export const create = async (posterId, title, listingType, mainCondition, second
 		secondaryCondition: secondaryCondition,
 		price: price,
 		attachments: attachments,
+		trades: trades,
 		shippingPrice: shippingPrice,
 		shippingMethods: shippingMethods,
 		description: description,
@@ -94,7 +97,7 @@ export const remove = async (id) => {
 	return `${deletionInfo.value.name} has been successfully deleted!`;
 };
 
-export const update = async (id, open, title, listingType, mainCondition, secondaryCondition, price, attachments, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
+export const update = async (id, open, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
 	if (typeof(open) !== "boolean") {throw new Error("Error: invalid open type.")}
 	id = helpers.isValidID(id);
     title = helpers.isValidString(title);
@@ -105,13 +108,17 @@ export const update = async (id, open, title, listingType, mainCondition, second
 	for (let i = 0; i < secondaryCondition.length; i++) {
 		secondaryCondition[i] = helpers.isValidString(secondaryCondition[i]);
 	}
+	helpers.isValidTradeArray(trades);
+	for (let i = 0; i < trades.length; i++) {
+		trades[i] = helpers.isValidString(trades[i])
+	}
 	price = helpers.isValidPrice(price);
     helpers.isValidArray(shippingMethods);
 	for (let i = 0; i < shippingMethods.length; i++) {
 		shippingMethods[i] = helpers.isValidString(shippingMethods[i]);
 	}
     description = helpers.isValidString(description);
-    helpers.isValidPrice(rejectionOfferValue);
+
     currency = helpers.isValidString(currency);
 
     const listingCollection = await listings();
@@ -132,6 +139,7 @@ export const update = async (id, open, title, listingType, mainCondition, second
 		secondaryCondition: secondaryCondition,
 		price: price,
 		attachments: attachments,
+		trades: trades,
 		shippingPrice: shippingPrice,
 		shippingMethods: shippingMethods,
 		description: description,
