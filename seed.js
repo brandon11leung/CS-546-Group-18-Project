@@ -307,6 +307,8 @@ try {
 
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
+console.log("\n\n-----INSERTING LISTINGS------\n\n");
+
 try {
     const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
     const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD", 32913);
@@ -342,7 +344,6 @@ try {
 } catch (e) {
     console.log(e.message)
 }
-
 
 console.log("\n\n-----INSERTING INVALID COMMENTS------\n\n");
 
