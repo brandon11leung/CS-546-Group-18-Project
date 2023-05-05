@@ -5,6 +5,7 @@ import * as listings from './data/listings.js';
 import * as reviews from './data/reviews.js';
 import * as comments from './data/comments.js';
 import * as offers from './data/offers.js';
+import * as transactions from './data/transactions.js';
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -309,8 +310,9 @@ console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
+const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
 try {
-    const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
+    // const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
     const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD", 32913);
     const validListing3 = await listings.create(ark._id.toString(), "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["USPS First Class"], "Cartridge Only", "No returns", "USD", 4124);
     const ssID = validListing._id.toString();
@@ -401,7 +403,14 @@ try {
 
 
 
-
+console.log("\n\n-----INSERTING TRANSACTIONS-----\n\n");
+//Working example (ONLY WITH A LISTING ID THAT YOU KNOW WILL BE IN THERE)
+try {
+    const goodTransaction = await (transactions.createTransaction(validListing._id.toString(), luke._id.toString()));
+    console.log(goodTransaction);
+} catch(e) {
+    console.log(e.message);
+}
 
 
 console.log('Done seeding database');
