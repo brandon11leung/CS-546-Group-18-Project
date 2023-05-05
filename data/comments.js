@@ -1,6 +1,5 @@
 import * as helpers from '../helpers.js';
-import * as users from './users.js';
-import {listings} from '../config/mongoCollections.js';
+import {listings, users} from '../config/mongoCollections.js';
 import * as listingFuncs from './listings.js';
 import {ObjectId} from 'mongodb'
 
@@ -13,10 +12,16 @@ export const createComment = async (listingId, posterId, content) => {
     content = helpers.isValidString(content, 'content');
 
     const listingCollection = await listings();
+    const userCollection = await users();
+
+    const userData = await userCollection.findOne({_id: new ObjectId(posterId)});
+    
+    if (userData === null) { throw new Error ('User not found in database.'); }
     
     let newComment = {
         _id: new ObjectId(),
         listingId: listingId, 
+        username: userData.username,
         posterId: posterId,
         content: content
     };
@@ -48,5 +53,5 @@ export const removeComment = async (listingId, commentId) => {
     if (updatedInfo.lastErrorObject.n === 0) { throw new Error("Error: unable to remove the comment from the listing info.") }
 
     updatedInfo.value._id = updatedInfo.value._id.toString();
-    return 'The comment has officially been removed'; 
+    return 'The comment has officially been removed';
 }

@@ -14,7 +14,7 @@
 {{#if listings.comments}}
     <h3>Comments</h3>
     {{#each listings.comments}}
-        <p >Username: {{this.content}}</p>
+        <p>{{this.username}}: {{this.content}}</p>
     {{/each}}
 {{else}}
     <h3>No Comments</h3>
@@ -26,5 +26,5 @@
  <div id="ListingId" value="{{listings._id}}"></div>
   <button type="submit">Submit</button>
  </form>
-<script src="../public/js/commemtCheck.js"></script>
+<script src="../public/js/commentCheck.js"></script>
                         

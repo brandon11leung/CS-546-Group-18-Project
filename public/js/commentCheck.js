@@ -15,7 +15,7 @@ if (form) {
         if (!validString(comment.value)) {
             event.preventDefault();
             errorComment.hidden = false;
-            errorComment.innerHTML = 'Comment must be a valiod string.';
+            errorComment.innerHTML = 'Comment must be a valid string.';
         }
         }
     
