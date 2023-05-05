@@ -240,56 +240,16 @@ console.log("\n---BEGINNING SEEDING PROCESS FOR CREATE USER---\n");
 
 
 const luke = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002-06-02", "Stevens997*", "Cranford", "NJ");
-console.log(luke);
-
 const patrick = await users.createUser(" Patrick    ", " Hill ", " phill@stevens.edu", " phill1 ", "1975-01-01", "1ErrorCheck!", "Vernon", "NJ");
-console.log(patrick);
-
 const ark = await users.createUser("Arkansas", "Apprentice", "aapp1123@gmail.com", " arkman", "2004-02-06", "passWord'56", "Little Rock", "AR");
-console.log(ark);
+const mrKing = await users.createUser("mister", "king", " 1coolkid!@gmail.com", " notanarcissist1 ", "2002-04-29", "'yeehaW123", "San Francisco " , "CA");
+const gamer = await users.createUser("   gamer    ", "man", "      PHILLISTHEBEST@STEVENS.EDU   ", "games4thwin", "1954-04-29", "i<3Hilll", "    Des Moines  ", "IA");
+const albertEinstein = await users.createUser(" albert   ", " einstein ", " 1einstein1@yahoo.com ", " Einstein ", "1924-01-01", "The*Genius123", " jackson  ", "    ms   ");
+const handymanny = await users.createUser("    Handy    ", " Manny   ", "  h@m.net", "handymanny", "1982-01-01", "i%T12ool", "  san antonio ", "   tx   ");
+const trickyUser = await users.createUser(" tRiCksTeR    ", " uSeR ", " TRICKY@Stevens.edu", " Trickshot12345678910 ", "2004-12-31", "T3094dwkj2()", "Anchorage", "AK");
+const alien = await users.createUser("Zeep", "Zorp", "123zorp1@yes.org", "Beep12", "1970-11-22", "oiei32@(!H", "Reno", "NV");
+const finalUser = await users.createUser("Barack", "Obama", "presidentobama@something.mil", "ObamaMama<3", "1961-08-04", "Obama804*", "Honolulu", "HI");
 
-try {
-    const mrKing = console.log(await users.createUser("mister", "king", " 1coolkid!@gmail.com", " notanarcissist1 ", "2002-04-29", "'yeehaW123", "San Francisco " , "CA"));
-} catch (e) {
-    console.log(e.message);
-}
-
-
-try {
-    const gamer = console.log(await users.createUser("   gamer    ", "man", "      PHILLISTHEBEST@STEVENS.EDU   ", "games4thwin", "1954-04-29", "i<3Hilll", "    Des Moines  ", "IA"));
-} catch (e) {
-    console.log(e.message);
-}
-
-try {
-    const albertEinstein = console.log(await users.createUser(" albert   ", " einstein ", " 1einstein1@yahoo.com ", " Einstein ", "1924-01-01", "The*Genius123", " jackson  ", "    ms   "));
-} catch (e) {
-    console.log(e.message);
-}
-
-try {
-    const handymanny = console.log(await users.createUser("    Handy    ", " Manny   ", "  h@m.net", "handymanny", "1982-01-01", "i%T12ool", "  san antonio ", "   tx   "));
-} catch (e) {
-    console.log(e.message);
-}
-
-try {
-    const trickyUser = console.log(await users.createUser(" tRiCksTeR    ", " uSeR ", " TRICKY@Stevens.edu", " Trickshot12345678910 ", "2004-12-31", "T3094dwkj2()", "Anchorage", "AK"));
-} catch (e) {
-    console.log(e.message);
-}
-
-try {
-    const alien = console.log(await users.createUser("Zeep", "Zorp", "123zorp1@yes.org", "Beep12", "1970-11-22", "oiei32@(!H", "Reno", "NV"));
-} catch (e) {
-    console.log(e.message);
-}
-
-try {
-    const finalUser = console.log(await users.createUser("Barack", "Obama", "presidentobama@something.mil", "ObamaMama<3", "1961-08-04", "Obama804*", "Honolulu", "HI"));
-} catch (e) {
-    console.log(e.message);
-}
 
 
 console.log("\n---ATTEMPTS TO DUPLICATE USERNAMES AND EMAIL ADDRESSES---\n");
@@ -348,10 +308,13 @@ try {
 
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
+console.log("\n\n-----INSERTING LISTINGS------\n\n");
+
+const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
 try {
-    const validListing = await listings.create("644ff220e48b8901e0211642", "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
-    const validListing2 = await listings.create("644ff220e48b8901e0211642", "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD", 32913);
-    const validListing3 = await listings.create("644ff220e48b8901e0211642", "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["USPS First Class"], "Cartridge Only", "No returns", "USD", 4124);
+    // const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
+    const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD", 32913);
+    const validListing3 = await listings.create(ark._id.toString(), "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["USPS First Class"], "Cartridge Only", "No returns", "USD", 4124);
     const ssID = validListing._id.toString();
     console.log("get\n")
     console.log(await listings.get(ssID))
@@ -360,7 +323,8 @@ try {
     console.log(await listings.getAll())
     console.log("remove\n")
     console.log(await listings.remove(validListing3._id.toString()))
-
+    console.log(await listings.updateStatus(ssID, false))
+    console.log(await listings.getAll())
     console.log("\n\n-----INSERTING OFFERS------\n\n");
 
     const validMoneyOffer1 = await offers.create(ssID, "644ff220e48b8901e0211642", 0, 145, "", []);
@@ -383,7 +347,6 @@ try {
     console.log(e.message)
 }
 
-
 console.log("\n\n-----INSERTING INVALID COMMENTS------\n\n");
 
 
@@ -403,11 +366,38 @@ try {
 
 
 console.log("\n\n-----INSERTING REVIEWS-----\n\n");
-//Working example
+/* Patrick reviews the Arkansas Apprentice */
 try {
-    const goodReview = await (reviews.createReview('64518a9e9046cbbd433f633c', '64518a9d9046cbbd433f633b', 'This is a test Review. This is a test Review. This is a test Review. This is a test Review', 5));
+    const goodReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'This guy is from Arkansas; therefore, I like him', 5);
     console.log(goodReview);
-} catch(e) {
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const averageReview = await reviews.createReview(mrKing._id.toString(), handymanny._id.toString(), 'He took his sweet time with shipping. Product was in good shape', 3);
+    console.log(averageReview);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const gotScammed = await reviews.createReview(finalUser._id.toString(), alien._id.toString(), 'This alien fellow did not sell me a good product', 1);
+    console.log(gotScammed);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const duplicateReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'I found out he was not actually from Arkansas, whoops', 2);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const iLoveLuke = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'You are my favorite student <3', 5);
+    console.log(iLoveLuke);
+} catch (e) {
     console.log(e.message);
 }
 
@@ -416,7 +406,7 @@ try {
 console.log("\n\n-----INSERTING TRANSACTIONS-----\n\n");
 //Working example (ONLY WITH A LISTING ID THAT YOU KNOW WILL BE IN THERE)
 try {
-    const goodTransaction = await (transactions.createTransaction('64555cb2fe2aaa6c77dfa54b', '64555caefe2aaa6c77dfa541'));
+    const goodTransaction = await (transactions.createTransaction(validListing._id.toString(), luke._id.toString()));
     console.log(goodTransaction);
 } catch(e) {
     console.log(e.message);

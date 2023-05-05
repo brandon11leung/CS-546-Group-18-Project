@@ -17,6 +17,5 @@ if (form) {
             errorComment.hidden = false;
             errorComment.innerHTML = 'Comment must be a valid string.';
         }
-        }
-    
-    )};
+    }
+)};

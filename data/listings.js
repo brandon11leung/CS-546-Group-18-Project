@@ -101,6 +101,22 @@ export const remove = async (id) => {
 	return `${deletionInfo.value.title} has been successfully deleted!`;
 };
 
+export const updateStatus = async (id, open) => {
+	if (typeof(open) !== "boolean") {throw new Error("Error: invalid open type.")}
+	id = helpers.isValidID(id);
+	const updatedListing = {
+		open: open
+	}
+	const listingCollection = await listings();
+	const updatedInfo = await listingCollection.findOneAndUpdate(
+		{_id: new ObjectId(id)},
+		{$set: updatedListing},
+		{returnDocument: 'after'})
+	if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the listing info.")}
+		updatedInfo.value._id = updatedInfo.value._id.toString();
+		return updatedInfo.value;
+}
+
 export const update = async (id, open, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency, pricechartingID) => {
 	if (typeof(open) !== "boolean") {throw new Error("Error: invalid open type.")}
 	id = helpers.isValidID(id);
@@ -139,7 +155,7 @@ export const update = async (id, open, title, listingType, mainCondition, second
     }
 
 	const updatedListing = {
-        open: true,
+        open: open,
 		title: title,
 		timeStampUpdated: timestamp('YYYY/MM/DD - HH:mm:ss'),
 		mainCondition: mainCondition,
@@ -163,4 +179,4 @@ export const update = async (id, open, title, listingType, mainCondition, second
 		return updatedInfo.value;
 };
 
-export default {create, get, getAll, remove, update}
+export default {create, get, getAll, remove, update, updateStatus}

@@ -2,7 +2,7 @@
 import {listings, transactions} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import timestamp from "time-stamp";
-// import * as listings from "./listings.js";
+import{updateStatus} from "./listings.js";
 
 export const createTransaction = async (
     listingId,
@@ -60,6 +60,8 @@ export const createTransaction = async (
     if (!insertInfo.acknowledged || !insertInfo.insertedId) {
       throw new Error ('Could not add user');
     }
+
+    await updateStatus(listingId, false);
   
     return {insertedTransaction: true};
 
@@ -67,4 +69,3 @@ export const createTransaction = async (
 
 export default {createTransaction}
 
-// await createTransaction('64553137fd5c573cad641310', '64553134fd5c573cad641306');

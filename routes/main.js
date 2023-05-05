@@ -4,6 +4,7 @@ const router = Router();
 import * as helpers from '../helpers.js';
 import * as users from '../data/users.js'
 import * as listings from '../data/listings.js'
+import xss from 'xss';
 
 router.route('/').get(async (req, res) => {
     try {
@@ -81,6 +82,19 @@ router.route('/signup').get(async (req, res) => {
     }
 })
 .post(async (req, res) => {
+
+    // XSS Registration
+    req.body.firstNameInput = xss(req.body.firstNameInput);
+    req.body.lastNameInput = xss(req.body.lastNameInput);
+    req.body.emailAddressInput = xss(req.body.emailAddressInput);
+    req.body.usernameInput = xss(req.body.usernameInput);
+    req.body.passwordInput = xss(req.body.passwordInput);
+    req.body.DOBInput = xss(req.body.DOBInput);
+    req.body.cityInput = xss(req.body.cityInput);
+    req.body.stateInput = xss(req.body.stateInput);
+    req.body.bioInput = xss(req.body.bioInput);
+    
+    
     if (!helpers.validName(req.body.firstNameInput)) {
         res.status(400).render('createAccount', {title: 'Create an Account', error: 'Invalid first name'});
     }
@@ -99,6 +113,10 @@ router.route('/signup').get(async (req, res) => {
 
     if (!helpers.validPassword(req.body.passwordInput)) {
         res.status(400).render('createAccount', {title: 'Create an Account', error: 'Invalid password'});
+    }
+
+    if (!helpers.validDOB(req.body.DOBInput)) {
+        res.status(400).render('createAccount', {title: 'Create an Account', error: 'Invalid date of birth'});
     }
 
     if (!helpers.validCity(req.body.cityInput)) {
@@ -131,6 +149,10 @@ router.route('/login').get(async (req, res) => {
         res.status(500).json({error: e});
     }
 }).post(async (req, res) => {
+
+    req.body.emailAddressInput = xss(req.body.emailAddressInput);
+    req.body.passwordInput = xss(req.body.passwordInput);
+    
     if (!helpers.validEmail(req.body.emailAddressInput)) {
         res.status(400).render('login', {title: 'Login', error: 'Invalid email address'})
     }
