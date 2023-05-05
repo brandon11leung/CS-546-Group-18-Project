@@ -1,0 +1,16 @@
+<h1>Buying Bazaar</h1>
+    {{#each listings}}
+                <div class="items"> 
+                <h2 class="itemName">Item: {{listing.title}}</h2>
+                <div>
+                <img alt="img" src="{{img}}"><br>
+                </div>
+                <p class="item">Condition: {{listing.mainCondition}}</p>
+                <p class="item">Description: {{listing.description}}</p>
+                <p class="item">Price: ${{listing.price}}</p>
+                <P class="item">Shipping: ${{listing.shippingPrice}}</P>
+                <p class="item">Last time updated: {{listing.timeStampUpdated}}</p>
+                <button onclick="window.location.href = 'http://localhost:3000/buyinglistings/{{listing._id}}'">More Details</button>
+                </div>
+                        
+    {{/each}}
