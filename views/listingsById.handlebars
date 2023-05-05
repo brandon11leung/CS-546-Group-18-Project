@@ -8,15 +8,23 @@
 <P >Shipping: ${{listings.shippingPrice}}</P>
 <p >Return Policy: {{listings.returnPolicy}}</p>
 <p >Last time updated: {{listings.timeStampUpdated}}</p><br>
-
-
+<div class="btn-group">
+<button class="purchase" onclick="window.location.href = 'http://localhost:3000/transaction'">Buy Now</button>
+</div>
 {{#if listings.comments}}
     <h3>Comments</h3>
     {{#each listings.comments}}
-        <p >Username: {{this.content}}</p>
+        <p>{{this.username}}: {{this.content}}</p>
     {{/each}}
 {{else}}
     <h3>No Comments</h3>
 {{/if}}
-
+<p id="errorComment" hidden></p>
+<form method="POST" id="comment-form" action="">
+<label for="commentInput">Leave a comment:</label>
+ <textarea id="commentInput" type="text" name="commentInput"></textarea><br>
+ <div id="ListingId" value="{{listings._id}}"></div>
+  <button type="submit">Submit</button>
+ </form>
+<script src="../public/js/commentCheck.js"></script>
                         
