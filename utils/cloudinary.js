@@ -8,8 +8,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_CLOUD_KEY_SECRET,
 });
 
-
-
 export const uploadImage = async (imageArr) => {
     let urlArr = [];
     try {
@@ -30,6 +28,5 @@ export const uploadImage = async (imageArr) => {
 //             "./images/Pokemon SoulSilver/4 - k2JHBzZ.jpg",
 //             "./images/Pokemon SoulSilver/5 - 0Tw1cei.jpg"
 //             ]
-
-const RT = ["./images/Rhythm Thief/s-l600.jpg"]
-console.log(uploadImage(RT))
+// const RT = ["./images/Rhythm Thief/s-l600.jpg"]
+// console.log(uploadImage(RT))

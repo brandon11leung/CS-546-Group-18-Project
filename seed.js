@@ -359,7 +359,8 @@ try {
     console.log(await listings.getAll())
     console.log("remove\n")
     console.log(await listings.remove(validListing3._id.toString()))
-
+    console.log(await listings.updateStatus(ssID, false))
+    console.log(await listings.getAll())
     console.log("\n\n-----INSERTING OFFERS------\n\n");
 
     const validMoneyOffer1 = await offers.create(ssID, "644ff220e48b8901e0211642", 0, 145, "", []);
