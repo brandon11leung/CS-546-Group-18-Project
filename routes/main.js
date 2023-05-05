@@ -27,7 +27,7 @@ router.route('/account').get(async (req, res) => {
         res.status(500).json({error: e});
     }});
 
-router.route('/listings/:id').get(async (req, res) => {
+router.route('/sellinglistings/:id').get(async (req, res) => {
     try {
         let List = await listings.get(req.params.id); 
         res.render('listingsById', {title: List.title,listings: List});
@@ -35,18 +35,43 @@ router.route('/listings/:id').get(async (req, res) => {
         res.status(500).json({error: e});
     }});
 
-router.route('/listings').get(async (req, res) => {
+router.route('/sellinglistings').get(async (req, res) => {
     try {
         let allListings = await listings.getAll();
         let Ready = [];
         for (let x of allListings){
-            let lplusI = {listing: x,img: x.attachments[0]}
-            Ready.push(lplusI);
+            if(x.listingType === "Sell"){
+                let lplusI = {listing: x,img: x.attachments[0]}
+                Ready.push(lplusI);
+            }
         } 
-        res.render('listings', {title: "Listings Station",listings: Ready});
+        res.render('sellingListings', {title: "Selling Station",listings: Ready});
         } catch (e) {
         res.status(500).json({error: e});
     }});
+
+router.route('/buyinglistings/:id').get(async (req, res) => {
+        try {
+            let List = await listings.get(req.params.id); 
+            res.render('listingsById', {title: List.title,listings: List});
+            } catch (e) {
+            res.status(500).json({error: e});
+        }});
+    
+router.route('/buyinglistings').get(async (req, res) => {
+        try {
+            let allListings = await listings.getAll();
+            let Ready = [];
+            for (let x of allListings){
+                if(x.listingType === "Buy"){
+                    let lplusI = {listing: x,img: x.attachments[0]}
+                    Ready.push(lplusI);
+                }
+            } 
+            res.render('buyingListings', {title: "Buying Bazaar",listings: Ready});
+            } catch (e) {
+            res.status(500).json({error: e});
+        }});
 
 router.route('/signup').get(async (req, res) => {
     try {

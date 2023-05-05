@@ -371,13 +371,20 @@ try {
     console.log(validMixedOffer1);
     await offers.remove(validMixedOffer1._id.toString())
     console.log(await offers.getAll(ssID))
+
+    console.log('\n\n-----INSERTING COMMENTS-----\n\n');
+
+    const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
+    console.log(goodComment);
+    const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
+    console.log(goodComment2);
     
 } catch (e) {
     console.log(e.message)
 }
 
 
-console.log("\n\n-----INSERTING COMMENTS------\n\n");
+console.log("\n\n-----INSERTING INVALID COMMENTS------\n\n");
 
 
 try {
@@ -392,17 +399,8 @@ try {
     console.log(e.message);
 }
 
-try {
-    const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
-} catch (e) {
-    console.log(e.message);
-}
+    
 
-try {
-    const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
-} catch (e) {
-    console.log(e.message);
-}
 
 console.log("\n\n-----INSERTING REVIEWS-----\n\n");
 //Working example
