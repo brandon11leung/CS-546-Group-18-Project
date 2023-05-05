@@ -11,12 +11,15 @@ import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 import timestamp from "time-stamp";
 
-export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
+export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency, pricechartingID) => {
 	posterId = helpers.isValidID(posterId);
     title = helpers.isValidString(title);
 	listingType = helpers.isValidString(listingType);
 	mainCondition = helpers.isValidString(mainCondition);
 	helpers.isValidTradeArray(trades);
+	if (!pricechartingID == false) {
+		helpers.isValidNumber(pricechartingID);
+	}
 	for (let i = 0; i < trades.length; i++) {
 		trades[i] = helpers.isValidString(trades[i])
 	}
@@ -56,6 +59,7 @@ export const create = async (posterId, title, listingType, mainCondition, second
 		description: description,
 		returnPolicy: returnPolicy,
 		currency: currency,
+		pricechartingID: pricechartingID,
 		offers: [],
 		comments: []
     };
@@ -94,10 +98,10 @@ export const remove = async (id) => {
 	const listingCollection = await listings();
 	const deletionInfo = await listingCollection.findOneAndDelete({_id: new ObjectId(id)});
 	if (deletionInfo.lastErrorObject.n === 0) {throw new Error(`Error: was unable to delete listing with id of ${id}.`)}
-	return `${deletionInfo.value.name} has been successfully deleted!`;
+	return `${deletionInfo.value.title} has been successfully deleted!`;
 };
 
-export const update = async (id, open, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency) => {
+export const update = async (id, open, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency, pricechartingID) => {
 	if (typeof(open) !== "boolean") {throw new Error("Error: invalid open type.")}
 	id = helpers.isValidID(id);
     title = helpers.isValidString(title);
@@ -108,9 +112,12 @@ export const update = async (id, open, title, listingType, mainCondition, second
 	for (let i = 0; i < secondaryCondition.length; i++) {
 		secondaryCondition[i] = helpers.isValidString(secondaryCondition[i]);
 	}
+	if (!pricechartingID == false) {
+		helpers.isValidNumber(pricechartingID, "Pricecharting ID");
+	}
 	helpers.isValidTradeArray(trades);
 	for (let i = 0; i < trades.length; i++) {
-		trades[i] = helpers.isValidString(trades[i])
+		trades[i] = helpers.isValidString(trades[i], "Trade Array Element")
 	}
 	price = helpers.isValidPrice(price);
     helpers.isValidArray(shippingMethods);
@@ -144,7 +151,8 @@ export const update = async (id, open, title, listingType, mainCondition, second
 		shippingMethods: shippingMethods,
 		description: description,
 		returnPolicy: returnPolicy,
-		currency: currency
+		currency: currency,
+		pricechartingID: pricechartingID
 	};
 	const updatedInfo = await listingCollection.findOneAndUpdate(
 		{_id: new ObjectId(id)},
