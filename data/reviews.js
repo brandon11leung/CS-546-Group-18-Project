@@ -29,8 +29,8 @@ export const createReview = async (
     userFrom = userFrom.trim();
     userAbout = userAbout.trim();
 
-    if (reviewBody.length < 50 || reviewBody.length > 1500) {
-      throw new Error ('Ratin')
+    if (reviewBody.length < 10 || reviewBody.length > 1500) {
+      throw new Error ('Error: Character limit too short or too long')
     }
     reviewBody = reviewBody.trim();
 
@@ -68,7 +68,7 @@ const getReview = async (reviewId) => {
   
 
     const reviewData = await reviews();
-    let review = await reviewData.findOne({_id: new ObjectId(id)});
+    let review = await reviewData.findOne({_id: new ObjectId(reviewId)});
   
     if (review === null) { throw new Error('Review not found in database'); }
     review._id = review._id.toString();

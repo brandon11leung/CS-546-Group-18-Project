@@ -162,3 +162,5 @@ export const update = async (id, open, title, listingType, mainCondition, second
 		updatedInfo.value._id = updatedInfo.value._id.toString();
 		return updatedInfo.value;
 };
+
+export default {create, get, getAll, remove, update}
