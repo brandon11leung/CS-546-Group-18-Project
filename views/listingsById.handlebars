@@ -8,8 +8,9 @@
 <P >Shipping: ${{listings.shippingPrice}}</P>
 <p >Return Policy: {{listings.returnPolicy}}</p>
 <p >Last time updated: {{listings.timeStampUpdated}}</p><br>
-
-
+<div class="btn-group">
+<button class="purchase" onclick="window.location.href = 'http://localhost:3000/transaction'">Buy Now</button>
+</div>
 {{#if listings.comments}}
     <h3>Comments</h3>
     {{#each listings.comments}}

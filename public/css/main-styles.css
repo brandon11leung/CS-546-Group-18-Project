@@ -103,3 +103,9 @@ p {
   color: black;
   font-size: 150%;
 }
+
+.purchase {
+  height:100px;
+    width:200px;
+    align-content: center;
+}
