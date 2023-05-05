@@ -95,7 +95,7 @@ export const validPassword = (password) => {
 export const validDOB = (dob) => {
     if (typeof dob !== 'string') { return false; }
 
-    let splitDate = dob.split('-');
+    let splitDate = dob.trim().split('-');
     if (splitDate.length !== 3) { return false; }
     
 

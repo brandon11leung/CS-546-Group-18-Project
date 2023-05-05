@@ -1,5 +1,5 @@
 /* Luke Bianchi */
-import {reviews} from "./../config/mongoCollections.js";
+import {reviews, users} from "./../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 
 export const createReview = async (
@@ -18,8 +18,17 @@ export const createReview = async (
     if ((!(userFrom.replace(/\s/g, '').length)) || (!(userAbout.replace(/\s/g, '').length)) || (!(reviewBody.replace(/\s/g, '').length))) {
         throw new Error ('userFrom, userAbout, and reviewBody must be nonempty strings');
     }
-    if (!ObjectId.isValid(userFrom)) throw 'invalid object ID on userFrom';
-    if (!ObjectId.isValid(userAbout)) throw 'invalid object ID on userAbout';
+    if (!ObjectId.isValid(userFrom)) throw new Error ('invalid object ID on userFrom');
+
+    const userCollection = await users();
+    const userFromFound = await userCollection.findOne({_id: new ObjectId(userFrom)});
+    if (userFromFound === null) { throw new Error ('userFrom parameter was not found in database'); }
+
+    if (!ObjectId.isValid(userAbout)) throw new Error ('invalid object ID on userAbout');
+
+    const userAboutFound = await userCollection.findOne({_id: new ObjectId(userAbout)});
+    if (userAboutFound === null) { throw new Error ('userAbout parameter was not found in database'); }
+
     if (isNaN(rating)) {
         throw new Error('Rating is NaN');
     }
@@ -29,11 +38,12 @@ export const createReview = async (
     userFrom = userFrom.trim();
     userAbout = userAbout.trim();
 
-    if (reviewBody.length < 50 || reviewBody.length > 1500) {
-      throw new Error ('Ratin')
-    }
     reviewBody = reviewBody.trim();
 
+    if (reviewBody.length < 10 || reviewBody.length > 5000) {
+      throw new Error ('Review must be between 10 and 5000 characters.')
+    }
+  
     //Check if user already reviewed person
     const val = await checkIfAlrReviewed(userFrom, userAbout);
     if (val === true) {
@@ -53,7 +63,7 @@ export const createReview = async (
       throw new Error ('Could not add user');
     }
   
-    return {insertedUser: true};
+    return {insertedReview: true};
 }
   
 const getReview = async (reviewId) => {
@@ -68,7 +78,7 @@ const getReview = async (reviewId) => {
   
 
     const reviewData = await reviews();
-    let review = await reviewData.findOne({_id: new ObjectId(id)});
+    let review = await reviewData.findOne({_id: new ObjectId(reviewId)});
   
     if (review === null) { throw new Error('Review not found in database'); }
     review._id = review._id.toString();
