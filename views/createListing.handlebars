@@ -14,30 +14,59 @@
                     <option value="">Select a state</option>
                     <option value="Buy">Buying</option>
                     <option value="Sell">Selling</option>
-                </select>
+                </select><br><br>
 
                 <label for="TitleInput">Listing Title:</label>
-                <input id="TitleInput" type="text" name="TitleInput"><br>
+                <input id="TitleInput" type="text" name="TitleInput"><br><br>
+
+                <label for="pcIdInput">Price Charts ID:</label>
+                <input id="pcIdInput" type="number" name="pcIdInput"><br><br>
 
                 <label for="conditionInput">Listing's Condition:</label>
-                <input id="conditionInput" type="text" name="conditionInput"><br>
+                <input id="conditionInput" type="text" name="conditionInput"><br><br>
                 
                 <label for="priceInput">Price:</label>
-                <input id="priceInput" type="number" name="priceInput"><br>
+                <input id="priceInput" type="number" name="priceInput"><br><br>
 
                 <label for="shippingPriceInput">Shipping Price:</label>
-                <input id="shippingPriceInput" type="number" name="shippingPriceInput"><br>
+                <input id="shippingPriceInput" type="number" name="shippingPriceInput"><br><br>
                 
                 <label for="descriptionInput">Description:</label>
-                <textarea id="descriptionInput" type="text" name="descriptionInput"></textarea><br>
+                <textarea id="descriptionInput" type="text" name="descriptionInput"></textarea><br><br>
 
                 <label for="returnPolicyInput">Return Policy:</label>
-                <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"></textarea><br>
+                <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"></textarea><br><br>
 
                 <label for="imageInput">Submit images here:</label>
                 <input type="file" id="imageInput" name="imageInput" multiple><br><br>
 
                 <button type="submit">Register</button>
             </form>
+
+               
+                <div>
+                    {{#if chart}}
+                     <h1>Data gathered from Price Charts</h1>
+                    <ol>
+                        {{#each chart}}
+                        <li>
+                        <ul class="search">
+                            <li class="search">Product Name: {{this.product-name}}</li><br>
+                            <li class="search">Release Date: {{this.release-date}}</li><br>
+                            <li class="search">Console Name: {{this.console-name}}</li><br>
+                            <li class="search">Genre: {{this.genre}}</li><br>
+                            <li class="search">Price Chart ID: {{this.id}}</li><br>
+                            <li class="search">Box Only Price: ${{this.box-only-price}}</li><br>
+                            <li class="search">Complete in Box Price: ${{this.cib-price}}</li><br>
+                            <li class="search">Game Only Price: ${{this.loose-price}}</li><br>
+                            <li class="search">Manual Only Price: ${{this.manual-only-price}}</li><br>
+                            <li class="search">New in Box Price: ${{this.new-price}}</li><br>
+                        </ul>
+                        </li><br>
+                        {{/each}}
+                    </ol>
+                    {{else}}
+                    {{/if}}
+                </div>
         </div>
         <script src="../public/js/listingCheck.js"></script>
