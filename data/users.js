@@ -192,8 +192,8 @@ export const createUser = async (
       city: city,
       state: state,
       reviewedBy: [],
-      purchaseHistory: {},
-      salesHistory: {},
+      purchaseHistory: [],
+      salesHistory: [],
       currentListings: [],
       overallRating: 0,
     };

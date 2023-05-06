@@ -1,5 +1,5 @@
 /* Luke Bianchi */
-import {listings, transactions} from '../config/mongoCollections.js';
+import {listings, transactions, users} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import timestamp from "time-stamp";
 import{updateStatus} from "./listings.js";
@@ -44,6 +44,9 @@ export const createTransaction = async (
             seller: listing.posterId,
             buyer: buyerOrSeller
         }
+        // const userData = await users();
+        // let user = await userData.findOne({_id: new ObjectId(buyerOrSeller)});
+        // user.purchaseHistory
     } else {
         var newTransaction = {
             _id: new ObjectId(),
