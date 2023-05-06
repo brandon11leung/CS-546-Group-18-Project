@@ -93,11 +93,11 @@ export const createUser = async (
         throw new Error ('Username field must be a valid username of at least size 6');
     }
 
-    username = username.trim().toLowerCase();
+    username = username.trim();
     if (!letters.test(username) || username.indexOf(' ') >= 0) { throw new Error ('Username must include at least one letter and cannot include spaces.'); }
     
     
-    const sameUsername = await userCollection.findOne({username: username});
+    const sameUsername = await userCollection.findOne({username: /username/i});
     if (sameUsername) {
       throw new Error ('Username is already associated with a user');
     }

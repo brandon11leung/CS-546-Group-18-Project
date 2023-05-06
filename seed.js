@@ -10,16 +10,14 @@ import * as transactions from './data/transactions.js';
 const db = await dbConnection();
 await db.dropDatabase();
 
-/* Missing parameters */
-
+console.log("\n---MISSING PARAMETERS---\n")
 try {
     const noParams = await users.createUser();
 } catch (e) {
     console.log(e.message);
 }
 
-console.log("\n\n-----------\n\n");
-/* Invalid first name */
+console.log("\n---INVALID FIRST NAME---\n");
 
 try {
     const badFirstName1 = await users.createUser("Luke1", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002-06-02", "Stevens100", "Cranford", "NJ");
@@ -52,10 +50,7 @@ try {
     console.log(e.message);
 }
 
-console.log("\n\n-----------\n\n");
-
-
-/* Invalid last name */
+console.log("\n---INVALID LAST NAME---\n");
 
 try {
     const badLastName1 = await users.createUser("Luke", "Muhnicky1", "lmuhnick@stevens.edu", "LukeM602", "2002-06-02", "Stevens100", "Cranford", "NJ");
@@ -87,8 +82,8 @@ try {
     console.log(e.message);
 }
 
-console.log("\n\n-----------\n\n");
-/* Invalid email */
+console.log("\n---INVALID EMAIL---\n");
+
 
 try {
     const badEmail1 = await users.createUser("Luke", "Muhnicky", "lmuhnickstevens.edu", "LukeM602", "2002-06-02", "Stevens100", "Cranford", "NJ");
@@ -120,8 +115,8 @@ try {
     console.log(e.message);
 }
 
-console.log("\n\n-----------\n\n");
-/* Invalid password */
+console.log("\n---BAD PASSWORD---\n");
+
 
 try {
     const badPassword1 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002-06-02", "Stevens", "Cranford", "NJ");
@@ -154,10 +149,7 @@ try {
 }
 
 
-console.log("\n\n-----------\n\n");
-
-
-/* Invalid username */
+console.log("\n---INVALID USERNAME---\n");
 
 try {
     const badUsername1 = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM", "2002-06-02", "Stevens997*", "Cranford", "NJ");
@@ -171,9 +163,7 @@ try {
     console.log(e.message);
 }
 
-console.log("\n\n-----------\n\n");
-
-/* Invalid age */
+console.log("\n---INVALID DOB---\n");
 
 try {
     const tooOld = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "1922-05-02", "Stevens997*", "Cranford", "NJ");
@@ -193,10 +183,7 @@ try {
     console.log(e.message);
 }
 
-
-
-
-/* Invalid city */
+console.log("\n---INVALID CITY---\n");
 
 try {
     const numberCity = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002-06-02", "Stevens997*", "Cranford1", "NJ");
@@ -212,7 +199,7 @@ try {
 } 
 
 
-console.log("\n\n-----------\n\n");
+console.log("\n---INVALID STATE---\n");
 
 /* Invalid state */
 
@@ -235,7 +222,7 @@ try {
 }
 
 
-console.log("\n\n---END OF PARAMETER CHECKING FOR CREATE USER---\n\n");
+console.log("\n---END OF PARAMETER CHECKING FOR CREATE USER---\n");
 console.log("\n---BEGINNING SEEDING PROCESS FOR CREATE USER---\n");
 
 
@@ -250,7 +237,7 @@ const trickyUser = await users.createUser(" tRiCksTeR    ", " uSeR ", " TRICKY@S
 const alien = await users.createUser("Zeep", "Zorp", "123zorp1@yes.org", "Beep12", "1970-11-22", "oiei32@(!H", "Reno", "NV");
 const finalUser = await users.createUser("Barack", "Obama", "presidentobama@something.mil", "ObamaMama<3", "1961-08-04", "Obama804*", "Honolulu", "HI");
 
-
+console.log("\n---ALL USERS ADDED---\n");
 
 console.log("\n---ATTEMPTS TO DUPLICATE USERNAMES AND EMAIL ADDRESSES---\n");
 
@@ -269,7 +256,7 @@ try {
 }
 
 
-console.log("\n---MOVING ONTO CHECKUSER ERROR CHECKING---\n");
+console.log("\n---CHECKUSER ERROR CHECKING---\n");
 
 
 try {
@@ -302,6 +289,26 @@ try {
 
 try {
     const validUser = console.log(await users.checkUser("  LMUHNICK@STEVENS.EDU   ", "Stevens997*"))
+} catch (e) {
+    console.log(e.message);
+}
+
+console.log("\n---INSERTING INVALID LISTINGS---\n");
+
+try {
+    const noParamListings = await listings.create();
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const missingGameName = await listings.create(patrick._id.toString(), "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const noSecondaryCondition = await listings.create(mrKing._id.toString(), "Breath of the Wild", "Sell", "Used",  ['Cartridge'], ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
 } catch (e) {
     console.log(e.message);
 }

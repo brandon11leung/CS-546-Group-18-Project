@@ -2,6 +2,7 @@ let letters = /[A-Za-z]/;
 let upper = /[A-Z]/;
 let nums = /\d/;
 let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+let ajax = true;
 
 
 const validEmail = (email) => {
@@ -60,18 +61,34 @@ let errorPassword = document.getElementById('errorPassword');
 
 if (form) {
     form.addEventListener('submit', (event) => {
+        ajax = true;
         errorEmail.hidden = true;
         errorPassword.hidden = true;
         if (!validEmail(email.value)) {
+            ajax = false;
             event.preventDefault();
             errorEmail.hidden = false;
             errorEmail.innerHTML = 'Email must be in email address format, containing a valid prefix and domain.';
         }
 
         if (!validPassword(password.value)) {
+            ajax = false;
             event.preventDefault();
             errorPassword.hidden = false;
             errorPassword.innerHTML = 'Password must contain at least eight characters, have at least one uppercase letter, at least one number, and at least one special character. No spaces.';
         }
+        if (ajax === true) {
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    emailAddress: email.value,
+                    password: password.value
+                }
+            }).then(res => {
+                if (res.ok) { return res.json(); }
+                else { throw new Error('Error occurred! Status code: ' + res.status)}
+            });
+        }
     });
+
 }
