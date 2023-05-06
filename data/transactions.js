@@ -42,11 +42,31 @@ export const createTransaction = async (
             timestamp: timestamp('YYYY/MM/DD - HH:mm:ss'),
             price: listing.price,
             seller: listing.posterId,
-            buyer: buyerOrSeller
+            buyer: new ObjectId(buyerOrSeller)
         }
-        // const userData = await users();
-        // let user = await userData.findOne({_id: new ObjectId(buyerOrSeller)});
-        // user.purchaseHistory
+        //Update purchaseHistory for buyer
+        let updatedUser = {
+            $push: { purchaseHistory: new ObjectId(listingId) }
+        }
+        let userData = await users();
+        let updatedInfo = await userData.findOneAndUpdate(
+            {_id: new ObjectId(buyerOrSeller)},
+            updatedUser,
+            {returnDocument: 'after'})
+        if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the user info.")}
+            updatedInfo.value._id = updatedInfo.value._id.toString();
+
+        //Update salesHistory for seller
+        updatedUser = {
+            $push: { salesHistory: new ObjectId(listingId) }
+        }
+        userData = await users();
+        updatedInfo = await userData.findOneAndUpdate(
+            {_id: new ObjectId(listing.posterId)},
+            updatedUser,
+            {returnDocument: 'after'})
+        if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the user info.")}
+            updatedInfo.value._id = updatedInfo.value._id.toString();
     } else {
         var newTransaction = {
             _id: new ObjectId(),
@@ -54,9 +74,32 @@ export const createTransaction = async (
             listingName: listing.title,
             timestamp: timestamp('YYYY/MM/DD - HH:mm:ss'),
             price: listing.price,
-            seller: buyerOrSeller,
+            seller: new ObjectId(buyerOrSeller),
             buyer: listing.posterId
         }
+        //Update purchaseHistory for buyer
+        let updatedUser = {
+            $push: { purchaseHistory: new ObjectId(listingId) }
+        }
+        let userData = await users();
+        let updatedInfo = await userData.findOneAndUpdate(
+            {_id: new ObjectId(listing.posterId)},
+            updatedUser,
+            {returnDocument: 'after'})
+        if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the user info.")}
+            updatedInfo.value._id = updatedInfo.value._id.toString();
+
+        //Update salesHistory for seller
+        updatedUser = {
+            $push: { salesHistory: new ObjectId(listingId) }
+        }
+        userData = await users();
+        updatedInfo = await userData.findOneAndUpdate(
+            {_id: new ObjectId(buyerOrSeller)},
+            updatedUser,
+            {returnDocument: 'after'})
+        if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the user info.")}
+            updatedInfo.value._id = updatedInfo.value._id.toString();
     }
     
     const insertInfo = await transactionCollection.insertOne(newTransaction);
