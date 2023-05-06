@@ -4,6 +4,7 @@ const router = Router();
 import * as helpers from '../helpers.js';
 import * as users from '../data/users.js'
 import * as listings from '../data/listings.js'
+import * as charting from '../utils/pricecharting.js'
 import xss from 'xss';
 
 router.route('/').get(async (req, res) => {
@@ -36,12 +37,10 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
         res.status(500).json({error: e});
     }})
     .post(async (req, res) => {
-
-        req.body.commentInput = xss(req.body.commentInput);
-        
-        if (!helpers.isValidString(req.body.commentInput)) {
-            res.status(400).render('login', {title: 'Login', error: 'Invalid email address'})
+        if(!req.session.user){
+            res.redirect('/login');
         }
+        req.body.commentInput = xss(req.body.commentInput);
         try {
             await listings.addComment(req.params.id, req.session.user.username, req.session.user.id, req.body.commentInput);
             res.redirect('/sellinglistings/'+ req.params.id);
@@ -74,12 +73,10 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
             res.status(500).json({error: e});
         }})
         .post(async (req, res) => {
-
-            req.body.commentInput = xss(req.body.commentInput);
-            
-            if (!helpers.isValidString(req.body.commentInput)) {
-                res.status(400).render('login', {title: 'Login', error: 'Invalid email address'})
+            if(!req.session.user){
+                res.redirect('/login');
             }
+            req.body.commentInput = xss(req.body.commentInput);
         
             try {
                 await listings.addComment(req.params.id, req.session.user.username, req.session.user.id, req.body.commentInput);
@@ -209,11 +206,37 @@ router.route('/transaction').get(async (req, res) => {
         res.status(500).json({error: e});
     }});
 
+    router.route('/PriceChartSearch').get(async (req, res) => {
+        try {
+            res.render('priceCharting', {title: 'Search for data'});
+        } catch (e) {
+            res.status(500).json({error: e});
+        }})
+        .post(async (req, res) => {
+                try {
+                    let chart = await charting.searchByTerm(req.body.searchInput);
+                    for(let x of chart){
+                        x['box-only-price'] = x['box-only-price']/100;
+                        x['cib-price'] = x['cib-price']/100;
+                        x['loose-price'] = x['loose-price']/100;
+                        x['manual-only-price'] = x['manual-only-price']/100;
+                        x['new-price'] = x['new-price']/100;
+                        }
+                    res.render('createListing', {title: 'Create a Listing', chart: chart});
+                } catch (e) {
+                    console.log(e.message);
+                    res.status(500).render('priceCharting', {title: 'Search for a game', error: 'Invalid search'})
+                }
+        });
+
 router.route('/createListing').get(async (req, res) => {
     try {
         res.render('createListing', {title: 'Create a Listing'});
     } catch (e) {
         res.status(500).json({error: e});
-    }});
+    }})
+    .post(async (req, res) => {
+
+    });
 
  export default router;

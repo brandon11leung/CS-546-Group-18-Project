@@ -1,5 +1,6 @@
 <h1>Selling Station</h1>
     {{#each listings}}
+    {{#if listing.open}}
                 <div class="items"> 
                 <h2 class="itemName">Item: {{listing.title}}</h2>
                 <div>
@@ -12,5 +13,7 @@
                 <p class="item">Last time updated: {{listing.timeStampUpdated}}</p>
                 <button onclick="window.location.href = 'http://localhost:3000/sellinglistings/{{listing._id}}'">More Details</button>
                 </div>
+    {{else}}
+    {{/if}}
                         
     {{/each}}

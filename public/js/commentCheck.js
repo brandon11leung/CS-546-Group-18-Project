@@ -7,7 +7,6 @@ const validString = (str) => {
 
 let form = document.getElementById('comment-form');
 let comment = document.getElementById('commentInput');
-let listing = document.getElementById('ListingId');
 let errorComment= document.getElementById('errorComment');
 
 if (form) {

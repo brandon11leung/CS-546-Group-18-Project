@@ -60,10 +60,19 @@ h3{
     height: auto;
   }
 
-  ul li {
+  ul li.history {
     border: 1px solid rgb(0, 0, 0);
     display: inline-block;
     position: absolute;
+  }
+
+  ul.search{
+    border: 1px solid rgb(0, 0, 0);
+    display: inline-block;
+  }
+  ul li.search {
+    font-size: 150%;
+    text-decoration: solid;
   }
 
 .items {
