@@ -225,11 +225,13 @@ export const filterByElements = async (listings, elements) => {
 				
 			}
 		}
-		const validMainConditionArr = ["Brand New", "Like New/Open Box", "Used", "For Parts or Not Working"];
+		const validMainConditionArr = ["Brand New", "Graded", "Like New/Open Box", "Used", "For Parts or Not Working"];
 		if ((validMainConditionArr.includes(elements.mainCondition) == false || validMainConditionArr.includes(listings[i].mainCondition) == false) && elements.mainCondition != null) {
 			throw new Error("Error: Invalid Main Condition.");
 		}
 		if (elements.mainCondition == "Brand New" && listings[i].mainCondition != "Brand New") {
+			matchFilter = false;
+		} else if (elements.mainCondition == "Graded" && listings[i].mainCondition != "Graded") {
 			matchFilter = false;
 		} else if (elements.mainCondition == "Like New/Open Box" && listings[i].mainCondition != "Like New/Open Box") {
 			matchFilter = false;
@@ -238,7 +240,7 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
 			matchFilter = false;
 		}
-		const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code"];
+		const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code", "Other"];
 		if (elements.secondaryCondition.length > 0 && listings[i].secondaryCondition.length > 0) {
 			let check = false;
 			for (let j = 0; j < elements.secondaryCondition.length; j++) {
@@ -354,8 +356,6 @@ export const sortByElement = (listings, element, order) => {
 	}
 	return sortedArr;
 }
-
-
 
 export const addComment = async (Listingid, username, posterid, comment) => {
 	if (typeof(comment) !== "string") {throw new Error("Error: invalid comment type.")}

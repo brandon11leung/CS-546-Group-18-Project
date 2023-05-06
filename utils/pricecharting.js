@@ -17,7 +17,8 @@ export const searchByTerm = async (searchItemTerm) => {
             filteredArr.push(data.products[i]);
         }
     }
-    return filteredArr;
+    return parseObj(filteredArr, 0);
+    // return filteredArr;
 }
 
 export const searchByID = async (id) => {
@@ -26,10 +27,84 @@ export const searchByID = async (id) => {
     if (data.products[0].id != id) {
         throw new Error("Error: no product was found with that id.")
     } else {
-        return data.products[0];
+        return parseObj(data.products[0], 1);
+        // return data.products[0]
     }
 }
 
-//
-// console.log(await searchByTerm("mario kart 8 deluxe"));
-// console.log(await searchByID(38623))
+export const parseObj = async (objArr, mode) => {
+    if ((mode == 0 || mode == 1) == false) {
+        throw new Error("Error: invalid mode.")
+    }
+    if (mode == 1) {
+        objArr = [objArr];
+    }
+    let parsedArr = []
+
+    for (let i = 0; i < objArr.length; i++) {
+        if (!objArr[i].id) {
+            objArr[i].id = null;
+        }
+        if (!objArr[i].title) {
+            objArr[i].title = null;
+        }
+        if (objArr[i]["release-date"]) {
+            objArr[i]["release-date"] = objArr[i]["release-date"].replace("-", "/");
+            objArr[i]["release-date"] = objArr[i]["release-date"].replace("-", "/");
+        } else {
+            objArr[i]["release-date"] = null;
+        }
+        if (!objArr[i].genre) {
+            objArr[i].genre = null;
+        }
+        if (!objArr[i]["new-price"]) {
+            objArr[i]["new-price"] = null;
+        } else {
+            objArr[i]["new-price"] /= 100;
+        }
+        if (!objArr[i]["graded-price"]) {
+            objArr[i]["graded-price"] = null;
+        } else {
+            objArr[i]["graded-price"] /= 100;
+        }
+        if (!objArr[i]["cib-price"]) {
+            objArr[i]["cib-price"] = null;
+        } else {
+            objArr[i]["cib-price"] /= 100;
+        }
+        if (!objArr[i]["loose-price"]) {
+            objArr[i]["loose-price"] = null;
+        } else {
+            objArr[i]["loose-price"] /= 100;
+        }
+        if (!objArr[i]["box-only-price"]) {
+            objArr[i]["box-only-price"] = null;
+        } else {
+            objArr[i]["box-only-price"] /= 100;
+        }
+        if (!objArr[i]["manual-only-price"]) {
+            objArr[i]["manual-only-price"] = null;
+        } else {
+            objArr[i]["manual-only-price"] /= 100;
+        }
+        let parsedObj = {
+            id: objArr[i].id,
+            title: objArr[i]["product-name"],
+            releaseDate: objArr[i]["release-date"],
+            genre: objArr[i].genre,
+            newPrice: objArr[i]["new-price"],
+            gradedPrice: objArr[i]["graded-price"],
+            cibPrice: objArr[i]["cib-price"],
+            loosePrice: objArr[i]["loose-price"],
+            boxPrice: objArr[i]["box-only-price"],
+            manualPrice: objArr[i]["manual-only-price"],
+        }
+        parsedArr.push(parsedObj);
+    }
+    if (mode == 1) {
+        parsedArr = parsedArr[0]
+    }
+    return parsedArr
+}
+// console.log(await searchByTerm("mario kart"));
+// console.log(await searchByID(4166331))
