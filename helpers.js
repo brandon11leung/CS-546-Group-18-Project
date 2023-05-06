@@ -213,3 +213,40 @@ export const isValidPrice = (arg, argName) => {
     if (Number(arg.toFixed(2)) !== arg) {throw new Error(`Error: the ${argName} parameter is not a valid price`)}
     return arg
 }
+
+export const stupidSort = (arr) => {
+    let sortedArr = [];
+    let i = Math.min(...arr);
+    while (arr.length > 0) {
+        if (arr.includes(i)) {
+            sortedArr.push(i);
+            arr.splice(arr.indexOf(i), 1)
+        } else {
+            i++;
+        }
+    }
+    return sortedArr
+}
+
+
+export const timestampSort = (timestampArr) => {
+    for (let i = 0; i < timestampArr.length; i++) {
+        timestampArr[i] = timestampArr[i].replace(" - ", "");
+        timestampArr[i] = timestampArr[i].replace("/", "");
+        timestampArr[i] = timestampArr[i].replace(":", "");
+        timestampArr[i] = timestampArr[i].replace("/", "");
+        timestampArr[i] = timestampArr[i].replace(":", "");
+    }
+    timestampArr.sort();
+    for (let i = 0; i < timestampArr.length; i++) {
+        timestampArr[i] = [timestampArr[i].slice(0, 12), ":", timestampArr[i].slice(12)].join("");
+        timestampArr[i] = [timestampArr[i].slice(0, 10), ":", timestampArr[i].slice(10)].join("");
+        timestampArr[i] = [timestampArr[i].slice(0, 8), " - ", timestampArr[i].slice(8)].join("");
+        timestampArr[i] = [timestampArr[i].slice(0, 6), "/", timestampArr[i].slice(6)].join("");
+        timestampArr[i] = [timestampArr[i].slice(0, 4), "/", timestampArr[i].slice(4)].join("");
+    }
+    return timestampArr
+}
+//[ '20230506002026', '20230509002026', '20230706002026' ]
+// console.log(timestampSort(["2023/05/06 - 00:20:26", "2023/05/09 - 00:20:26", "2023/07/06 - 00:20:26"]))
+//2023/05/06 - 00:20:26
