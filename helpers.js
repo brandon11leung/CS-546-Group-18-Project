@@ -228,7 +228,6 @@ export const stupidSort = (arr) => {
     return sortedArr
 }
 
-
 export const timestampSort = (timestampArr) => {
     for (let i = 0; i < timestampArr.length; i++) {
         timestampArr[i] = timestampArr[i].replace(" - ", "");
