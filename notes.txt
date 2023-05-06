@@ -1,1 +1,42 @@
 hi, this is for git demonstration 
+
+if (elements.includes("Free Shipping") && listings[i].shippingPrice > 0) {
+			matchFilter = false;
+		}
+
+		if (elements.includes("Brand New") && listings[i].mainCondition != "Brand New") {
+			matchFilter = false;
+		} else if (elements.includes("Like New/Open Box") && listings[i].mainCondition != "Like New/Open Box") {
+			matchFilter = false;
+		} else if (elements.includes("Used") && listings[i].mainCondition != "Used") {
+			matchFilter = false;
+		} else if (elements.includes("For Parts or Not Working") && listings[i].mainCondition != "For Parts or Not Working") {
+			matchFilter = false;
+		}
+
+		if (elements.includes("Sell Listing") && listings[i].listingType != "Sell") {
+			matchFilter = false;
+		} else if (elements.includes("Buy Listing") && listings[i].listingType != "Buy") {
+			matchFilter = false;
+		}
+
+		if (elements.includes("Trades Accepted") && listings[i].trades.length == 0) {
+			matchFilter = false;
+		}
+
+		if (elements.includes("Closed Listings") && listings[i].open == true) {
+			matchFilter = false;
+		}
+
+		if (elements.includes("Cartridge/Disc") && listings[i].secondaryCondition.includes("Cartridge/Disc") == false) {
+			matchFilter = false;
+		}
+		if (elements.includes("Box") && listings[i].secondaryCondition.includes("Box") == false) {
+			matchFilter = false;
+		}
+		if (elements.includes("Manuals/Inserts") && listings[i].secondaryCondition.includes("Manuals/Inserts") == false) {
+			matchFilter = false;
+		}
+		if (matchFilter == true) {
+			filteredListings.push(listings[i]);
+		}

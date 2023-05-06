@@ -9,6 +9,7 @@
 import {listings} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
+import * as pricecharting from '../utils/pricecharting.js'
 import timestamp from "time-stamp";
 
 export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency, pricechartingID) => {
@@ -178,6 +179,102 @@ export const update = async (id, open, title, listingType, mainCondition, second
 		updatedInfo.value._id = updatedInfo.value._id.toString();
 		return updatedInfo.value;
 };
+
+export const searchByTitle = async (searchQuery) => {
+    searchQuery = helpers.isValidString(searchQuery, "Search Query").toLowerCase();
+    const listingCollection = await listings();
+    const allListings = await getAll();
+    let matchedListings = [];
+    for (let i = 0; i < allListings.length; i++) {
+        let currListingTitle = allListings[i].title.toLowerCase();
+        if (currListingTitle.indexOf(searchQuery) > -1 || currListingTitle.includes(searchQuery)) {
+            // matchedListings.push(allListings[i]._id);
+            matchedListings.push(allListings[i]);
+        }
+    }
+    return matchedListings;
+}
+
+// export const filterByElement = async (listings, elements) => {
+// 	// Freeshipping, console, genre, condition, sell/sell, sold, undoc, secCondition
+// 	let elements = {
+// 		open: true,
+// 		consoles: [
+// 			"Nintendo Switch",
+// 			"Nintendo DS",
+// 			"Nintendo 3DS"],
+// 		mainCondition: null,
+// 		secondaryCondition: [],
+// 		listingType: "Sell",
+// 		trades: true,
+// 		shippingPrice: 0,
+// 	}
+// 	filteredListings = []
+// 	for (let i = 0; i < listings.length; i++) {
+// 		matchFilter = true;
+
+// 		if (elements.open == false && listings[i].open == true) {
+
+// 		}
+// 		if (elements.consoles.length > 0) {
+// 			if (consoles.includes(pricecharting.searchByID(listings[i].pricechartingID)) == false) {
+
+// 			}
+// 		}
+// 		if (elements.mainCondition == "Brand New" && listings[i].mainCondition != "Brand New") {
+// 			matchFilter = false;
+// 		} else if (elements.mainCondition == "Like New/Open Box" && listings[i].mainCondition != "Like New/Open Box") {
+// 			matchFilter = false;
+// 		} else if (elements.mainCondition == "Used" && listings[i].mainCondition != "Used") {
+// 			matchFilter = false;
+// 		} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
+// 			matchFilter = false;
+// 		}
+
+// 		if (elements.secondaryCondition.length > 0) {
+// 			if 
+// 		}
+
+// 		if (elements.includes("Free Shipping") && listings[i].shippingPrice > 0) {
+// 			matchFilter = false;
+// 		}
+
+		
+
+// 		if (elements.includes("Sell Listing") && listings[i].listingType != "Sell") {
+// 			matchFilter = false;
+// 		} else if (elements.includes("Buy Listing") && listings[i].listingType != "Buy") {
+// 			matchFilter = false;
+// 		}
+
+// 		if (elements.includes("Trades Accepted") && listings[i].trades.length == 0) {
+// 			matchFilter = false;
+// 		}
+
+// 		if (elements.includes("Closed Listings") && listings[i].open == true) {
+// 			matchFilter = false;
+// 		}
+
+// 		if (elements.includes("Cartridge/Disc") && listings[i].secondaryCondition.includes("Cartridge/Disc") == false) {
+// 			matchFilter = false;
+// 		}
+// 		if (elements.includes("Box") && listings[i].secondaryCondition.includes("Box") == false) {
+// 			matchFilter = false;
+// 		}
+// 		if (elements.includes("Manuals/Inserts") && listings[i].secondaryCondition.includes("Manuals/Inserts") == false) {
+// 			matchFilter = false;
+// 		}
+// 		if (matchFilter == true) {
+// 			filteredListings.push(listings[i]);
+// 		}
+// 	}
+// 	return filteredListings;
+// }
+
+// export const sortByElement = async (listings, element) => {
+// 	// alphabettical, last updated, last posted, lowest ->high, high -> low, 
+// 	if (element == "Alphabetically")
+// }
 
 export const addComment = async (Listingid, username, posterid, comment) => {
 	if (typeof(comment) !== "string") {throw new Error("Error: invalid comment type.")}
