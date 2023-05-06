@@ -323,7 +323,7 @@ try {
     console.log(await listings.getAll())
     console.log("remove\n")
     console.log(await listings.remove(validListing3._id.toString()))
-    console.log(await listings.updateStatus(ssID, false))
+    // console.log(await listings.updateStatus(ssID, false))
     console.log(await listings.getAll())
     console.log("\n\n-----INSERTING OFFERS------\n\n");
 

@@ -62,7 +62,7 @@ export const createTransaction = async (
     }
 
     await updateStatus(listingId, false);
-  
+    
     return {insertedTransaction: true};
 
 }
