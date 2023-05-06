@@ -414,7 +414,7 @@ try {
 
 console.log("Search Tests")
 
-console.log(await listings.searchByTitle("Pok"))
+console.log(await listings.searchByTitle("Pokimon"))
 
 console.log('Done seeding database');
 

@@ -195,81 +195,115 @@ export const searchByTitle = async (searchQuery) => {
     return matchedListings;
 }
 
-// export const filterByElement = async (listings, elements) => {
-// 	// Freeshipping, console, genre, condition, sell/sell, sold, undoc, secCondition
-// 	let elements = {
-// 		open: true,
-// 		consoles: [
-// 			"Nintendo Switch",
-// 			"Nintendo DS",
-// 			"Nintendo 3DS"],
-// 		mainCondition: null,
-// 		secondaryCondition: [],
-// 		listingType: "Sell",
-// 		trades: true,
-// 		shippingPrice: 0,
-// 	}
-// 	filteredListings = []
-// 	for (let i = 0; i < listings.length; i++) {
-// 		matchFilter = true;
+export const filterByElements = async (listings, elements) => {
+	let filteredListings = []
+	for (let i = 0; i < listings.length; i++) {
+		let matchFilter = true;
+		if (typeof elements.open !== "boolean" && elements.open !== null) {
+			throw new Error("Error: Open is not a boolean.");
+		}
+		if (elements.open == false && listings[i].open == true) {
+			matchFilter = false;
+		} else if (elements.open == true && listings[i].open == false) {
+			matchFilter = false;
+		}
 
-// 		if (elements.open == false && listings[i].open == true) {
+		if (elements.consoles.length > 0) {
+			if (listings[i].pricechartingID == null) {
+				matchFilter = false;
+			} else {
+				for (let j = 0; j < elements.consoles.length; j++) {
+					if (pricecharting.ntscConsoleArr.includes(elements.consoles[j]) == false) {
+						throw new Error("Error: Invalid Console.");
+					}
+					let listingConsole = await pricecharting.searchByID(listings[i].pricechartingID)
+					listingConsole = listingConsole["console-name"] 
+					console.log(listingConsole)
+					if (elements.consoles.includes(listingConsole) == false) {
+						matchFilter = false;
+					}
+				}
+				
+			}
+		}
+	
+		const validMainConditionArr = ["Brand New", "Like New/Open Box", "Used", "For Parts or Not Working"];
+		if ((validMainConditionArr.includes(elements.mainCondition) == false || validMainConditionArr.includes(listings[i].mainCondition) == false) && elements.mainCondition != null) {
+			throw new Error("Error: Invalid Main Condition.");
+		}
+		if (elements.mainCondition == "Brand New" && listings[i].mainCondition != "Brand New") {
+			matchFilter = false;
+		} else if (elements.mainCondition == "Like New/Open Box" && listings[i].mainCondition != "Like New/Open Box") {
+			matchFilter = false;
+		} else if (elements.mainCondition == "Used" && listings[i].mainCondition != "Used") {
+			matchFilter = false;
+		} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
+			matchFilter = false;
+		}
 
-// 		}
-// 		if (elements.consoles.length > 0) {
-// 			if (consoles.includes(pricecharting.searchByID(listings[i].pricechartingID)) == false) {
+		const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code"];
+		if (elements.secondaryCondition.length > 0 && listings[i].secondaryCondition.length > 0) {
+			let check = false;
+			for (let j = 0; j < elements.secondaryCondition.length; j++) {
+				if (validSecondaryConditionArr.includes(elements.secondaryCondition[j]) == false && validSecondaryConditionArr.includes(listings[i].secondaryCondition[j]) == false) {
+					throw new Error("Error: Invalid Secondary Condition.");
+				}
+				// if (elements.secondaryCondition.includes(listings[i].secondaryCondition[j])) {
+				// 	check = true;
+				// }
+				if (listings[i].secondaryCondition.includes(elements.secondaryCondition[j]) == false) {
+					check = true;
+				}
+			}
+			if (check == true) {
+				matchFilter = false;
+			}
+		}
+		
+		const validListingTypeArr = ["Buy", "Sell", "Trade"];
+		if ((validListingTypeArr.includes(elements.listingType) == false || validListingTypeArr.includes(listings[i].listingType) == false) && elements.listingType != null) {
+			throw new Error("Error: Invalid Listing Type.");
+		}
+		if (elements.listingType == "Sell" && listings[i].listingType != "Sell") {
+			matchFilter = false;
+		} else if (elements.listingType == "Buy" && listings[i].listingType != "Buy") {
+			matchFilter = false;
+		}
+		
+		if (typeof elements.trades !== "boolean" && elements.trades !== null) {
+			throw new Error("Error: Trades is not a boolean.");
+		}
+		if (elements.trades == true && listings[i].trades.length == 0) {
+			matchFilter = false;
+		}
 
-// 			}
-// 		}
-// 		if (elements.mainCondition == "Brand New" && listings[i].mainCondition != "Brand New") {
-// 			matchFilter = false;
-// 		} else if (elements.mainCondition == "Like New/Open Box" && listings[i].mainCondition != "Like New/Open Box") {
-// 			matchFilter = false;
-// 		} else if (elements.mainCondition == "Used" && listings[i].mainCondition != "Used") {
-// 			matchFilter = false;
-// 		} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
-// 			matchFilter = false;
-// 		}
-
-// 		if (elements.secondaryCondition.length > 0) {
-// 			if 
-// 		}
-
-// 		if (elements.includes("Free Shipping") && listings[i].shippingPrice > 0) {
-// 			matchFilter = false;
-// 		}
+		const validShippingMethodsArr = ["Shipping", "Local Meetup"];
+		for (let j = 0; j < elements.shippingMethods.length; j++) {
+			if (validShippingMethodsArr.includes(elements.shippingMethods[j]) == false && elements.shippingMethods != null) {
+				throw new Error("Error: Invalid Shipping Method.");
+			}
+			if (listings[i].shippingMethods.includes(elements.shippingMethods[j]) == false) {
+				matchFilter = false;
+			}
+		}
 
 		
+		if (typeof elements.freeShipping !== "boolean" && elements.freeShipping !== null) {
+			throw new Error("Error: Free Shipping is not a boolean.");
+		}
+		if (elements.freeShipping == true && listings[i].shippingPrice > 0 && listings[i].listingType == "Sell") {
+			matchFilter = false;
+		} else if (elements.freeShipping == false && listings[i].shippingPrice == 0 && listings[i].listingType == "Sell") {
+			matchFilter = false;
+		}
 
-// 		if (elements.includes("Sell Listing") && listings[i].listingType != "Sell") {
-// 			matchFilter = false;
-// 		} else if (elements.includes("Buy Listing") && listings[i].listingType != "Buy") {
-// 			matchFilter = false;
-// 		}
-
-// 		if (elements.includes("Trades Accepted") && listings[i].trades.length == 0) {
-// 			matchFilter = false;
-// 		}
-
-// 		if (elements.includes("Closed Listings") && listings[i].open == true) {
-// 			matchFilter = false;
-// 		}
-
-// 		if (elements.includes("Cartridge/Disc") && listings[i].secondaryCondition.includes("Cartridge/Disc") == false) {
-// 			matchFilter = false;
-// 		}
-// 		if (elements.includes("Box") && listings[i].secondaryCondition.includes("Box") == false) {
-// 			matchFilter = false;
-// 		}
-// 		if (elements.includes("Manuals/Inserts") && listings[i].secondaryCondition.includes("Manuals/Inserts") == false) {
-// 			matchFilter = false;
-// 		}
-// 		if (matchFilter == true) {
-// 			filteredListings.push(listings[i]);
-// 		}
-// 	}
-// 	return filteredListings;
-// }
+		
+		if (matchFilter == true) {
+			filteredListings.push(listings[i]);
+		}
+	}
+	return filteredListings;
+}
 
 // export const sortByElement = async (listings, element) => {
 // 	// alphabettical, last updated, last posted, lowest ->high, high -> low, 
