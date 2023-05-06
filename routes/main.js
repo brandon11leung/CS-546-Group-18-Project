@@ -34,7 +34,22 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
         res.render('listingsById', {title: List.title,listings: List});
         } catch (e) {
         res.status(500).json({error: e});
-    }});
+    }})
+    .post(async (req, res) => {
+
+        req.body.commentInput = xss(req.body.commentInput);
+        
+        if (!helpers.isValidString(req.body.commentInput)) {
+            res.status(400).render('login', {title: 'Login', error: 'Invalid email address'})
+        }
+        try {
+            await listings.addComment(req.params.id, req.session.user.username, req.session.user.id, req.body.commentInput);
+            res.redirect('/sellinglistings/'+ req.params.id);
+        } catch (e) {
+            console.log(e.message);
+            res.status(500).render('login', {title: 'Login', error: 'Either the email or password are incorrect'})
+        }
+    });
 
 router.route('/sellinglistings').get(async (req, res) => {
     try {
@@ -57,7 +72,23 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
             res.render('listingsById', {title: List.title,listings: List});
             } catch (e) {
             res.status(500).json({error: e});
-        }});
+        }})
+        .post(async (req, res) => {
+
+            req.body.commentInput = xss(req.body.commentInput);
+            
+            if (!helpers.isValidString(req.body.commentInput)) {
+                res.status(400).render('login', {title: 'Login', error: 'Invalid email address'})
+            }
+        
+            try {
+                await listings.addComment(req.params.id, req.session.user.username, req.session.user.id, req.body.commentInput);
+                res.redirect('/buyinglistings/'+ req.params.id);
+            } catch (e) {
+                console.log(e.message);
+                res.status(500).render('login', {title: 'Login', error: 'Either the email or password are incorrect'})
+            }
+        });
     
 router.route('/buyinglistings').get(async (req, res) => {
         try {
