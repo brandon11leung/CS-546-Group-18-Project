@@ -195,7 +195,7 @@ export const searchByTitle = async (searchQuery) => {
     return matchedListings;
 }
 
-export const filterByElements = async (listings, elements) => {
+export const filterByElements = async (listings, elements) => { 
 	let filteredListings = []
 	for (let i = 0; i < listings.length; i++) {
 		let matchFilter = true;
@@ -207,7 +207,6 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.open == true && listings[i].open == false) {
 			matchFilter = false;
 		}
-
 		if (elements.consoles.length > 0) {
 			if (listings[i].pricechartingID == null) {
 				matchFilter = false;
@@ -226,7 +225,6 @@ export const filterByElements = async (listings, elements) => {
 				
 			}
 		}
-	
 		const validMainConditionArr = ["Brand New", "Like New/Open Box", "Used", "For Parts or Not Working"];
 		if ((validMainConditionArr.includes(elements.mainCondition) == false || validMainConditionArr.includes(listings[i].mainCondition) == false) && elements.mainCondition != null) {
 			throw new Error("Error: Invalid Main Condition.");
@@ -240,7 +238,6 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
 			matchFilter = false;
 		}
-
 		const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code"];
 		if (elements.secondaryCondition.length > 0 && listings[i].secondaryCondition.length > 0) {
 			let check = false;
@@ -259,7 +256,6 @@ export const filterByElements = async (listings, elements) => {
 				matchFilter = false;
 			}
 		}
-		
 		const validListingTypeArr = ["Buy", "Sell", "Trade"];
 		if ((validListingTypeArr.includes(elements.listingType) == false || validListingTypeArr.includes(listings[i].listingType) == false) && elements.listingType != null) {
 			throw new Error("Error: Invalid Listing Type.");
@@ -269,14 +265,12 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.listingType == "Buy" && listings[i].listingType != "Buy") {
 			matchFilter = false;
 		}
-		
 		if (typeof elements.trades !== "boolean" && elements.trades !== null) {
 			throw new Error("Error: Trades is not a boolean.");
 		}
 		if (elements.trades == true && listings[i].trades.length == 0) {
 			matchFilter = false;
 		}
-
 		const validShippingMethodsArr = ["Shipping", "Local Meetup"];
 		for (let j = 0; j < elements.shippingMethods.length; j++) {
 			if (validShippingMethodsArr.includes(elements.shippingMethods[j]) == false && elements.shippingMethods != null) {
@@ -286,8 +280,6 @@ export const filterByElements = async (listings, elements) => {
 				matchFilter = false;
 			}
 		}
-
-		
 		if (typeof elements.freeShipping !== "boolean" && elements.freeShipping !== null) {
 			throw new Error("Error: Free Shipping is not a boolean.");
 		}
@@ -296,8 +288,6 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.freeShipping == false && listings[i].shippingPrice == 0 && listings[i].listingType == "Sell") {
 			matchFilter = false;
 		}
-
-		
 		if (matchFilter == true) {
 			filteredListings.push(listings[i]);
 		}
@@ -305,10 +295,67 @@ export const filterByElements = async (listings, elements) => {
 	return filteredListings;
 }
 
-// export const sortByElement = async (listings, element) => {
-// 	// alphabettical, last updated, last posted, lowest ->high, high -> low, 
-// 	if (element == "Alphabetically")
-// }
+export const sortByElement = (listings, element, order) => {
+	const validElementArr = ["By Alphabetically", "By Newest", "By Price"]
+	let sortedArr = []
+	if (validElementArr.includes(element) == false) {
+		throw new Error("Error: invalid element parameter.");
+	}
+	if ((order == 0 || order == 1) == false) {
+		throw new Error("Error: invalid order parameter.");
+	}
+	if (element == "By Alphabetically") {
+		let titleArr = [];
+		for (let i = 0; i < listings.length; i++) {
+			titleArr.push(listings[i].title);
+		}
+		titleArr.sort();
+		for (let i = 0; i < titleArr.length; i++) {
+			for (let j = 0; j < listings.length; j++) {
+				if (titleArr[i] == listings[j].title) {
+					sortedArr[i] = listings[j];
+					break;
+				}
+			}
+		}
+	}
+	if (element == "By Newest") {
+		let timestampArr = [];
+		for (let i = 0; i < listings.length; i++) {
+			timestampArr.push(listings[i].timeStampUpdated);
+		}
+		helpers.timestampSort(timestampArr);
+		for (let i = 0; i < timestampArr.length; i++) {
+			for (let j = 0; j < listings.length; j++) {
+				if (timestampArr[i] == listings[j].timeStampUpdated) {
+					sortedArr[i] = listings[j];
+					break;
+				}
+			}
+		}
+	}
+	if (element == "By Price") {
+		let priceArr = [];
+		for (let i = 0; i < listings.length; i++) {
+			priceArr.push(listings[i].price + listings[i].shippingPrice);
+		}
+		priceArr = helpers.stupidSort(priceArr);
+		for (let i = 0; i < priceArr.length; i++) {
+			for (let j = 0; j < listings.length; j++) {
+				if (priceArr[i] == listings[j].price + listings[j].shippingPrice) {
+					sortedArr[i] = listings[j];
+					break;
+				}
+			}
+		}
+	}
+	if (order == 1) {
+		sortedArr = sortedArr.reverse();
+	}
+	return sortedArr;
+}
+
+
 
 export const addComment = async (Listingid, username, posterid, comment) => {
 	if (typeof(comment) !== "string") {throw new Error("Error: invalid comment type.")}
