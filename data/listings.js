@@ -179,4 +179,27 @@ export const update = async (id, open, title, listingType, mainCondition, second
 		return updatedInfo.value;
 };
 
-export default {create, get, getAll, remove, update, updateStatus}
+export const addComment = async (Listingid, username, posterid, comment) => {
+	if (typeof(comment) !== "string") {throw new Error("Error: invalid comment type.")}
+	if (typeof(username) !== "string") {throw new Error("Error: invalid username type.")}
+	Listingid = helpers.isValidID(Listingid);
+	posterid = helpers.isValidID(posterid);
+	const listingCollection = await listings();
+	const newComment = {
+		_id: new ObjectId(),
+		listingId: Listingid,
+		username: username,
+		posterId: posterid,
+		content: comment
+	}
+	let listing = await get(Listingid);
+	const updatedInfo = await listingCollection.findOneAndUpdate(
+		{_id: new ObjectId(Listingid)},
+		{$set: {comments: listing['comments'].concat(newComment)}},
+		{returnDocument: 'after'})
+	if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the listing info.")}
+		updatedInfo.value._id = updatedInfo.value._id.toString();
+		return updatedInfo.value;
+}
+
+export default {create, get, getAll, remove, update, updateStatus, addComment}
