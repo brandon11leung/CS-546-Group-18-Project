@@ -63,15 +63,13 @@ export const createReview = async (
     throw new Error ('Could not add review');
   }
   
-  const updatedInfo = await userCollection.findOneAndUpdate({_id: new ObjectId(userAbout)}, {$push: {reviewedBy: [new ObjectId(userFrom), rating]}});
+  const updatedInfo = await userCollection.findOneAndUpdate({_id: new ObjectId(userAbout)}, {$push: {reviewedBy: [new ObjectId(userFrom), userFromFound.username, newReview.reviewBody, rating]}});
   if (updatedInfo.lastErrorObject.n === 0) { throw new Error ('Could not add review to the user'); }
 
   const updatedUser = await userCollection.findOne({_id: new ObjectId(userAbout)});
 
-  console.log(updatedUser);
   let len = updatedUser.reviewedBy.length;
   let newRating = Number(((updatedUser.overallRating * (len - 1) + newReview.rating) / len).toFixed(1))
-  console.log(newRating);  
   
 
   const updateRating = await userCollection.findOneAndUpdate({_id: new ObjectId(userAbout)}, {$set: {overallRating: newRating}});
