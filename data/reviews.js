@@ -3,67 +3,81 @@ import {reviews, users} from "./../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 
 export const createReview = async (
-    userFrom,
-    userAbout,
-    reviewBody,
-    rating
+  userFrom,
+  userAbout,
+  reviewBody,
+  rating
 ) => {
-    const reviewCollection = await reviews();
-    if ((!userFrom) || (!userAbout) || (!reviewBody) || (!rating)) {
-        throw new Error ('All fields need to have values');
-    }
-    if ((typeof userFrom !== "string") || (typeof userAbout !== "string") || (typeof reviewBody !== "string")) {
-        throw new Error ('userFrom, userAbout, and reviewBody must be nonempty strings');
-    }
-    if ((!(userFrom.replace(/\s/g, '').length)) || (!(userAbout.replace(/\s/g, '').length)) || (!(reviewBody.replace(/\s/g, '').length))) {
-        throw new Error ('userFrom, userAbout, and reviewBody must be nonempty strings');
-    }
-    if (!ObjectId.isValid(userFrom)) throw new Error ('invalid object ID on userFrom');
+  const reviewCollection = await reviews();
+  if ((!userFrom) || (!userAbout) || (!reviewBody) || (!rating)) {
+      throw new Error ('All fields need to have values');
+  }
+  if ((typeof userFrom !== "string") || (typeof userAbout !== "string") || (typeof reviewBody !== "string")) {
+      throw new Error ('userFrom, userAbout, and reviewBody must be nonempty strings');
+  }
+  if ((!(userFrom.replace(/\s/g, '').length)) || (!(userAbout.replace(/\s/g, '').length)) || (!(reviewBody.replace(/\s/g, '').length))) {
+      throw new Error ('userFrom, userAbout, and reviewBody must be nonempty strings');
+  }
+  if (!ObjectId.isValid(userFrom)) throw new Error ('invalid object ID on userFrom');
 
-    const userCollection = await users();
-    const userFromFound = await userCollection.findOne({_id: new ObjectId(userFrom)});
-    if (userFromFound === null) { throw new Error ('userFrom parameter was not found in database'); }
+  const userCollection = await users();
+  const userFromFound = await userCollection.findOne({_id: new ObjectId(userFrom)});
+  if (userFromFound === null) { throw new Error ('userFrom parameter was not found in database'); }
 
-    if (!ObjectId.isValid(userAbout)) throw new Error ('invalid object ID on userAbout');
+  if (!ObjectId.isValid(userAbout)) throw new Error ('invalid object ID on userAbout');
 
-    const userAboutFound = await userCollection.findOne({_id: new ObjectId(userAbout)});
-    if (userAboutFound === null) { throw new Error ('userAbout parameter was not found in database'); }
+  const userAboutFound = await userCollection.findOne({_id: new ObjectId(userAbout)});
+  if (userAboutFound === null) { throw new Error ('userAbout parameter was not found in database'); }
 
-    if (isNaN(rating)) {
-        throw new Error('Rating is NaN');
-    }
-    if (rating < 1 || rating > 5 || rating % 1 !== 0) {
-        throw new Error('Invalid rating');
-    }
-    userFrom = userFrom.trim();
-    userAbout = userAbout.trim();
+  if (isNaN(rating)) {
+      throw new Error('Rating is NaN');
+  }
+  if (rating < 1 || rating > 5 || rating % 1 !== 0) {
+      throw new Error('Invalid rating');
+  }
+  userFrom = userFrom.trim();
+  userAbout = userAbout.trim();
 
-    reviewBody = reviewBody.trim();
+  reviewBody = reviewBody.trim();
 
-    if (reviewBody.length < 10 || reviewBody.length > 5000) {
-      throw new Error ('Review must be between 10 and 5000 characters.')
-    }
+  if (reviewBody.length < 10 || reviewBody.length > 5000) {
+    throw new Error ('Review must be between 10 and 5000 characters.')
+  }
+
+  //Check if user already reviewed person
+  const val = await checkIfAlrReviewed(userFrom, userAbout);
+  if (val === true) {
+    throw new Error('User already has reviewed this person');
+  }
+
+  let newReview = {
+      _id: new ObjectId(),
+      userFrom: userFrom,
+      userAbout: userAbout,
+      reviewBody: reviewBody,
+      rating: rating
+  }
   
-    //Check if user already reviewed person
-    const val = await checkIfAlrReviewed(userFrom, userAbout);
-    if (val === true) {
-      throw new Error('User already has reviewed this person');
-    }
-
-    const newReview = {
-        _id: new ObjectId(),
-        userFrom: userFrom,
-        userAbout: userAbout,
-        reviewBody: reviewBody,
-        rating: rating
-    }
-    
-    const insertInfo = await reviewCollection.insertOne(newReview);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-      throw new Error ('Could not add user');
-    }
+  const insertInfo = await reviewCollection.insertOne(newReview);
+  if (!insertInfo.acknowledged || !insertInfo.insertedId) {
+    throw new Error ('Could not add review');
+  }
   
-    return {insertedReview: true};
+  const updatedInfo = await userCollection.findOneAndUpdate({_id: new ObjectId(userAbout)}, {$push: {reviewedBy: [new ObjectId(userFrom), rating]}});
+  if (updatedInfo.lastErrorObject.n === 0) { throw new Error ('Could not add review to the user'); }
+
+  const updatedUser = await userCollection.findOne({_id: new ObjectId(userAbout)});
+
+  console.log(updatedUser);
+  let len = updatedUser.reviewedBy.length;
+  let newRating = Number(((updatedUser.overallRating * (len - 1) + newReview.rating) / len).toFixed(1))
+  console.log(newRating);  
+  
+
+  const updateRating = await userCollection.findOneAndUpdate({_id: new ObjectId(userAbout)}, {$set: {overallRating: newRating}});
+  if (updateRating.lastErrorObject.n === 0) { throw new Error ('Could not update to the user'); }
+
+  return {insertedReview: true};
 }
   
 const getReview = async (reviewId) => {
