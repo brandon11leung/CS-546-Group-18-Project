@@ -395,12 +395,23 @@ try {
 }
 
 try {
-    const iLoveLuke = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'You are my favorite student <3', 5);
+    const iLoveLuke = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'The product shipped with excellent quality. You are my favorite student <3', 5);
     console.log(iLoveLuke);
 } catch (e) {
     console.log(e.message);
 }
 
+try {
+    const lukeIsOkay = await reviews.createReview(mrKing._id.toString(), luke._id.toString(), 'I saw a scratch on the back of the box. As someone who expects perfection, this is clearly disappointing.', 3);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const thisIsWhatsUp = await reviews.createReview(albertEinstein._id.toString(), luke._id.toString(), 'Exquisite product. Makes me think about the theory of relativity.', 5);
+} catch (e) {
+    console.log(e.message);
+}
 
 
 console.log("\n\n-----INSERTING TRANSACTIONS-----\n\n");
