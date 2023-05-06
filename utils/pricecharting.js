@@ -8,8 +8,8 @@ const jpConsoleArr = ["Famicom", "Famicom Disk System", "JP GameBoy", "JP GameBo
 const palConsoleArr = ["PAL Amiga CD32", "PAL GameBoy", "PAL GameBoy Advance", "PAL GameBoy Color", "PAL Gamecube", "PAL MSX", "PAL MSX2", "PAL Mega Drive 32X", "PAL NES", "PAL Neo Geo Pocket Color", "PAL Nintendo 3DS", "PAL Nintendo 64", "PAL Nintendo DS", "PAL Nintendo Switch", "PAL PSP", "PAL Playstation", "PAL Playstation 2", "PAL Playstation 3", "PAL Playstation 4", "PAL Playstation 5", "PAL Playstation Vita", "PAL Sega Dreamcast", "PAL Sega Game Gear", "PAL Sega Master System", "PAL Sega Mega CD", "PAL Sega Mega Drive", "PAL Sega Pico", "PAL Sega Saturn", "PAL Super Nintendo", "PAL Vectrex", "PAL Videopac G7000", "PAL Videopac G7400", "PAL Wii", "PAL Wii U", "PAL Xbox", "PAL Xbox 360", "PAL Xbox One", "PAL Xbox Series X"]
 const otherConsoleArr = ["Amiibo", "Amiibo Cards", "Disney Infinity", "Dreamcast Magazine", "Electronic Gaming Monthly", "Game Informer", "GamePro", "Lego Dimensions", "MegaZone", "Nintendo Power", "PC Gamer", "Pokemon Mini", "Rumble U", "Skylanders", "Starlink", "Stoneheart", "Strategy Guide"]
 
-export const priceChartingSearch = async (searchItemTerm, console) => {
-    
+export const searchByTerm = async (searchItemTerm) => {
+    searchItemTerm = helpers.isValidString(searchItemTerm)
     const { data } = await axios.get(`https://www.pricecharting.com/api/products?t=${process.env.PRICECHARTING_API_KEY}&q=${searchItemTerm}`);
     let filteredArr = [];
     for (let i = 0; i < data.products.length; i++) {
@@ -20,4 +20,14 @@ export const priceChartingSearch = async (searchItemTerm, console) => {
     return filteredArr;
 }
 
-console.log(await priceChartingSearch("pokemon pearl"));
+export const searchByID = async (id) => {
+    helpers.isValidNumber(id)
+    const { data } = await axios.get(`https://www.pricecharting.com/api/products?t=${process.env.PRICECHARTING_API_KEY}&id=${id}`);
+    if (data.products[0].id != id) {
+        throw new Error("Error: no product was found with that id.")
+    } else {
+        return data;
+    }
+}
+// console.log(await searchByTerm("pokemon pearl"));
+console.log(await searchByID(38623))

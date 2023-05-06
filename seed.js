@@ -306,7 +306,7 @@ try {
     console.log(e.message);
 }
 
-console.log("\n\n-----INSERTING LISTINGS------\n\n");
+
 
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
@@ -322,7 +322,7 @@ try {
     console.log("getAll\n")
     console.log(await listings.getAll())
     console.log("remove\n")
-    console.log(await listings.remove(validListing3._id.toString()))
+    //console.log(await listings.remove(validListing3._id.toString()))
     console.log(await listings.updateStatus(ssID, false))
     console.log(await listings.getAll())
     console.log("\n\n-----INSERTING OFFERS------\n\n");
@@ -412,6 +412,9 @@ try {
     console.log(e.message);
 }
 
+console.log("Search Tests")
+
+console.log(await listings.searchByTitle("Pok"))
 
 console.log('Done seeding database');
 
