@@ -113,8 +113,21 @@ p {
   font-size: 150%;
 }
 
+
 .purchase {
   height:100px;
     width:200px;
     align-content: center;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }

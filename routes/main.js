@@ -39,7 +39,8 @@ router.route('/account').get(async (req, res) => {
 router.route('/sellinglistings/:id').get(async (req, res) => {
     try {
         let List = await listings.get(req.params.id); 
-        res.render('listingsById', {title: List.title,listings: List});
+        let priceChartData = await charting.searchByID(List.pricechartingID.toString());
+        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now"});
         } catch (e) {
         res.status(500).json({error: e});
     }})
@@ -63,19 +64,26 @@ router.route('/sellinglistings').get(async (req, res) => {
         let Ready = [];
         for (let x of allListings){
             if(x.listingType === "Sell"){
-                let lplusI = {listing: x,img: x.attachments[0]}
+                let listinguser = await users.getUserById(x.posterId.toString())
+                let lplusI;
+                if (listinguser.overallRating === 0){
+                    lplusI = {listing: x,img: x.attachments[0], user: listinguser, rating: "User not Rated"}
+                }
+                else{ lplusI = {listing: x,img: x.attachments[0], user: listinguser, rating: listinguser.overallRating};}
                 Ready.push(lplusI);
             }
         } 
         res.render('sellingListings', {title: "Selling Station",listings: Ready});
         } catch (e) {
+            console.log(e);
         res.status(500).json({error: e});
     }});
 
 router.route('/buyinglistings/:id').get(async (req, res) => {
         try {
             let List = await listings.get(req.params.id); 
-            res.render('listingsById', {title: List.title,listings: List});
+            let priceChartData = await charting.searchByID(List.pricechartingID.toString());
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade"});
             } catch (e) {
             res.status(500).json({error: e});
         }})
@@ -100,7 +108,12 @@ router.route('/buyinglistings').get(async (req, res) => {
             let Ready = [];
             for (let x of allListings){
                 if(x.listingType === "Buy"){
-                    let lplusI = {listing: x,img: x.attachments[0]}
+                    let listinguser = await users.getUserById(x.posterId.toString())
+                    let lplusI;
+                    if (listinguser.overallRating === 0){
+                        lplusI = {listing: x,img: x.attachments[0], user: listinguser, rating: "User not Rated"}
+                    }
+                    else{ lplusI = {listing: x,img: x.attachments[0], user: listinguser, rating: listinguser.overallRating};}
                     Ready.push(lplusI);
                 }
             } 

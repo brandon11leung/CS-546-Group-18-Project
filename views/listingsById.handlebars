@@ -1,15 +1,59 @@
+<div>
 <h1>{{listings.title}}</h1>  
 {{#each listings.attachments}}
     <img alt="img" src="{{this}}">
-{{/each}}              
-<p >Condition: {{listings.mainCondition}}</p>
-<p >Description: {{listings.description}}</p>
-<p >Price: ${{listings.price}}</p>
-<P >Shipping: ${{listings.shippingPrice}}</P>
-<p >Return Policy: {{listings.returnPolicy}}</p>
-<p >Last time updated: {{listings.timeStampUpdated}}</p><br>
+{{/each}} 
+</div>
+<div class="row">
+<div class="column">   
+    <ul class="search"> <h1>Listing Information</h1>  
+                            <li class="search">Product Name: {{listings.title}}</li><br>
+                            <li class="search">Lisitng type: {{listings.listingType}}</li><br>
+                            <li class="search">Condition: {{listings.mainCondition}}</li><br>
+                            <li class="search">
+                                Secondary conditions:
+                                <ul>
+                                {{#each listings.secondaryCondition}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                                </ul> 
+                            </li><br>
+                            <li class="search">Description: {{listings.description}}</li><br>
+                            <li class="search">Price: ${{listings.price}}</li><br>
+                            <li class="search">Shipping: ${{listings.shippingPrice}}</li><br>
+                            <li class="search">
+                                Shipping Methods:
+                                <ul>
+                                {{#each listings.shippingMethods}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                                </ul>   
+                            </li><br>
+                            <li class="search">Return Policy: {{listings.returnPolicy}}</li><br>
+                            <li class="search">Last time updated: {{listings.timeStampUpdated}}</li><br>
+                        </ul>
+</div>
+<div class="column">
+                    {{#if chart}}
+                        <ul class="search"><h1>Game listing on Price Charts</h1>
+                            <li class="search">Product Name: {{chart.title}}</li><br>
+                            <li class="search">Release Date: {{chart.releaseDate}}</li><br>
+                            <li class="search">Console Name: {{chart.consoleName}}</li><br>
+                            <li class="search">Genre: {{chart.genre}}</li><br>
+                            <li class="search">Price Chart ID: {{chart.id}}</li><br>
+                            <li class="search">Box Only Price: ${{chart.boxPrice}}</li><br>
+                            <li class="search">Complete in Box Price: ${{chart.cibPrice}}</li><br>
+                            <li class="search">Game Only Price: ${{chart.loosePrice}}</li><br>
+                            <li class="search">Manual Only Price: ${{chart.manualPrice}}</li><br>
+                            <li class="search">New in Box Price: ${{chart.newPrice}}</li><br>
+                            <li class="search">Graded Price: ${{chart.gradedPrice}}</li><br>
+                        </ul><br>
+                    {{else}}
+                    {{/if}}
+                </div><br>
+</div>
 <div class="btn-group">
-<button class="purchase" onclick="window.location.href = 'http://localhost:3000/transaction'">Buy Now</button>
+<button class="purchase" onclick="window.location.href = 'http://localhost:3000/transaction'">{{type}}</button>
 </div>
 {{#if listings.comments}}
     <h3>Comments</h3>
