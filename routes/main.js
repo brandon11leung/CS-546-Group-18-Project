@@ -5,7 +5,14 @@ import * as helpers from '../helpers.js';
 import * as users from '../data/users.js'
 import * as listings from '../data/listings.js'
 import * as charting from '../utils/pricecharting.js'
+import * as cloud from '../utils/cloudinary.js'
 import xss from 'xss';
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+const __filename = fileURLToPath(import.meta.url);
+import {dirname} from 'path';
+const __dirname = dirname(__filename);
 
 router.route('/').get(async (req, res) => {
     try {
@@ -213,20 +220,98 @@ router.route('/transaction').get(async (req, res) => {
             res.status(500).json({error: e});
         }})
         .post(async (req, res) => {
+            req.body.searchInput = xss(req.body.searchInput);
+            if(req.body.searchInput){
                 try {
                     let chart = await charting.searchByTerm(req.body.searchInput);
-                    for(let x of chart){
-                        x['box-only-price'] = x['box-only-price']/100;
-                        x['cib-price'] = x['cib-price']/100;
-                        x['loose-price'] = x['loose-price']/100;
-                        x['manual-only-price'] = x['manual-only-price']/100;
-                        x['new-price'] = x['new-price']/100;
-                        }
                     res.render('createListing', {title: 'Create a Listing', chart: chart});
                 } catch (e) {
                     console.log(e.message);
                     res.status(500).render('priceCharting', {title: 'Search for a game', error: 'Invalid search'})
                 }
+            }
+            else{
+                req.body.listingTypeInput = xss(req.body.listingTypeInput);
+                req.body.TitleInput = xss(req.body.TitleInput);
+                req.body.pcIdInput = xss(req.body.pcIdInput);
+                req.body.conditionInput = xss(req.body.conditionInput);
+                req.body.priceInput = xss(req.body.priceInput);
+                req.body.shippingPriceInput = xss(req.body.shippingPriceInput);
+                req.body.descriptionInput = xss(req.body.descriptionInput);
+                req.body.returnPolicyInput = xss(req.body.returnPolicyInput);
+                req.body.imageInput = xss(req.body.imageInput);
+                
+                req.body.Cartridge = xss(req.body.Cartridge);
+                req.body.Box = xss(req.body.Box);
+                req.body.Case = xss(req.body.Case);
+                req.body.Manual = xss(req.body.Manual);
+                req.body.Console = xss(req.body.Console);
+                req.body.Controller = xss(req.body.Controller);
+                req.body.Disc = xss(req.body.Disc);
+                req.body.Cables = xss(req.body.Cables);
+                req.body.RedemptionCode = xss(req.body.RedemptionCode);
+                req.body.Other = xss(req.body.Other);
+                
+                let secCond = [];
+                if(req.body.Cartridge){
+                    secCond.push(req.body.Cartridge);
+                }
+                if(req.body.Box){
+                    secCond.push(req.body.Box);
+                }
+                if(req.body.Case){
+                    secCond.push(req.body.Case);
+                }
+                if(req.body.Manual){
+                    secCond.push(req.body.Manual);
+                }
+                if(req.body.Console){
+                    secCond.push(req.body.Console);
+                }
+                if(req.body.Controller){
+                    secCond.push(req.body.Controller);
+                }
+                if(req.body.Disc){
+                    secCond.push(req.body.Disc);
+                }
+                if(req.body.Cables){
+                    secCond.push(req.body.Cables);
+                }
+                if(req.body.RedemptionCode){
+                    secCond.push(req.body.RedemptionCode);
+                }
+                if(req.body.Other){
+                    secCond.push(req.body.Other);
+                }   
+                console.log(req.files);
+                let paths = [];
+                for(let x of req.files.imageInput){
+                    const image = x;
+                    const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
+                    paths.push(path.join(__dirname, '..', 'uploads', image.name));
+                    writeStream.write(image.data);
+                    writeStream.end();
+                }
+                let images = await cloud.uploadImage(paths);
+                try {
+                    let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, [], req.body.shippingPriceInput, ['USPS Priority'],  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
+                    let pathway = path.join(__dirname, '..', 'uploads');
+                    console.log(listing);
+                    fs.readdir(pathway, (err, files) => {
+                        if (err) throw err;
+                        for( let x of files){
+                            let filepath = path.join(pathway, x);
+                            fs.unlink(filepath, err => {
+                                if (err) throw err;
+                            });
+                        }
+                    });
+                    res.redirect('/');
+                } catch (e) {
+                    console.log(e.message);
+                    res.status(500).render('createListing', {title: 'Create a Listing', error: 'Invalid Listing'})
+                }
+            }
         });
 
 router.route('/createListing').get(async (req, res) => {
@@ -234,10 +319,7 @@ router.route('/createListing').get(async (req, res) => {
         res.render('createListing', {title: 'Create a Listing'});
     } catch (e) {
         res.status(500).json({error: e});
-    }})
-    .post(async (req, res) => {
-
-    });
+    }});
 
 router.route('/logout').get(async (req, res) => {
     req.session.destroy();

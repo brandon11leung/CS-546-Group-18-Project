@@ -1,6 +1,7 @@
 
 import session from 'express-session';
 import express from 'express';
+import fileUpload from 'express-fileupload';
 const app = express();
 import configRoutes from './routes/index.js';
 import {fileURLToPath} from 'url';
@@ -13,6 +14,7 @@ const staticDir = express.static(__dirname + '/public');
 app.use('/public', staticDir);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(fileUpload());
 
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');

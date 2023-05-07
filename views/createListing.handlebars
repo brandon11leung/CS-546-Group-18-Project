@@ -7,7 +7,7 @@
             {{/if}}
         </div>
         <div>
-            <form method="POST" id="listing-form" action="">
+            <form method="POST" id="listing-form" action="/PriceChartSearch" enctype="multipart/form-data">
 
                 <label for="listingTypeInput">Listing type:</label>
                 <select id="listingTypeInput" name="listingTypeInput" required>
@@ -22,8 +22,36 @@
                 <label for="pcIdInput">Price Charts ID:</label>
                 <input id="pcIdInput" type="number" name="pcIdInput"><br><br>
 
-                <label for="conditionInput">Listing's Condition:</label>
-                <input id="conditionInput" type="text" name="conditionInput"><br><br>
+                <label for="conditionInput">Listing's Main Condition:</label>
+                <select typ id="conditionInput" name="conditionInput" required>
+                    <option value="">Select a Condition</option>
+                    <option value="Brand New">Brand New</option>
+                    <option value="Like New/Open Box">Like New/Open Box</option>
+                    <option value="Used">Used</option>
+                    <option value="For Parts or Not Working">For Parts or Not Working</option>
+                </select><br><br>
+
+                <label>Listing's Secondary Conditions:</label><br>
+                <label for="Cartridge">Cartridge</label>
+                <input id="Cartridge" type="checkbox" name="Cartridge" value="Cartridge"><br>
+                <label for="Box">Box</label>
+                <input id="Box" type="checkbox" name="Box" value="Box"><br>
+                <label for="Case">Case</label>
+                <input id="Case" type="checkbox" name="Case" value="Case"><br>
+                <label for="Manual">Manual</label>
+                <input id="Manual" type="checkbox" name="Manual" value="Manual"><br>
+                <label for="Console">Console</label>
+                <input id="Console" type="checkbox" name="Console" value="Console"><br>
+                <label for="Controller">Controller</label>
+                <input id="Controller" type="checkbox" name="Controller" value="Controller"><br>
+                <label for="Disc">Disc</label>
+                <input id="Disc" type="checkbox" name="Disc" value="Disc"><br>
+                <label for="Cables">Cables</label>
+                <input id="Cables" type="checkbox" name="Cables" value="Cables"><br>
+                <label for="RedemptionCode">Redemption Code</label>
+                <input id="RedemptionCode" type="checkbox" name="RedemptionCode" value="RedemptionCode"><br>
+                <label for="Other">Other</label>
+                <input id="Other" type="checkbox" name="Other" value="Other"><br><br>
                 
                 <label for="priceInput">Price:</label>
                 <input id="priceInput" type="number" name="priceInput"><br><br>
@@ -42,7 +70,18 @@
 
                 <button type="submit">Register</button>
             </form>
-
+            <p id="errorType" hidden></p>
+            <p id="errorTitle" hidden></p>
+            <p id="errorPCID" hidden></p>
+            <p id="errorMainCond" hidden></p>
+            <p id="errorPrice" hidden></p>
+            <p id="errorShipPrice" hidden></p>
+            <p id="errorDesc" hidden></p>
+            <p id="errorRetPol" hidden></p>
+            <p id="errorImgs" hidden></p>
+            {{#if error}}
+            <p>{{error}}</p>
+            {{/if}}
                
                 <div>
                     {{#if chart}}
@@ -51,16 +90,17 @@
                         {{#each chart}}
                         <li>
                         <ul class="search">
-                            <li class="search">Product Name: {{this.product-name}}</li><br>
-                            <li class="search">Release Date: {{this.release-date}}</li><br>
-                            <li class="search">Console Name: {{this.console-name}}</li><br>
+                            <li class="search">Product Name: {{this.title}}</li><br>
+                            <li class="search">Release Date: {{this.releaseDate}}</li><br>
+                            <li class="search">Console Name: {{this.consoleName}}</li><br>
                             <li class="search">Genre: {{this.genre}}</li><br>
                             <li class="search">Price Chart ID: {{this.id}}</li><br>
-                            <li class="search">Box Only Price: ${{this.box-only-price}}</li><br>
-                            <li class="search">Complete in Box Price: ${{this.cib-price}}</li><br>
-                            <li class="search">Game Only Price: ${{this.loose-price}}</li><br>
-                            <li class="search">Manual Only Price: ${{this.manual-only-price}}</li><br>
-                            <li class="search">New in Box Price: ${{this.new-price}}</li><br>
+                            <li class="search">Box Only Price: ${{this.boxPrice}}</li><br>
+                            <li class="search">Complete in Box Price: ${{this.cibPrice}}</li><br>
+                            <li class="search">Game Only Price: ${{this.loosePrice}}</li><br>
+                            <li class="search">Manual Only Price: ${{this.manualPrice}}</li><br>
+                            <li class="search">New in Box Price: ${{this.newPrice}}</li><br>
+                            <li class="search">Graded Price: ${{this.gradedPrice}}</li><br>
                         </ul>
                         </li><br>
                         {{/each}}
