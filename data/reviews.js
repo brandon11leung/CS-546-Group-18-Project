@@ -1,5 +1,5 @@
 /* Luke Bianchi */
-import {reviews, users} from "./../config/mongoCollections.js";
+import {reviews, users, transactions} from "./../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 
 export const createReview = async (
@@ -27,7 +27,21 @@ export const createReview = async (
   if (!ObjectId.isValid(userAbout)) throw new Error ('invalid object ID on userAbout');
 
   const userAboutFound = await userCollection.findOne({_id: new ObjectId(userAbout)});
-  if (userAboutFound === null) { throw new Error ('userAbout parameter was not found in database'); }
+  if (userAboutFound === null) { throw new Error ('The person you are trying to review is not a registered user.'); }
+
+  const transactionCollection = await transactions();
+  const option1 = await transactionCollection.findOne({seller: new ObjectId(userFrom), buyer: new ObjectId(userAbout)});
+  const option2 = await transactionCollection.findOne({seller: new ObjectId(userAbout), buyer: new ObjectId(userFrom)});
+
+  /* Buyers can review sellers; likewise, sellers can review buyers.
+     A reviewer can't review someone who didn't buy from them or 
+     if they didn't buy a product from them
+  */
+
+  if (option1 === null && option2 === null) {
+    throw new Error ('Not allowed to review this person. Buyers can review sellers, and sellers can review buyers.')
+  }
+
 
   if (isNaN(rating)) {
       throw new Error('Rating is NaN');

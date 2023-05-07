@@ -33,6 +33,30 @@ app.use('/account', async (req, res, next) => {
   }
 });
 
+app.use('/login', async (req, res, next) => {
+  if (req.session.user) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+});
+
+app.use('/signup', async (req, res, next) => {
+  if (req.session.user) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+});
+
+app.use('/logout', async (req, res, next) => {
+  if (!req.session.user) {
+    res.redirect('/');
+  }
+  else {
+    next();
+  }
+});
 
 
 // app.use('/createListing', async(req, res, next) => {
@@ -43,21 +67,7 @@ app.use('/account', async (req, res, next) => {
 //   }
 // });
 
-// app.use('/login', async (req, res, next) => {
-//   if (req.session.user) {
-//     res.redirect('/listings');
-//   } else {
-//     next();
-//   }
-// });
 
-// app.use('/signup', async (req, res, next) => {
-//   if (req.session.user) {
-//     res.redirect('/listings');
-//   } else {
-//     next();
-//   }
-// })
 
 
 

@@ -372,53 +372,53 @@ try {
     
 
 
-console.log("\n\n-----INSERTING REVIEWS-----\n\n");
-/* Patrick reviews the Arkansas Apprentice */
-try {
-    const goodReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'This guy is from Arkansas; therefore, I like him', 5);
-    console.log(goodReview);
-} catch (e) {
-    console.log(e.message);
-}
+// console.log("\n\n-----INSERTING REVIEWS-----\n\n");
 
-try {
-    const averageReview = await reviews.createReview(mrKing._id.toString(), handymanny._id.toString(), 'He took his sweet time with shipping. Product was in good shape', 3);
-    console.log(averageReview);
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const goodReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'This guy is from Arkansas; therefore, I like him', 5);
+//     console.log(goodReview);
+// } catch (e) {
+//     console.log(e.message);
+// }
 
-try {
-    const gotScammed = await reviews.createReview(finalUser._id.toString(), alien._id.toString(), 'This alien fellow did not sell me a good product', 1);
-    console.log(gotScammed);
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const averageReview = await reviews.createReview(mrKing._id.toString(), handymanny._id.toString(), 'He took his sweet time with shipping. Product was in good shape', 3);
+//     console.log(averageReview);
+// } catch (e) {
+//     console.log(e.message);
+// }
 
-try {
-    const duplicateReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'I found out he was not actually from Arkansas, whoops', 2);
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const gotScammed = await reviews.createReview(finalUser._id.toString(), alien._id.toString(), 'This alien fellow did not sell me a good product', 1);
+//     console.log(gotScammed);
+// } catch (e) {
+//     console.log(e.message);
+// }
 
-try {
-    const iLoveLuke = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'The product shipped with excellent quality. You are my favorite student <3', 5);
-    console.log(iLoveLuke);
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const duplicateReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'I found out he was not actually from Arkansas, whoops', 2);
+// } catch (e) {
+//     console.log(e.message);
+// }
 
-try {
-    const lukeIsOkay = await reviews.createReview(mrKing._id.toString(), luke._id.toString(), 'I saw a scratch on the back of the box. As someone who expects perfection, this is clearly disappointing.', 3);
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const iLoveLuke = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'The product shipped with excellent quality. You are my favorite student <3', 5);
+//     console.log(iLoveLuke);
+// } catch (e) {
+//     console.log(e.message);
+// }
 
-try {
-    const thisIsWhatsUp = await reviews.createReview(albertEinstein._id.toString(), luke._id.toString(), 'Exquisite product. Makes me think about the theory of relativity.', 5);
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const lukeIsOkay = await reviews.createReview(mrKing._id.toString(), luke._id.toString(), 'I saw a scratch on the back of the box. As someone who expects perfection, this is clearly disappointing.', 3);
+// } catch (e) {
+//     console.log(e.message);
+// }
+
+// try {
+//     const thisIsWhatsUp = await reviews.createReview(albertEinstein._id.toString(), luke._id.toString(), 'Exquisite product. Makes me think about the theory of relativity.', 5);
+// } catch (e) {
+//     console.log(e.message);
+// }
 
 
 console.log("\n\n-----INSERTING TRANSACTIONS-----\n\n");
@@ -430,9 +430,49 @@ try {
     console.log(e.message);
 }
 
-console.log("Search Tests")
 
-console.log(await listings.searchByTitle("Pokimon"))
+console.log('\n---INSERTING REVIEWS---\n')
+
+try {
+    const personalGrudge = await reviews.createReview(mrKing._id.toString(), alien._id.toString(), 'I have a personal grudge against you, so I will give you a bad review.', 1);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const biggestFan = await reviews.createReview(patrick._id.toString(), albertEinstein._id.toString(), 'I am your biggest fan! Can I get your autograph?', 5);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const goodReview = await reviews.createReview(luke._id.toString(), patrick._id.toString(), 'My delivery came in on time and my product was in perfect shape. I am very happy.', 4);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const goodReview2 = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'Good buyer, no complaints. -PH', 5);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const repeatedReview = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'I like breaking things; therefore, I will try reviewing you again!', 4);
+    console.log('This message should NOT be displayed!');
+} catch (e) {
+    console.log(e.message);
+}
+
+
+
+// console.log("\n---SEARCH TESTS---\n")
+
+// console.log(await listings.searchByTitle("Pokimon"))
+// console.log(await listings.searchByTitle("Mario Kart 8 Deluxe"))
+// console.log(await listings.searchByTitle("Splatoon"))
+// console.log(await listings.searchByTitle("Pikmin"))
+// console.log(await listings.searchByTitle("Minecraft"))
 
 console.log('Done seeding database');
 
