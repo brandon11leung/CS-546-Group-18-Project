@@ -354,6 +354,17 @@ try {
     console.log(e.message)
 }
 
+const validListing4 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Case"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, ["USPS Priority"], "Comes with case", "30 Days", "USD", 32913);
+const validListing5 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Case"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, ["Standard"], "Has a scratch but otherwise in good condition", "None", "USD", 32913);
+const validListing6 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, ["USPS Priority"], "sorry it's just the disk", "two weeks", "USD", 32913);
+const validListing7 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, ["USPS Priority"], "WOMBO COMBO (Game not included)", "none", "USD", 32913);
+const validListing8 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Case", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, ["Standard US Shipping"], "Complete in box - perfect for collectors.", "Two Weeks", "USD", 32913);
+const validListing9 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, ["Free Shipping - Priority"], "Cartridge. Nothing more.", "Two months", "USD", 32913);
+const validListing10 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Case"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, ["free"], "Huge nostalgia rush! Deal of a lifetime.", "90 Day", "USD", 32913);
+
+
+
+
 console.log("\n\n-----INSERTING INVALID COMMENTS------\n\n");
 
 
