@@ -90,6 +90,7 @@ export const parseObj = async (objArr, mode) => {
         let parsedObj = {
             id: objArr[i].id,
             title: objArr[i]["product-name"],
+            consoleName: objArr[i]["console-name"],
             releaseDate: objArr[i]["release-date"],
             genre: objArr[i].genre,
             newPrice: objArr[i]["new-price"],

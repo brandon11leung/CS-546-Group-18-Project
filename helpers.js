@@ -210,7 +210,7 @@ export const isValidTradeArray = (arg, argName) => { // Universal
 
 export const isValidPrice = (arg, argName) => {
     isValidNumber(arg);
-    if (Number(arg.toFixed(2)) !== arg) {throw new Error(`Error: the ${argName} parameter is not a valid price`)}
+    if (Number(parseFloat(arg).toFixed(2)) !== parseFloat(arg)) {throw new Error(`Error: the ${argName} parameter is not a valid price`)}
     return arg
 }
 
