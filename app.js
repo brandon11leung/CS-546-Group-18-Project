@@ -35,15 +35,30 @@ app.use('/account', async (req, res, next) => {
   }
 });
 
-// app.post('/upload', (req, res) => {
-//   console.log(req.files);
-//   for(let x of req.files.imageInput){
-//     const image = x;
-//     //image.mv(__dirname + '/upload/' + image.name);
-//     const writeStream = fs.createWriteStream(__dirname + '/uploads/' + image.name);
-//     writeStream.write(image.data);
-//   }
-// });
+app.use('/login', async (req, res, next) => {
+  if (req.session.user) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+});
+
+app.use('/signup', async (req, res, next) => {
+  if (req.session.user) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+});
+
+app.use('/logout', async (req, res, next) => {
+  if (!req.session.user) {
+    res.redirect('/');
+  }
+  else {
+    next();
+  }
+});
 
 
 // app.use('/createListing', async(req, res, next) => {
@@ -54,21 +69,7 @@ app.use('/account', async (req, res, next) => {
 //   }
 // });
 
-// app.use('/login', async (req, res, next) => {
-//   if (req.session.user) {
-//     res.redirect('/listings');
-//   } else {
-//     next();
-//   }
-// });
 
-// app.use('/signup', async (req, res, next) => {
-//   if (req.session.user) {
-//     res.redirect('/listings');
-//   } else {
-//     next();
-//   }
-// })
 
 
 

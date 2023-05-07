@@ -11,9 +11,9 @@
         <div>
             <h3>Purchase History</h3>
             <ul>
-        {{#each user.purchaseHistory}} 
-            <liclass="history">
-                <p>Item: {{listingName}}</p>
+        {{#each user.purchaseHistory}}
+            <li>
+                <p>Item: {{title}}</p>
                 <p>Price: {{price}}</p>
             </li>
         {{/each}}
@@ -21,8 +21,8 @@
             <h3>Sales History</h3>
             <ul>
         {{#each user.salesHistory}}
-            <li class="history">
-                <p>Item: {{listingName}}</p>
+            <li>
+                <p>Item: {{title}}</p>
                 <p>Price: {{price}}</p>
             </li>
         {{/each}}
@@ -32,4 +32,4 @@
     </div>
     
 
-    <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/PriceChartSearch'">Create Listing</button>
+    <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/createListing'">Create Listing</button>

@@ -46,7 +46,7 @@ export const createTransaction = async (
         }
         //Update purchaseHistory for buyer
         let updatedUser = {
-            $push: { purchaseHistory: new ObjectId(listingId) }
+            $push: { purchaseHistory: {_id: new ObjectId(listingId), title: listing.title, price: listing.price}}
         }
         let userData = await users();
         let updatedInfo = await userData.findOneAndUpdate(
@@ -58,7 +58,7 @@ export const createTransaction = async (
 
         //Update salesHistory for seller
         updatedUser = {
-            $push: { salesHistory: new ObjectId(listingId) }
+            $push: { salesHistory: {_id: new ObjectId(listingId), title: listing.title, price: listing.price}}
         }
         userData = await users();
         updatedInfo = await userData.findOneAndUpdate(
@@ -91,7 +91,7 @@ export const createTransaction = async (
 
         //Update salesHistory for seller
         updatedUser = {
-            $push: { salesHistory: new ObjectId(listingId) }
+            $push: { salesHistory: [new ObjectId(listingId), listing.title, listing.price] }
         }
         userData = await users();
         updatedInfo = await userData.findOneAndUpdate(
@@ -104,7 +104,7 @@ export const createTransaction = async (
     
     const insertInfo = await transactionCollection.insertOne(newTransaction);
     if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-      throw new Error ('Could not add user');
+      throw new Error ('Could not add transaction');
     }
 
     await updateStatus(listingId, false);

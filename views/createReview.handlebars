@@ -1,0 +1,21 @@
+<h1>Create Review</h1>
+
+<p>Here, you can create a review for a user.</p>
+<p>Note: Buyers can review sellers; likewise, only sellers can review buyers</p>
+
+<form method="POST" id="review-form" action="">
+    <label for="contentInput">Content for Review</label>
+    <textarea id="contentInput" name="contentInput" rows="10" columns="20" placeholder="Enter review here"></textarea>
+
+    <label for="ratingInput">Rating</label>
+    <select id="ratingInput" name="rating" required>
+          <option value="Enter rating">Select a rating</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+      </select><br>
+</form>
+<p id="errorContent" hidden></p>
+<p id="errorRating" hidden></p>
