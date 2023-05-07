@@ -11,8 +11,21 @@ import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 import * as pricecharting from '../utils/pricecharting.js'
 import timestamp from "time-stamp";
+const validMainConditionArr = ["New", "Graded", "Like New/Open Box", "Used", "For Parts or Not Working"];
+const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code", "Other", "Outer Box"];
+const validListingTypeArr = ["Buy", "Sell", "Trade"];
+const validShippingMethodsArr = ["Shipping", "Local Meetup"];
+const validReturnPolicyArr = ["No Returns", 
+							  "30 Day Returns (Buyer pays for return shipping)", 
+							  "30 Day Returns (Seller pays for return shipping)",
+							  "60 Day Returns (Buyer pays for return shipping)", 
+							  "60 Day Returns (Seller pays for return shipping)",
+							  "90 Day Returns (Buyer pays for return shipping)", 
+							  "90 Day Returns (Seller pays for return shipping)",
+							  "No Preference"];
 
 export const create = async (posterId, title, listingType, mainCondition, secondaryCondition, price, attachments, trades, shippingPrice, shippingMethods, description, returnPolicy, currency, pricechartingID) => {
+	
 	posterId = helpers.isValidID(posterId);
     title = helpers.isValidString(title);
 	listingType = helpers.isValidString(listingType);
@@ -33,11 +46,33 @@ export const create = async (posterId, title, listingType, mainCondition, second
 	for (let i = 0; i < shippingMethods.length; i++) {
 		shippingMethods[i] = helpers.isValidString(shippingMethods[i]);
     }
+	if (listingType == "Sell" && returnPolicy == "No Preference") {
+		throw new Error("Error: Sellers are not allowed to declare No Preference.")
+	}
     description = helpers.isValidString(description);
     currency = helpers.isValidString(currency);
     helpers.isValidArray(attachments);
     returnPolicy = helpers.isValidString(returnPolicy);
     helpers.isValidPrice(shippingPrice);
+	if (validMainConditionArr.includes(mainCondition) == false) {
+		throw new Error("Error: Invalid Main Condition.");
+	}
+	for (let i = 0; i < secondaryCondition.length; i++) {
+		if (validSecondaryConditionArr.includes(secondaryCondition[i]) == false) {
+			throw new Error("Error: Invalid Secondary Condition.");
+		}
+	}
+	if (validListingTypeArr.includes(listingType) == false) {
+		throw new Error("Error: Invalid Listing Type.");
+	}
+	for (let i = 0; i < shippingMethods.length; i++) {
+		if (validShippingMethodsArr.includes(shippingMethods[i]) == false) {
+			throw new Error("Error: Invalid Shipping Method.");
+		}
+	}
+	if (validReturnPolicyArr.includes(returnPolicy) == false) {
+		throw new Error("Error: Invalid Return Policy .");
+	}
 
     if (listingType == "Buy") {
         shippingPrice = 0;
@@ -216,8 +251,7 @@ export const filterByElements = async (listings, elements) => {
 						throw new Error("Error: Invalid Console.");
 					}
 					let listingConsole = await pricecharting.searchByID(listings[i].pricechartingID)
-					listingConsole = listingConsole["console-name"] 
-					console.log(listingConsole)
+					listingConsole = listingConsole.consoleName 
 					if (elements.consoles.includes(listingConsole) == false) {
 						matchFilter = false;
 					}
@@ -225,11 +259,10 @@ export const filterByElements = async (listings, elements) => {
 				
 			}
 		}
-		const validMainConditionArr = ["Brand New", "Graded", "Like New/Open Box", "Used", "For Parts or Not Working"];
 		if ((validMainConditionArr.includes(elements.mainCondition) == false || validMainConditionArr.includes(listings[i].mainCondition) == false) && elements.mainCondition != null) {
 			throw new Error("Error: Invalid Main Condition.");
 		}
-		if (elements.mainCondition == "Brand New" && listings[i].mainCondition != "Brand New") {
+		if (elements.mainCondition == "New" && listings[i].mainCondition != "New") {
 			matchFilter = false;
 		} else if (elements.mainCondition == "Graded" && listings[i].mainCondition != "Graded") {
 			matchFilter = false;
@@ -240,7 +273,6 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
 			matchFilter = false;
 		}
-		const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code", "Other"];
 		if (elements.secondaryCondition.length > 0 && listings[i].secondaryCondition.length > 0) {
 			let check = false;
 			for (let j = 0; j < elements.secondaryCondition.length; j++) {
@@ -258,7 +290,6 @@ export const filterByElements = async (listings, elements) => {
 				matchFilter = false;
 			}
 		}
-		const validListingTypeArr = ["Buy", "Sell", "Trade"];
 		if ((validListingTypeArr.includes(elements.listingType) == false || validListingTypeArr.includes(listings[i].listingType) == false) && elements.listingType != null) {
 			throw new Error("Error: Invalid Listing Type.");
 		}
@@ -273,7 +304,6 @@ export const filterByElements = async (listings, elements) => {
 		if (elements.trades == true && listings[i].trades.length == 0) {
 			matchFilter = false;
 		}
-		const validShippingMethodsArr = ["Shipping", "Local Meetup"];
 		for (let j = 0; j < elements.shippingMethods.length; j++) {
 			if (validShippingMethodsArr.includes(elements.shippingMethods[j]) == false && elements.shippingMethods != null) {
 				throw new Error("Error: Invalid Shipping Method.");
@@ -290,6 +320,23 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.freeShipping == false && listings[i].shippingPrice == 0 && listings[i].listingType == "Sell") {
 			matchFilter = false;
 		}
+
+		if (elements.returnPolicy == "No Returns" && listings[i].returnPolicy != "No Returns") {
+			matchFilter = false;
+		} else if (elements.returnPolicy == "30 Day Returns (Buyer pays for return shipping)" && listings[i].returnPolicy != "30 Day Returns (Buyer pays for return shipping)") {
+			matchFilter = false;
+		} else if (elements.returnPolicy == "30 Day Returns (Seller pays for return shipping)" && listings[i].returnPolicy != "30 Day Returns (Seller pays for return shipping)") {
+			matchFilter = false;
+		} else if (elements.returnPolicy == "60 Day Returns (Buyer pays for return shipping)" && listings[i].returnPolicy != "60 Day Returns (Buyer pays for return shipping)") {
+			matchFilter = false;
+		} else if (elements.returnPolicy == "60 Day Returns (Seller pays for return shipping)" && listings[i].returnPolicy != "60 Day Returns (Seller pays for return shipping)") {
+			matchFilter = false;
+		} else if (elements.returnPolicy == "90 Day Returns (Buyer pays for return shipping)" && listings[i].returnPolicy != "90 Day Returns (Buyer pays for return shipping)") {
+			matchFilter = false;
+		} else if (elements.returnPolicy == "90 Day Returns (Seller pays for return shipping)" && listings[i].returnPolicy != "90 Day Returns (Seller pays for return shipping)") {
+			matchFilter = false;
+		}
+
 		if (matchFilter == true) {
 			filteredListings.push(listings[i]);
 		}

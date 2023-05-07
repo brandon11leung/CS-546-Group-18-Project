@@ -317,52 +317,163 @@ try {
 
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
-const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
-try {
-    // const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
-    const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["USPS Priority"], "Cartridge Only", "No returns", "USD", 32913);
-    const validListing3 = await listings.create(ark._id.toString(), "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["USPS First Class"], "Cartridge Only", "No returns", "USD", 4124);
-    const ssID = validListing._id.toString();
-    console.log("get\n")
-    console.log(await listings.get(ssID))
-    console.log(await listings.update(ssID, true, "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 185, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], [],  10, ["USPS Priority"], "Good condition copy.", "No returns", "USD"))
-    console.log("getAll\n")
-    console.log(await listings.getAll())
-    console.log("remove\n")
-    //console.log(await listings.remove(validListing3._id.toString()))
-    console.log(await listings.updateStatus(ssID, false))
-    console.log(await listings.getAll())
-    console.log("\n\n-----INSERTING OFFERS------\n\n");
+// const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["Shipping"], "Good and clean copy, tested working, refer to images for condition.", "No Returns", "USD", 38623)
+// try {
+//     // const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
+//     const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["Shipping"], "Cartridge Only", "No Returns", "USD", 32913);
+//     const validListing3 = await listings.create(ark._id.toString(), "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["Shipping"], "Cartridge Only", "No returns", "USD", 4124);
+//     const ssID = validListing._id.toString();
+//     console.log("get\n")
+//     console.log(await listings.get(ssID))
+//     console.log(await listings.update(ssID, true, "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 185, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], [],  10, ["USPS Priority"], "Good condition copy.", "No returns", "USD"))
+//     console.log("getAll\n")
+//     console.log(await listings.getAll())
+//     console.log("remove\n")
+//     //console.log(await listings.remove(validListing3._id.toString()))
+//     console.log(await listings.updateStatus(ssID, false))
+//     console.log(await listings.getAll())
+//     console.log("\n\n-----INSERTING OFFERS------\n\n");
 
-    const validMoneyOffer1 = await offers.create(ssID, "644ff220e48b8901e0211642", 0, 145, "", []);
-    console.log(validMoneyOffer1);
-    const validTradeOffer1 = await offers.create(ssID, "644ff220e48b8901e0211643", 1, 0, "Pokemon HeartGold CIB", ["https://u-mercari-images.mercdn.net/photos/m26281566540_1.jpg?1677724813"]);
-    console.log(validTradeOffer1);
-    const validMixedOffer1 = await offers.create(ssID, "644ff220e48b8901e0211644", 2, 145, "Pokemon HeartGold Loose", []);
-    console.log(validMixedOffer1);
-    await offers.remove(validMixedOffer1._id.toString())
-    console.log(await offers.getAll(ssID))
+//     const validMoneyOffer1 = await offers.create(ssID, "644ff220e48b8901e0211642", 0, 145, "", []);
+//     console.log(validMoneyOffer1);
+//     const validTradeOffer1 = await offers.create(ssID, "644ff220e48b8901e0211643", 1, 0, "Pokemon HeartGold CIB", ["https://u-mercari-images.mercdn.net/photos/m26281566540_1.jpg?1677724813"]);
+//     console.log(validTradeOffer1);
+//     const validMixedOffer1 = await offers.create(ssID, "644ff220e48b8901e0211644", 2, 145, "Pokemon HeartGold Loose", []);
+//     console.log(validMixedOffer1);
+//     await offers.remove(validMixedOffer1._id.toString())
+//     console.log(await offers.getAll(ssID))
 
-    console.log('\n\n-----INSERTING COMMENTS-----\n\n');
+//     console.log('\n\n-----INSERTING COMMENTS-----\n\n');
 
-    const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
-    console.log(goodComment);
-    const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
-    console.log(goodComment2);
+//     const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
+//     console.log(goodComment);
+//     const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
+//     console.log(goodComment2);
     
+// } catch (e) {
+//     console.log(e.message)
+// }
+
+const validListing4 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Case"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, ["Shipping"], "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing5 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Case"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, ["Shipping"], "Has a scratch but otherwise in good condition", "No Returns", "USD", 32913);
+const validListing6 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, ["Shipping"], "sorry it's just the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing7 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, ["Shipping"], "WOMBO COMBO (Game not included)", "No Returns", "USD", 32913);
+const validListing8 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Case", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, ["Shipping"], "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing9 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, ["Shipping"], "Cartridge. Nothing more.", "60 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing10 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Case"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, ["Shipping"], "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+
+
+try {
+    const echo = await users.createUser("Edward", "Cho", "echo@stevens.edu", "Echo11", "1997-11-21", "Dainsleif8&", "New York", "NY");
+    const raye = await users.createUser("Ilse", "Katarn", "rikatarn11@gmail.com", "Raye01", "2001-01-01", "trashCans1!!", "Miami", "FL");
+    const modkop = await users.createUser("Brandon", "Leung", "bleu@gmail.com", "Modkop", "2002-11-12", "MudkipWithAGun2002[]", "Staten Island", "NY");
+    const arthur = await users.createUser("Tacitus", "Kilgore", "kgilgore@eyefind.com", "Fenton", "1963-02-22", "HeyThereMister!!!1899", "Philadelphia", "PA");
+    const sasha = await users.createUser("Sasha", "Braus", "sbraus@paradise.com", "PotatoGirl", "2000-07-26", "104Cadets:D", "Dauper", "SC");
+
+    const soulsilver = await listings.create(modkop._id, "Pokemon Soulsilver Big Box CIB", "Sell", "Used", ["Cartridge", "Manual", "Case", "Outer Box", "Other"], 250, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431639/orkbvk22sxozt4uulzwa.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431639/cv0tmqgdfcrtxfxkdgzs.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431640/iqnrslkdmuznagvt9wvs.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431640/jw8cy3dbw6l5x3knrpzw.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431641/lrrplymhfcrlxpvfoydk.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431642/iujwrm2ubshupbqxr3ul.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431642/xi23xkxkzkv8uxdm1a6p.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431642/dcwpnrl8whlrvezvcxgh.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431643/bn3n5smryhffx9wlnhmj.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431643/aqeeryu6t7us98xmqtro.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431644/vp9gljsgu0ykbpj3ynfm.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431644/o0zenf0yo9tyu2yocjp4.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431645/domrfpqjtdiumtxjm1y1.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431645/ighqhby9ri5hyd80ohfn.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431646/ouzozdoc5uxk2q3c5grw.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431646/o2z4mqptpvpmcy09p94o.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431647/pebylwmy1bgykzswvusw.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431647/vhxqenyhjnurcjexljiq.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431648/qdm4fjwmprh50jxfb990.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431648/il5yvhwdjda2vnnelop9.jpg'
+    ], ["Rhythm Thief & the Emperors Treasure"], 10, ["Shipping", "Local Meetup"], "Comes with Pokewalker (no battery), though I am willing to lower the price by 50 if you do not want the Pokewalker. Please refer to the pictures for the condition, but the game is confirmed to work.", "No Returns", "USD", 38623);
+
+    const emerald = await listings.create(echo._id, "Pokemon Emerald Loose", "Sell", "Used", ["Cartridge"], 185, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431653/semr8q1er31f0lpktfri.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431654/wnlsxvf5u2gquzx86g4d.jpg'
+    ], ["Pokemon Emerald"], 0, ["Shipping", "Local Meetup"], "Looking to sell or trade this copy of Pokemon Emerald for money or Pokemon Emerald with a factory code of 11 E3. Please comment if you have any questions. Thanks!", "No Returns", "USD", 2455);
+
+    const pearl = await listings.create(raye._id, "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 40, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431650/tnhc834bvs5wffhdzfmw.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431651/rydmmleil0udktg13x81.jpg'
+    ], [], 5, ["Shipping"], "Confirmed to be working. Please refer to images for condition.", "30 Day Returns (Buyer pays for return shipping)", "USD", 4124);
+
+    const kidIcarus = await listings.create(modkop._id, "Kid Icarus Uprising Loose", "Sell", "Used", ["Cartridge"], 70, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431649/x3bdusvejfwblnqexitx.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431649/riy3bl1etortdrtkrk6n.jpg'
+    ], [], 0, ["Shipping", "Local Meetup"], "Confirmed to be working. Please refer to images for condition.", "No Returns", "USD", 32655);
+
+    const spiritTracks = await listings.create(sasha._id, "The Legend of Zelda: Spirit Tracks Loose", "Sell", "Used", ["Cartridge"], 35, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431652/cwleofyf77gxl3nplzhj.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431652/cpnt7ofwymibkglbt2ew.jpg'
+    ], [], 0, ["Local Meetup"], "Should still work. Don't have a DS to test it.", "60 Day Returns (Buyer pays for return shipping)", "USD", 20109);
+
+    const superMetroid = await listings.create(arthur._id, "Super Metroid Loose", "Sell", "Used", ["Cartridge"], 100, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431654/mmrhbj4r3tnyoinawkk3.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431655/mskcmasrcbxf0bxqkbhz.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431655/s4lqli5zua0fpc4vnh7u.jpg'
+    ], [], 0, ["Shipping"], "Super Metroid Loose", "No Returns", "USD", 7143);
+
+    const battlefront = await listings.create(echo._id, "Star Wars Battlefront II Greatest Hits PSP CIB", "Sell", "Used", ["Disc", "Box", "Manual"], 20, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431656/qbqqinb0qvyerjghpdgo.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431656/fxoa0kjhx89bpirjlbvu.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431657/dcbt06yngkdfte123pas.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431657/ajg20qtmylyklod8xnsx.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431658/ytrjt1tqizmoir1vmhpm.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431658/accy0arugkuwaunfe38f.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431659/hkjutbfifizcldpuvhzf.jpg'
+    ], ["Metal Gear Solid: Peacewalker"], 5, ["Shipping", "Local Meetup"], "Disc is in rough shape but still works.", "No Returns", "USD", 3232477);
+
+    const threeDS = await listings.create(modkop._id, "Nintendo 3DS Aqua Blue", "Sell", "Used", ["Console"], 125, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431659/uglqyfmeigzxreqqm6uu.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431660/uleyglenjtx36l0palp2.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431660/o025r4vc2ighzsfjqcgy.jpg'
+    ], ["Attack on Titan 2: Final Battle Switch"], 0, ["Shipping", "Local Meetup"], "Console does work. Includes stylus. Will be factory reset.", "No Returns", "USD", 31254);
+
+    const attackOnTitan = await listings.create(modkop._id, "Attack on Titan 2: Final Battle for Switch", "Buy", "New", ["Box", "Cartridge"], 85, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431661/b03pljnaafokjgnywnmo.jpg'
+    ], ["3DS Aqua Blue"], 0, ["Shipping", "Local Meetup"], "Looking for AOT Final Battle, either new or CIB.", "60 Day Returns (Buyer pays for return shipping)", "USD", 61002);
+
+    const white2 = await listings.create(modkop._id, "Pokemon White 2 Box and Manual", "Buy", "Used", ["Box", "Manual"], 25, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683445726/hrxghym9jyqw9leqbrz7.jpg'
+    ], [], 0, ["Shipping", "Local Meetup"], "I own the cartridge, just trying to make it CIB. Thanks.", "No Preference", "USD", 33362);
+
+    const fossilLeague = await listings.create(modkop._id, "Fossil League CIB", "Buy", "Used", ["Cartridge", "Box", "Manual"], 20, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431662/yq7ko38w5gzip71h9cgs.jpg'
+    ], [], 0, ["Shipping", "Local Meetup"], "Looking for a clean copy. Thanks.", "No Preference", "USD", 11811);
+
+    const marioKart8Deluxe = await listings.create(raye._id, "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Box"], 50, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431662/nc4pli1uw20xtd0olr2b.jpg'
+    ], [], 0, ["Local Meetup"], "Mario Kart 8 Deluxe", "No Preference", "USD", 37433);
+
+    const n64JungleGreen = await listings.create(echo._id, "Nintendo N64 Jungle Green", "Buy", "Used", ["Console", "Controller"], 165, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431663/u08co8d0ml3dyxiep4cp.jpg'
+    ], [], 0, ["Local Meetup", "Shipping"], "Looking for a good condition console. Thanks.", "60 Day Returns (Seller pays for return shipping)", "USD", 3689);
+
+    const pokemonConquest = await listings.create(sasha._id, "Pokemon Conquest CIB", "Buy", "Used", ["Cartridge", "Box", "Manual"], 85, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431663/wfeazz1kupfcudvazdmp.jpg'
+    ], [], 0, ["Local Meetup", "Shipping"], "Looking for a good condition copy. Thanks.", "No Preference", "USD", 32859);
+
+    const pokemonCrystal = await listings.create(modkop._id, "Pokemon Crystal Loose", "Buy", "Used", ["Cartridge"], 100, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431664/fgp2kdhk5xddx7wdjzn2.jpg'
+    ], [], 0, ["Local Meetup", "Shipping"], "Looking for a good condition copy. Thanks.", "No Preference", "USD", 2980);
+
+    const rhythmThief = await listings.create(sasha._id, "Rhythm Thief & the Emperor's Treasure", "Buy", "Used", ["Cartridge", "Box", "Manual"], 220, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431664/ff0brdf5zipw6f4maomw.jpg'
+    ], [], 0, ["Local Meetup", "Shipping"], "Looking for a good condition copy. Thanks.", "No Preference", "USD", 32913);
+
+    const republicCommando = await listings.create(sasha._id, "Star Wars Republic Commando Collectors Edition for Switch", "Buy", "New", ["Cartridge", "Box", "Manual", "Other"], 90, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683431664/y2ur0b5to4mgak2szgnc.jpg'
+    ], [], 0, ["Local Meetup", "Shipping"], "Looking for a new copy of this. Thanks.", "No Preference", "USD", 2183061);
+   
 } catch (e) {
     console.log(e.message)
 }
-
-const validListing4 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Case"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, ["USPS Priority"], "Comes with case", "30 Days", "USD", 32913);
-const validListing5 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Case"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, ["Standard"], "Has a scratch but otherwise in good condition", "None", "USD", 32913);
-const validListing6 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, ["USPS Priority"], "sorry it's just the disk", "two weeks", "USD", 32913);
-const validListing7 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, ["USPS Priority"], "WOMBO COMBO (Game not included)", "none", "USD", 32913);
-const validListing8 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Case", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, ["Standard US Shipping"], "Complete in box - perfect for collectors.", "Two Weeks", "USD", 32913);
-const validListing9 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, ["Free Shipping - Priority"], "Cartridge. Nothing more.", "Two months", "USD", 32913);
-const validListing10 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Case"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, ["free"], "Huge nostalgia rush! Deal of a lifetime.", "90 Day", "USD", 32913);
-
-
 
 
 console.log("\n\n-----INSERTING INVALID COMMENTS------\n\n");
@@ -477,13 +588,30 @@ try {
 
 
 
-// console.log("\n---SEARCH TESTS---\n")
-
+// console.log("\n\n-----TESTING SEARCH, FILTER, SORT------\n\n")
+// console.log(await listings.searchByTitle("Pokimon"))
 // console.log(await listings.searchByTitle("Pokimon"))
 // console.log(await listings.searchByTitle("Mario Kart 8 Deluxe"))
 // console.log(await listings.searchByTitle("Splatoon"))
 // console.log(await listings.searchByTitle("Pikmin"))
 // console.log(await listings.searchByTitle("Minecraft"))
+
+// let elements = {
+// 		open: null,
+// 		consoles: [],
+// 		mainCondition: null,
+// 		secondaryCondition: [],
+// 		listingType: null,
+// 		trades: null,
+//         shippingMethods: [],
+// 		freeShipping: null,
+//         returnPolicy: "null"
+// 	}
+//console.log(await listings.filterByElements(await listings.getAll(), elements))
+// console.log(listings.sortByElement(await listings.getAll(), "By Alphabetically", 0))
+
+
+
 
 console.log('Done seeding database');
 
