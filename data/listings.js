@@ -344,8 +344,8 @@ export const filterByElements = async (listings, elements) => {
 	return filteredListings;
 }
 
-export const sortByElement = (listings, element, order) => {
-	const validElementArr = ["By Alphabetically", "By Newest", "By Price"]
+export const sortByElement = async (listings, element, order) => {
+	const validElementArr = ["Default", "By Alphabetically", "By Newest", "By Price"]
 	let sortedArr = []
 	if (validElementArr.includes(element) == false) {
 		throw new Error("Error: invalid element parameter.");
@@ -353,6 +353,78 @@ export const sortByElement = (listings, element, order) => {
 	if ((order == 0 || order == 1) == false) {
 		throw new Error("Error: invalid order parameter.");
 	}
+
+	if (element == "Default") {
+		let tier0 = []; // Below Market Price
+		let tier1 = []; // At Market Price
+		let tier2 = []; // Other items or For Parts or Not Working
+		let tier3 = []; // No Pricecharting data
+		let tier4 = []; // Above Market price
+		const multiplier0 = 0.8;
+		const multiplier1 = 1.5;
+		
+		for (let i = 0; i < listings.length; i++) {
+			if (listings[i].listingType == "Buy") {
+				continue;
+			}
+			let tempShippingPrice = listings[i].shippingPrice;
+			if (listings[i].shippingPrice > 25) {
+				tempShippingPrice = 25;
+			}
+			let pricechartingData = await pricecharting.searchByID(listings[i].pricechartingID);
+			let comp;
+			if (listings[i].mainCondition == "New") {
+				comp = pricechartingData.newPrice;
+			} else if (listings[i].mainCondition == "Graded") {
+				comp = pricechartingData.gradedPrice;
+			} else if (listings[i].mainCondition == "Used") {
+				let binary = 1000;
+				if ((listings[i].secondaryCondition.includes("Cartridge") || listings[i].secondaryCondition.includes("Disc") || listings[i].secondaryCondition.includes("Console")) && pricechartingData.loosePrice) {binary += 100}
+				if ((listings[i].secondaryCondition.includes("Manual")) && pricechartingData.manualPrice) {binary += 10}
+				if ((listings[i].secondaryCondition.includes("Box") || listings[i].secondaryCondition.includes("Case")) && pricechartingData.boxPrice) {binary += 1}
+				if (binary == 1111) {
+					comp = pricechartingData.cibPrice;
+				} else if (binary == 1100) {
+					comp = pricechartingData.loosePrice;
+				} else if (binary == 1011) {
+					comp = pricechartingData.manualPrice + pricechartingData.boxPrice;
+				} else if (binary == 1110) {
+					comp = pricechartingData.loosePrice + pricechartingData.manualPrice;
+				} else if (binary == 1101) {
+					comp = pricechartingData.loosePrice + pricechartingData.boxPrice;
+				} else if (binary == 1010) {
+					comp = pricechartingData.manualPrice
+				} else if (binary == 1001) {
+					comp = pricechartingData.boxPrice;
+				} else {
+					tier2.push(listings[i]);
+					continue;
+				}
+			} else {
+				tier3.push(listings[i]);
+				continue; 
+			}
+			if (listings[i].price + tempShippingPrice <= comp * multiplier1) {
+				tier1.push(listings[i]);
+			} else if (listings[i].price + tempShippingPrice <= comp * multiplier0) {
+				tier0.push(listings[i]);
+				tier1.push(listings[i]);
+			}
+			else {
+				tier4.push(listings[i]);
+			}
+			// console.log("Tier 1")
+			// console.log(tier1)
+			// console.log("Tier 2")
+			// console.log(tier2)
+			// console.log("Tier 3")
+			// console.log(tier3)
+			// console.log("Tier 4")
+			// console.log(tier4)
+		}
+		sortedArr = tier1.concat(tier2.concat(tier3.concat(tier4)))
+	}
+
 	if (element == "By Alphabetically") {
 		let titleArr = [];
 		for (let i = 0; i < listings.length; i++) {

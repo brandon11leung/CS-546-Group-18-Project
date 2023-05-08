@@ -107,5 +107,5 @@ export const parseObj = async (objArr, mode) => {
     }
     return parsedArr
 }
-// console.log(await searchByTerm("mario kart"));
-// console.log(await searchByID(4166331))
+// console.log(await searchByTerm("wii sports resort"));
+// console.log(await searchByID(3232477))
