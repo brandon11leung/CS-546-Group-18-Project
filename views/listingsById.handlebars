@@ -1,5 +1,6 @@
 <div>
 <h1>{{listings.title}}</h1>  
+<h2>Listing created by User <a href="http://localhost:3000/{{username}}" target="_blank">{{username}}</a></h2>
 {{#each listings.attachments}}
     <img alt="img" src="{{this}}">
 {{/each}} 
