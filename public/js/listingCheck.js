@@ -107,6 +107,7 @@ let listingShippingPrice = document.getElementById('shippingPriceInput');
 let listingDesc = document.getElementById('descriptionInput');
 let listingRetPolicy = document.getElementById('returnPolicyInput');
 let imageInput = document.getElementById('imageInput');
+let shipMethodInput = document.getElementById('shipMethodInput');
 
 
 
@@ -120,7 +121,7 @@ let errorShipPrice = document.getElementById('errorShipPrice');
 let errorDesc = document.getElementById('errorDesc');
 let errorRetPol = document.getElementById('errorRetPol');
 let errorImgs = document.getElementById('errorImgs');
-
+let errorShipMethod  = document.getElementById('errorShipMethod');
 
 
 
@@ -216,6 +217,12 @@ if (form) {
             event.preventDefault();
             errorDesc.hidden = false;
             errorDesc.innerHTML = 'Description must be a valid string';
+        }
+
+        if (!validString(shipMethodInput.value)) {
+            event.preventDefault();
+            errorShipMethod.hidden = false;
+            errorShipMethod.innerHTML = 'Description must be a valid string';
         }
 
         if (!validString(listingRetPolicy.value)) {
