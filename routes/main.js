@@ -370,17 +370,17 @@ router.route('/logout').get(async (req, res) => {
     res.render('logout');
 });
 
-router.route('/:username').get(async (req, res) => {
-    let info = await users.getUserByUsername(req.params.username);
-    let reviews;
-    if(info.reviewedBy.length > 0){
-        reviews = [];
-        for (let x of info.reviewedBy){
-            let rev = {name: x[1], message: x[2], rating: x[3]};
-            reviews.push(rev);
-        }
-    }
+router.route('/ProfilePage/:username').get(async (req, res) => {
     try {
+        let info = await users.getUserByUsername(req.params.username);
+        let reviews;
+        if(info.reviewedBy.length > 0){
+            reviews = [];
+            for (let x of info.reviewedBy){
+                let rev = {name: x[1], message: x[2], rating: x[3]};
+                reviews.push(rev);
+            }
+        }
         res.render('profilePage', {title: info.username+'\'s Profile', user: info, reviews: reviews});
     } catch (e) {
         res.status(500).json({error: e});
