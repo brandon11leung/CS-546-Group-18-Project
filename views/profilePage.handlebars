@@ -6,11 +6,15 @@
         <p>Biography: {{user.biography}}</p>
         <h3>Reviews</h3>
         {{#if reviews}}
+        <ol>
         {{#each reviews}}
+        <li class="container">
         <p>{{this.name}}: {{this.message}}</p>
         <p>Rating Given: {{this.rating}}</p>
+        </li>
         {{/each}}
-        <div>
+        </ol>
         {{else}}
         <p>No Reviews about {{user.username}}</p>
         {{/if}}
+    </div>

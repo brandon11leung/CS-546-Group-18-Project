@@ -108,6 +108,8 @@ let listingDesc = document.getElementById('descriptionInput');
 let listingRetPolicy = document.getElementById('returnPolicyInput');
 let imageInput = document.getElementById('imageInput');
 let shipMethodInput = document.getElementById('shipMethodInput');
+let tradesInput = document.getElementById('tradesInput');
+
 
 
 
@@ -122,6 +124,8 @@ let errorDesc = document.getElementById('errorDesc');
 let errorRetPol = document.getElementById('errorRetPol');
 let errorImgs = document.getElementById('errorImgs');
 let errorShipMethod  = document.getElementById('errorShipMethod');
+let errorTrades  = document.getElementById('errorTrades');
+
 
 
 
@@ -213,6 +217,12 @@ if (form) {
             errorShipPrice.innerHTML = 'Shipping Price must be a number above 0.';
         }
 
+        if (!validString(tradesInput.value)) {
+            event.preventDefault();
+            errorTrades.hidden = false;
+            errorTrades.innerHTML = 'Trades must be a valid string';
+        }
+
         if (!validString(listingDesc.value)) {
             event.preventDefault();
             errorDesc.hidden = false;
@@ -222,7 +232,7 @@ if (form) {
         if (!validString(shipMethodInput.value)) {
             event.preventDefault();
             errorShipMethod.hidden = false;
-            errorShipMethod.innerHTML = 'Description must be a valid string';
+            errorShipMethod.innerHTML = 'Shipping Methods must be a valid string';
         }
 
         if (!validString(listingRetPolicy.value)) {

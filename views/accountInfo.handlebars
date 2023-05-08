@@ -13,8 +13,9 @@
             <ul class="search">
         {{#each user.purchaseHistory}}
             <li>
-                <p>Item: {{title}}</p>
-                <p>Price: {{price}}</p>
+                <p>User purchased From: <a href="http://localhost:3000/{{this.username}}" target="_blank">{{this.username}}</a></p>
+                <p>Item purchased: {{this.title}}</p>
+                <p>Price purchased for: {{this.price}}</p>
                 {{!-- <form method="POST" id="listing-form" action="/LeaveReview" enctype="multipart/form-data">
                 <label for="returnPolicyInput">Return Policy:</label>
                 <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"></textarea><br><br>
@@ -27,8 +28,9 @@
             <ul class="search">
         {{#each user.salesHistory}}
             <li>
-                <p>Item: {{title}}</p>
-                <p>Price: {{price}}</p>
+                <p>User sold to: <a href="http://localhost:3000/{{this.username}}" target="_blank">{{this.username}}</a></p>
+                <p>Item sold: {{this.title}}</p>
+                <p>Price sold for: {{this.price}}</p>
             </li>
         {{/each}}
             </ul>
