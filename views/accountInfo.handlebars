@@ -10,16 +10,21 @@
         <p>Biography: {{user.biography}}</p>
         <div>
             <h3>Purchase History</h3>
-            <ul>
+            <ul class="search">
         {{#each user.purchaseHistory}}
             <li>
                 <p>Item: {{title}}</p>
                 <p>Price: {{price}}</p>
+                {{!-- <form method="POST" id="listing-form" action="/LeaveReview" enctype="multipart/form-data">
+                <label for="returnPolicyInput">Return Policy:</label>
+                <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"></textarea><br><br>
+                <button type="submit">Register</button> --}}
+            </form>
             </li>
         {{/each}}
             </ul>
             <h3>Sales History</h3>
-            <ul>
+            <ul class="search">
         {{#each user.salesHistory}}
             <li>
                 <p>Item: {{title}}</p>

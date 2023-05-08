@@ -334,3 +334,16 @@ export const removeUser = async (id) => {
   return `${deletionInfo.value.name} has been successfully deleted!`;
 };
 
+export const getUserByUsername = async (username) => {
+
+  if (!username) { throw new Error('Missing ID parameter'); }
+
+  if (typeof username !== 'string' || username.trim().length === 0) {
+    throw new Error('ID parameter is invalid');
+  }
+  username = username.trim();
+  const userData = await users();
+  let user = await userData.findOne({username: username});
+  if (user === null) { throw new Error('User not found in database'); }
+  return user;
+}

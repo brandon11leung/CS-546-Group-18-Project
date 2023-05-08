@@ -40,7 +40,9 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
     try {
         let List = await listings.get(req.params.id); 
         let priceChartData = await charting.searchByID(List.pricechartingID.toString());
-        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now"});
+        let user = await users.getUserById(List.posterId.toString())
+        let username = user.username;
+        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username});
         } catch (e) {
         res.status(500).json({error: e});
     }})
@@ -83,7 +85,9 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
         try {
             let List = await listings.get(req.params.id); 
             let priceChartData = await charting.searchByID(List.pricechartingID.toString());
-            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade"});
+            let user = await users.getUserById(List.posterId.toString())
+            let username = user.username;
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username});
             } catch (e) {
             res.status(500).json({error: e});
         }})
@@ -338,4 +342,20 @@ router.route('/logout').get(async (req, res) => {
     req.session.destroy();
     res.render('logout');
 });
+
+router.route('/:username').get(async (req, res) => {
+    let info = await users.getUserByUsername(req.params.username);
+    let reviews;
+    if(info.reviewedBy.length > 0){
+        reviews = [];
+        for (let x of info.reviewedBy){
+            let rev = {name: x[1], message: x[2], rating: x[3]};
+            reviews.push(rev);
+        }
+    }
+    try {
+        res.render('profilePage', {title: info.username+'\'s Profile', user: info, reviews: reviews});
+    } catch (e) {
+        res.status(500).json({error: e});
+    }});
  export default router;
