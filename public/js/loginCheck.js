@@ -12,7 +12,7 @@ const validEmail = (email) => {
     email = email.trim().toLowerCase();
 
     if (!email.includes('@')) {
-        return false;
+        return false; 
     }
 
     if (email.includes(' ')) {
@@ -23,7 +23,7 @@ const validEmail = (email) => {
         return false;
     }
 
-    if (email[0] === '@') {
+    if (email[0] === '@') { 
         return false;
     }
 
@@ -61,18 +61,15 @@ let errorPassword = document.getElementById('errorPassword');
 
 if (form) {
     form.addEventListener('submit', (event) => {
-        ajax = true;
         errorEmail.hidden = true;
         errorPassword.hidden = true;
         if (!validEmail(email.value)) {
-            ajax = false;
             event.preventDefault();
             errorEmail.hidden = false;
             errorEmail.innerHTML = 'Email must be in email address format, containing a valid prefix and domain.';
         }
 
         if (!validPassword(password.value)) {
-            ajax = false;
             event.preventDefault();
             errorPassword.hidden = false;
             errorPassword.innerHTML = 'Password must contain at least eight characters, have at least one uppercase letter, at least one number, and at least one special character. No spaces.';
@@ -81,8 +78,8 @@ if (form) {
         //     fetch('/login', {
         //         method: 'POST',
         //         headers: {
-        //             emailAddress: email.value,
-        //             password: password.value
+        //             emailAddressInput: email.value,
+        //             passwordInput: password.value
         //         }
         //     }).then(res => {
         //         if (res.ok) { return res.json(); }

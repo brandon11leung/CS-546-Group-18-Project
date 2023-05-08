@@ -31,7 +31,7 @@ export const createReview = async (
 
   const transactionCollection = await transactions();
   const option1 = await transactionCollection.findOne({seller: new ObjectId(userFrom), buyer: new ObjectId(userAbout)});
-  const option2 = await transactionCollection.findOne({seller: new ObjectId(userAbout), buyer: new ObjectId(userFrom)});
+  const option2 = await transactionCollection.findOne({seller: new ObjectId(userAbout), buyer: new ObjectId(userFrom)}); 
 
   /* Buyers can review sellers; likewise, sellers can review buyers.
      A reviewer can't review someone who didn't buy from them or 

@@ -243,7 +243,7 @@ const raye = await users.createUser("Ilse", "Katarn", "rikatarn11@gmail.com", "R
 const modkop = await users.createUser("Brandon", "Leung", "bleu@gmail.com", "Modkop", "2002-11-12", "MudkipWithAGun2002[]", "Staten Island", "NY");
 const arthur = await users.createUser("Tacitus", "Kilgore", "kgilgore@eyefind.com", "Fenton", "1963-02-22", "HeyThereMister!!!1899", "Philadelphia", "PA");
 const sasha = await users.createUser("Sasha", "Braus", "sbraus@paradise.com", "PotatoGirl", "2000-07-26", "104Cadets:D", "Dauper", "SC");
-console.log("Total users added: 15");
+console.log("Total users added: 15"); 
 
 
 console.log("\n---ALL USERS ADDED---\n");
@@ -327,54 +327,13 @@ try {
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
 
-// const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
-// const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["Shipping"], "Cartridge Only", "No Returns", "USD", 32913);
-// const validListing3 = await listings.create(ark._id.toString(), "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["Shipping"], "Cartridge Only", "No returns", "USD", 4124);
-
-
-
-// const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["Shipping"], "Good and clean copy, tested working, refer to images for condition.", "No Returns", "USD", 38623)
-// try {
-    
-//     const ssID = validListing._id.toString();
-//     console.log("get\n")
-//     console.log(await listings.get(ssID))
-//     console.log(await listings.update(ssID, true, "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 185, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], [],  10, ["USPS Priority"], "Good condition copy.", "No returns", "USD"))
-//     console.log("getAll\n")
-//     console.log(await listings.getAll())
-//     console.log("remove\n")
-//     //console.log(await listings.remove(validListing3._id.toString()))
-//     console.log(await listings.updateStatus(ssID, false))
-//     console.log(await listings.getAll())
-//     console.log("\n\n-----INSERTING OFFERS------\n\n");
-
-//     const validMoneyOffer1 = await offers.create(ssID, "644ff220e48b8901e0211642", 0, 145, "", []);
-//     console.log(validMoneyOffer1);
-//     const validTradeOffer1 = await offers.create(ssID, "644ff220e48b8901e0211643", 1, 0, "Pokemon HeartGold CIB", ["https://u-mercari-images.mercdn.net/photos/m26281566540_1.jpg?1677724813"]);
-//     console.log(validTradeOffer1);
-//     const validMixedOffer1 = await offers.create(ssID, "644ff220e48b8901e0211644", 2, 145, "Pokemon HeartGold Loose", []);
-//     console.log(validMixedOffer1);
-//     await offers.remove(validMixedOffer1._id.toString())
-//     console.log(await offers.getAll(ssID))
-
-//     console.log('\n\n-----INSERTING COMMENTS-----\n\n');
-
-//     const goodComment = await comments.createComment(validListing._id.toString(), luke._id.toString(), "Woah, this game looks really cool! Mind if you tell me more?");
-//     console.log(goodComment);
-//     const goodComment2 = await comments.createComment(validListing2._id.toString(), luke._id.toString(), "I never heard of this game before. It looks really good though.");
-//     console.log(goodComment2);
-    
-// } catch (e) {
-//     console.log(e.message)
-// }
-
-const validListing4 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Case"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, ["Shipping"], "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing5 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Case"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, ["Shipping"], "Has a scratch but otherwise in good condition", "No Returns", "USD", 32913);
-const validListing6 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, ["Shipping"], "i only want the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing7 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, ["Shipping"], "Just need the case, and bam! My collection will be complete.", "No Returns", "USD", 32913);
-const validListing8 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Case", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, ["Shipping"], "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing9 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, ["Shipping"], "Cartridge. Nothing more.", "60 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing10 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Case"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, ["Shipping"], "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing1 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Case"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, ["Shipping"], "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing2 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Case"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, ["Shipping"], "Has a scratch but otherwise in good condition", "No Returns", "USD", 32913);
+const validListing3 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, ["Shipping"], "i only want the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing4 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, ["Shipping"], "Just need the case, and bam! My collection will be complete.", "No Returns", "USD", 32913);
+const validListing5 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Case", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, ["Shipping"], "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing6 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, ["Shipping"], "Cartridge. Nothing more.", "60 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing7 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Case"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, ["Shipping"], "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 
 
 try {
@@ -501,7 +460,7 @@ try {
 }
 
 console.log("\n\n-----INSERTING TRANSACTIONS-----\n\n");
-//Working example (ONLY WITH A LISTING ID THAT YOU KNOW WILL BE IN THERE)
+
 try {
     const goodTransaction = await (transactions.createTransaction(validListing5._id.toString(), luke._id.toString()));
     console.log(goodTransaction);
@@ -518,10 +477,24 @@ try {
 
 try {
     const goodTransaction2 = await (transactions.createTransaction(validListing6._id.toString(), mrKing._id.toString()));
+    console.log(goodTransaction2);
 } catch (e) {
     console.log(e.message);
 }
 
+try {
+    const goodTransaction3 = await (transactions.createTransaction(validListing2._id.toString(), albertEinstein._id.toString()));
+    console.log(goodTransaction3);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const myOwnListing = await (transactions.createTransaction(validListing7._id.toString(), luke._id.toString()));
+    console.log('This should NOT print.');
+} catch (e) {
+    console.log(e.message);
+}
 
 
 
@@ -543,7 +516,7 @@ try {
 console.log('\n---INSERTING VALID REVIEWS---\n');
 
 try {
-    const review1 = await reviews.createReview(luke._id.toString(), ark._id.toString(), 'Thank you!', 5);
+    const review1 = await reviews.createReview(luke._id.toString(), alien._id.toString(), 'Good experience, thank you!', 5);
     console.log(review1);
 } catch (e) {
     console.log(e.message);
@@ -557,11 +530,25 @@ try {
 }
 
 try {
-    const review3 = await reviews.createReview()
+    const review3 = await reviews.createReview(mrKing._id.toString(), luke._id.toString(), 'No problems here besides my delivery arriving one day late', 4);
+    console.log(review3);
 } catch (e) {
     console.log(e.message);
 }
 
+try {
+    const review4 = await reviews.createReview(albertEinstein._id.toString(), ark._id.toString(), 'Why in the world did this have a scratch? Unacceptable?', 2);
+    console.log(review4);
+} catch (e) {
+    console.log(e.message);
+}
+
+try {
+    const review4 = await reviews.createReview(albertEinstein._id.toString(), ark._id.toString(), 'Why in the world did this have a scratch? Unacceptable?', 2);
+    console.log(review4);
+} catch (e) {
+    console.log(e.message);
+}
 
 
 
