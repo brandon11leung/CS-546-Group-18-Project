@@ -3,13 +3,6 @@ let letters = /[A-Za-z]/;
 let nums = /\d/;
 let specials = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-const validBio = (bio) => {
-    if (typeof bio !== 'string') { return false; }
-    bio = bio.trim();
-    if (bio.length === 0) { return false; }
-    return true;
-}
-
 const validName = (name) => {
     if (typeof name !== 'string') { return false; }
 

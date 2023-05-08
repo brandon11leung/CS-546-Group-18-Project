@@ -23,7 +23,7 @@ const validEmail = (email) => {
         return false;
     }
 
-    if (email[0] === '@') { 
+    if (email[0] === '@') {
         return false;
     }
 
