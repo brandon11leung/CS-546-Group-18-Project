@@ -6,6 +6,7 @@ import * as users from '../data/users.js'
 import * as listings from '../data/listings.js'
 import * as charting from '../utils/pricecharting.js'
 import * as cloud from '../utils/cloudinary.js'
+import * as transactions from '../data/transactions.js'
 import xss from 'xss';
 import fs from 'fs';
 import path from 'path';
@@ -79,11 +80,28 @@ router.route('/sellinglistings').get(async (req, res) => {
         res.status(500).json({error: e});
     }});
 
+router.route('/transaction/:id').get(async (req, res) => {
+    try {
+        let List = await listings.get(req.params.id); 
+        res.render('transaction', {title: "Checkout", pic: 'public/images/Credit-Card-Logos-high-resolution.png', link: `/transaction/${List._id}`});
+    } catch (e) {
+        res.status(500).json({error: e});
+    }})
+    .post(async (req, res) => {
+        try {
+            let List = await listings.get(req.params.id); 
+            let transaction = await transactions.createTransaction(List._id, req.session.user.id)
+            res.redirect('/account');
+        } catch (e) {
+            res.status(500).json({error: e});
+        }
+    });
+
 router.route('/buyinglistings/:id').get(async (req, res) => {
         try {
             let List = await listings.get(req.params.id); 
             let priceChartData = await charting.searchByID(List.pricechartingID.toString());
-            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade"});
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Make Offer"});
             } catch (e) {
             res.status(500).json({error: e});
         }})
@@ -219,12 +237,7 @@ router.route('/login').get(async (req, res) => {
     }
 });
 
-router.route('/transaction').get(async (req, res) => {
-    try {
-        res.render('transaction', {title: "Checkout", pic: 'public/images/Credit-Card-Logos-high-resolution.png'});
-    } catch (e) {
-        res.status(500).json({error: e});
-    }});
+
 
     router.route('/PriceChartSearch').get(async (req, res) => {
         try {

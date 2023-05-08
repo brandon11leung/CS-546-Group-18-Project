@@ -77,18 +77,18 @@ if (form) {
             errorPassword.hidden = false;
             errorPassword.innerHTML = 'Password must contain at least eight characters, have at least one uppercase letter, at least one number, and at least one special character. No spaces.';
         }
-        if (ajax === true) {
-            fetch('/login', {
-                method: 'POST',
-                headers: {
-                    emailAddress: email.value,
-                    password: password.value
-                }
-            }).then(res => {
-                if (res.ok) { return res.json(); }
-                else { throw new Error('Error occurred! Status code: ' + res.status)}
-            });
-        }
+        // if (ajax === true) {
+        //     fetch('/login', {
+        //         method: 'POST',
+        //         headers: {
+        //             emailAddress: email.value,
+        //             password: password.value
+        //         }
+        //     }).then(res => {
+        //         if (res.ok) { return res.json(); }
+        //         else { throw new Error('Error occurred! Status code: ' + res.status)}
+        //     });
+        // }
     });
 
 }
