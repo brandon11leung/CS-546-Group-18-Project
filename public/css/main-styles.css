@@ -69,10 +69,12 @@ h3{
   ul.search{
     border: 1px solid rgb(0, 0, 0);
     display: inline-block;
+    padding: 20px;
   }
   ul li.search {
     font-size: 150%;
     text-decoration: solid;
+    padding: 20px;
   }
 
 .items {
@@ -130,4 +132,10 @@ p {
   content: "";
   display: table;
   clear: both;
+}
+
+.container{
+  border: 1px solid rgb(0, 0, 0);
+  display: inline-block;
+  padding: 20px;
 }

@@ -14,7 +14,7 @@ import timestamp from "time-stamp";
 const validMainConditionArr = ["New", "Graded", "Like New/Open Box", "Used", "For Parts or Not Working"];
 const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code", "Other", "Outer Box"];
 const validListingTypeArr = ["Buy", "Sell", "Trade"];
-const validShippingMethodsArr = ["Shipping", "Local Meetup"];
+const validShippingMethodsArr = ["Shipping", "Local Meetup", "Both Shipping and Local Meetup"];
 const validReturnPolicyArr = ["No Returns", 
 							  "30 Day Returns (Buyer pays for return shipping)", 
 							  "30 Day Returns (Seller pays for return shipping)",
@@ -42,13 +42,7 @@ export const create = async (posterId, title, listingType, mainCondition, second
 		secondaryCondition[i] = helpers.isValidString(secondaryCondition[i]);
 	}
 	helpers.isValidPrice(price);
-    helpers.isValidArray(shippingMethods);
-	for (let i = 0; i < shippingMethods.length; i++) {
-		shippingMethods[i] = helpers.isValidString(shippingMethods[i]);
-    }
-	if (listingType == "Sell" && returnPolicy == "No Preference") {
-		throw new Error("Error: Sellers are not allowed to declare No Preference.")
-	}
+    helpers.isValidString(shippingMethods);
     description = helpers.isValidString(description);
     currency = helpers.isValidString(currency);
     helpers.isValidArray(attachments);
@@ -65,11 +59,10 @@ export const create = async (posterId, title, listingType, mainCondition, second
 	if (validListingTypeArr.includes(listingType) == false) {
 		throw new Error("Error: Invalid Listing Type.");
 	}
-	for (let i = 0; i < shippingMethods.length; i++) {
-		if (validShippingMethodsArr.includes(shippingMethods[i]) == false) {
+	if (validShippingMethodsArr.includes(shippingMethods) == false) {
 			throw new Error("Error: Invalid Shipping Method.");
 		}
-	}
+	
 	if (validReturnPolicyArr.includes(returnPolicy) == false) {
 		throw new Error("Error: Invalid Return Policy .");
 	}

@@ -271,6 +271,7 @@ router.route('/login').get(async (req, res) => {
                 req.body.returnPolicyInput = xss(req.body.returnPolicyInput);
                 req.body.imageInput = xss(req.body.imageInput);
                 req.body.shipMethodInput = xss(req.body.shipMethodInput);
+                req.body.tradesInput = xss(req.body.tradesInput);
                 
                 req.body.Cartridge = xss(req.body.Cartridge);
                 req.body.Box = xss(req.body.Box);
@@ -317,6 +318,8 @@ router.route('/login').get(async (req, res) => {
                 console.log(req.files);
                 let paths = [];
                 let Allimages = req.files.imageInput;
+                let validTrades = req.body.tradesInput;
+                validTrades = validTrades.split(",");
                 if (typeof(Allimages) !== "object"){
                     for(let x of req.files.imageInput){
                         const image = x;
@@ -335,7 +338,7 @@ router.route('/login').get(async (req, res) => {
                 }
                 let images = await cloud.uploadImage(paths);
                 try {
-                    let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, [], req.body.shippingPriceInput, req.body.shipMethodInput,  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
+                    let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, validTrades, req.body.shippingPriceInput, req.body.shipMethodInput,  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
                     let pathway = path.join(__dirname, '..', 'uploads');
                     console.log(listing);
                     fs.readdir(pathway, (err, files) => {

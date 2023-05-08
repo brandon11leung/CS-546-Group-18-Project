@@ -22,14 +22,19 @@
                             <li class="search">Description: {{listings.description}}</li><br>
                             <li class="search">Price: ${{listings.price}}</li><br>
                             <li class="search">Shipping: ${{listings.shippingPrice}}</li><br>
+                            <li class="search">Shipping Methods: {{listings.shippingMethods}}</li><br>
+                            {{#if listings.trades}}
                             <li class="search">
-                                Shipping Methods:
-                                <ul>
-                                {{#each listings.shippingMethods}}
+                                Viable Trade Options:
+                                <ul>   
+                                {{#each listings.trades}}
                                     <li>{{this}}</li>
                                 {{/each}}
                                 </ul>   
                             </li><br>
+                            {{else}}
+                            <li class="search">No Trade Options Given</li><br>
+                            {{/if}}
                             <li class="search">Return Policy: {{listings.returnPolicy}}</li><br>
                             <li class="search">Last time updated: {{listings.timeStampUpdated}}</li><br>
                         </ul>
