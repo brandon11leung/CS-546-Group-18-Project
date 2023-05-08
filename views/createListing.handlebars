@@ -62,11 +62,28 @@
                 <label for="descriptionInput">Description:</label>
                 <textarea id="descriptionInput" type="text" name="descriptionInput"></textarea><br><br>
 
+                <label for="shipMethodInput">Return Policy:</label>
+                <select typ id="shipMethodInput" name="shipMethodInput" required>
+                    <option value="">Select a Condition</option>
+                    <option value="Shipping">Shipping</option>
+                    <option value="Local Meetup">Local Meetup</option>
+                </select><br><br>
+
                 <label for="returnPolicyInput">Return Policy:</label>
-                <textarea id="returnPolicyInput" type="text" name="returnPolicyInput"></textarea><br><br>
+                <select typ id="returnPolicyInput" name="returnPolicyInput" required>
+                    <option value="">Select a Condition</option>
+                    <option value="No Returns">No Returns</option>
+                    <option value="No Preference">No Preference</option>
+                    <option value="30 Day Returns (Buyer pays for return shipping)">30 Day Returns (Buyer pays for return shipping)</option>
+                    <option value="30 Day Returns (Seller pays for return shipping)">30 Day Returns (Seller pays for return shipping)</option>
+                    <option value="60 Day Returns (Buyer pays for return shipping)">60 Day Returns (Buyer pays for return shipping)</option>
+                    <option value="60 Day Returns (Seller pays for return shipping)">60 Day Returns (Seller pays for return shipping)</option>
+                    <option value="90 Day Returns (Buyer pays for return shipping)">90 Day Returns (Buyer pays for return shipping)</option>
+                    <option value="90 Day Returns (Seller pays for return shipping)">90 Day Returns (Seller pays for return shipping)</option>
+                </select><br><br>
 
                 <label for="imageInput">Submit images here:</label>
-                <input type="file" id="imageInput" name="imageInput" multiple><br><br>
+                <input type="file" id="imageInput" name="imageInput" multiple required><br><br>
 
                 <button type="submit">Register</button>
             </form>
@@ -78,6 +95,7 @@
             <p id="errorShipPrice" hidden></p>
             <p id="errorDesc" hidden></p>
             <p id="errorRetPol" hidden></p>
+            <p id="errorShipMethod" hidden></p>
             <p id="errorImgs" hidden></p>
             {{#if error}}
             <p>{{error}}</p>

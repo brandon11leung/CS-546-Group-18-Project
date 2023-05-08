@@ -270,6 +270,7 @@ router.route('/login').get(async (req, res) => {
                 req.body.descriptionInput = xss(req.body.descriptionInput);
                 req.body.returnPolicyInput = xss(req.body.returnPolicyInput);
                 req.body.imageInput = xss(req.body.imageInput);
+                req.body.shipMethodInput = xss(req.body.shipMethodInput);
                 
                 req.body.Cartridge = xss(req.body.Cartridge);
                 req.body.Box = xss(req.body.Box);
@@ -315,16 +316,26 @@ router.route('/login').get(async (req, res) => {
                 }   
                 console.log(req.files);
                 let paths = [];
-                for(let x of req.files.imageInput){
-                    const image = x;
-                    const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
-                    paths.push(path.join(__dirname, '..', 'uploads', image.name));
-                    writeStream.write(image.data);
-                    writeStream.end();
+                let Allimages = req.files.imageInput;
+                if (typeof(Allimages) !== "object"){
+                    for(let x of req.files.imageInput){
+                        const image = x;
+                        const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
+                        paths.push(path.join(__dirname, '..', 'uploads', image.name));
+                        writeStream.write(image.data);
+                        writeStream.end();
+                    }
+                }
+                else{
+                        const image = Allimages;
+                        const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
+                        paths.push(path.join(__dirname, '..', 'uploads', image.name));
+                        writeStream.write(image.data);
+                        writeStream.end();
                 }
                 let images = await cloud.uploadImage(paths);
                 try {
-                    let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, [], req.body.shippingPriceInput, ['USPS Priority'],  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
+                    let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, [], req.body.shippingPriceInput, req.body.shipMethodInput,  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
                     let pathway = path.join(__dirname, '..', 'uploads');
                     console.log(listing);
                     fs.readdir(pathway, (err, files) => {
