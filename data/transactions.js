@@ -31,6 +31,8 @@ export const createTransaction = async (
     //Find listing
     let listing = await listingCollection.findOne({_id: new ObjectId(listingId)});
     if (listing === null) { throw new Error('Review not found in database'); }
+    
+    if (listing.open === false) { throw new Error('The listing is not open'); }
 
     // console.log(listing);
 

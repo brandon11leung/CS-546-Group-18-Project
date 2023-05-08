@@ -48,7 +48,7 @@ export const createUser = async (
   
     //Check email
     if (!emailAddress.includes('@')) {
-      throw new Error ('Email cannot include @');
+      throw new Error ('Email must include @');
     }
     if (emailAddress.includes(' ')) {
       throw new Error ('Email cannot include spaces');
@@ -147,6 +147,12 @@ export const createUser = async (
       }
     }
 
+    const m = String(monthDate).padStart(2, '0');
+    const d = String(dayDate).padStart(2, '0');
+    const y = String(yearDate);
+
+    dob = `${m}/${d}/${y}`;
+  
     //Check city
     if ((typeof city !== "string") || (!(city.replace(/\s/g, '').length)) || (city.trim().length < 2)) {
         throw new Error ('City field is invalid');

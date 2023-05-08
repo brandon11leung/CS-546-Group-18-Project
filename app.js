@@ -27,7 +27,7 @@ app.use(session({
 }));
 
 
-app.use('/account', async (req, res, next) => {
+app.use('/account', (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
   } else {
@@ -35,7 +35,7 @@ app.use('/account', async (req, res, next) => {
   }
 });
 
-app.use('/login', async (req, res, next) => {
+app.use('/login', (req, res, next) => {
   if (req.session.user) {
     res.redirect('/');
   } else {
@@ -43,7 +43,7 @@ app.use('/login', async (req, res, next) => {
   }
 });
 
-app.use('/signup', async (req, res, next) => {
+app.use('/signup', (req, res, next) => {
   if (req.session.user) {
     res.redirect('/');
   } else {
@@ -51,7 +51,7 @@ app.use('/signup', async (req, res, next) => {
   }
 });
 
-app.use('/logout', async (req, res, next) => {
+app.use('/logout', (req, res, next) => {
   if (!req.session.user) {
     res.redirect('/');
   }

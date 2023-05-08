@@ -231,11 +231,20 @@ const patrick = await users.createUser(" Patrick    ", " Hill ", " phill@stevens
 const ark = await users.createUser("Arkansas", "Apprentice", "aapp1123@gmail.com", " arkman", "2004-02-06", "passWord'56", "Little Rock", "AR");
 const mrKing = await users.createUser("mister", "king", " 1coolkid!@gmail.com", " notanarcissist1 ", "2002-04-29", "'yeehaW123", "San Francisco " , "CA");
 const gamer = await users.createUser("   gamer    ", "man", "      PHILLISTHEBEST@STEVENS.EDU   ", "games4thwin", "1954-04-29", "i<3Hilll", "    Des Moines  ", "IA");
+console.log("Total users added: 5");
 const albertEinstein = await users.createUser(" albert   ", " einstein ", " 1einstein1@yahoo.com ", " Einstein ", "1924-01-01", "The*Genius123", " jackson  ", "    ms   ");
 const handymanny = await users.createUser("    Handy    ", " Manny   ", "  h@m.net", "handymanny", "1982-01-01", "i%T12ool", "  san antonio ", "   tx   ");
 const trickyUser = await users.createUser(" tRiCksTeR    ", " uSeR ", " TRICKY@Stevens.edu", " Trickshot12345678910 ", "2004-12-31", "T3094dwkj2()", "Anchorage", "AK");
 const alien = await users.createUser("Zeep", "Zorp", "123zorp1@yes.org", "Beep12", "1970-11-22", "oiei32@(!H", "Reno", "NV");
 const finalUser = await users.createUser("Barack", "Obama", "presidentobama@something.mil", "ObamaMama<3", "1961-08-04", "Obama804*", "Honolulu", "HI");
+console.log("Total users added: 10");
+const echo = await users.createUser("Edward", "Cho", "echo@stevens.edu", "Echo11", "1997-11-21", "Dainsleif8&", "New York", "NY");
+const raye = await users.createUser("Ilse", "Katarn", "rikatarn11@gmail.com", "Raye01", "2001-01-01", "trashCans1!!", "Miami", "FL");
+const modkop = await users.createUser("Brandon", "Leung", "bleu@gmail.com", "Modkop", "2002-11-12", "MudkipWithAGun2002[]", "Staten Island", "NY");
+const arthur = await users.createUser("Tacitus", "Kilgore", "kgilgore@eyefind.com", "Fenton", "1963-02-22", "HeyThereMister!!!1899", "Philadelphia", "PA");
+const sasha = await users.createUser("Sasha", "Braus", "sbraus@paradise.com", "PotatoGirl", "2000-07-26", "104Cadets:D", "Dauper", "SC");
+console.log("Total users added: 15");
+
 
 console.log("\n---ALL USERS ADDED---\n");
 
@@ -317,11 +326,16 @@ try {
 
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
+
+// const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
+// const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["Shipping"], "Cartridge Only", "No Returns", "USD", 32913);
+// const validListing3 = await listings.create(ark._id.toString(), "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["Shipping"], "Cartridge Only", "No returns", "USD", 4124);
+
+
+
 // const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["Shipping"], "Good and clean copy, tested working, refer to images for condition.", "No Returns", "USD", 38623)
 // try {
-//     // const validListing = await listings.create(patrick._id.toString(), "Pokemon Soulsilver", "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
-//     const validListing2 = await listings.create(ark._id.toString(), "Rhythm Thief and the Emperors Treasure", "Buy", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157699/r1ilyogmsge3bouarq48.jpg"], [], 0, ["Shipping"], "Cartridge Only", "No Returns", "USD", 32913);
-//     const validListing3 = await listings.create(ark._id.toString(), "Pokemon Pearl Loose", "Sell", "Used", ["Cartridge"], 35, ["https://i.imgur.com/vRFFSm7.jpeg", "https://i.imgur.com/HnWMwol.jpeg"], [], 0, ["Shipping"], "Cartridge Only", "No returns", "USD", 4124);
+    
 //     const ssID = validListing._id.toString();
 //     console.log("get\n")
 //     console.log(await listings.get(ssID))
@@ -356,19 +370,14 @@ console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
 const validListing4 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Case"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, ["Shipping"], "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 const validListing5 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Case"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, ["Shipping"], "Has a scratch but otherwise in good condition", "No Returns", "USD", 32913);
-const validListing6 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, ["Shipping"], "sorry it's just the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing7 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, ["Shipping"], "WOMBO COMBO (Game not included)", "No Returns", "USD", 32913);
+const validListing6 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, ["Shipping"], "i only want the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing7 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, ["Shipping"], "Just need the case, and bam! My collection will be complete.", "No Returns", "USD", 32913);
 const validListing8 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Case", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, ["Shipping"], "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 const validListing9 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, ["Shipping"], "Cartridge. Nothing more.", "60 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 const validListing10 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Case"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, ["Shipping"], "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 
 
 try {
-    const echo = await users.createUser("Edward", "Cho", "echo@stevens.edu", "Echo11", "1997-11-21", "Dainsleif8&", "New York", "NY");
-    const raye = await users.createUser("Ilse", "Katarn", "rikatarn11@gmail.com", "Raye01", "2001-01-01", "trashCans1!!", "Miami", "FL");
-    const modkop = await users.createUser("Brandon", "Leung", "bleu@gmail.com", "Modkop", "2002-11-12", "MudkipWithAGun2002[]", "Staten Island", "NY");
-    const arthur = await users.createUser("Tacitus", "Kilgore", "kgilgore@eyefind.com", "Fenton", "1963-02-22", "HeyThereMister!!!1899", "Philadelphia", "PA");
-    const sasha = await users.createUser("Sasha", "Braus", "sbraus@paradise.com", "PotatoGirl", "2000-07-26", "104Cadets:D", "Dauper", "SC");
 
     const soulsilver = await listings.create(modkop._id, "Pokemon Soulsilver Big Box CIB", "Sell", "Used", ["Cartridge", "Manual", "Case", "Outer Box", "Other"], 250, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431639/orkbvk22sxozt4uulzwa.jpg',
@@ -486,74 +495,37 @@ try {
 }
 
 try {
-    const badId = await comments.createComment(validListing._id.toString(), '100', "I'm going to try and break this");
+    const badId = await comments.createComment(validListing4._id.toString(), '100', "I'm going to try and break this");
 } catch (e) {
     console.log(e.message);
 }
 
-    
-
-
-// console.log("\n\n-----INSERTING REVIEWS-----\n\n");
-
-// try {
-//     const goodReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'This guy is from Arkansas; therefore, I like him', 5);
-//     console.log(goodReview);
-// } catch (e) {
-//     console.log(e.message);
-// }
-
-// try {
-//     const averageReview = await reviews.createReview(mrKing._id.toString(), handymanny._id.toString(), 'He took his sweet time with shipping. Product was in good shape', 3);
-//     console.log(averageReview);
-// } catch (e) {
-//     console.log(e.message);
-// }
-
-// try {
-//     const gotScammed = await reviews.createReview(finalUser._id.toString(), alien._id.toString(), 'This alien fellow did not sell me a good product', 1);
-//     console.log(gotScammed);
-// } catch (e) {
-//     console.log(e.message);
-// }
-
-// try {
-//     const duplicateReview = await reviews.createReview(patrick._id.toString(), ark._id.toString(), 'I found out he was not actually from Arkansas, whoops', 2);
-// } catch (e) {
-//     console.log(e.message);
-// }
-
-// try {
-//     const iLoveLuke = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'The product shipped with excellent quality. You are my favorite student <3', 5);
-//     console.log(iLoveLuke);
-// } catch (e) {
-//     console.log(e.message);
-// }
-
-// try {
-//     const lukeIsOkay = await reviews.createReview(mrKing._id.toString(), luke._id.toString(), 'I saw a scratch on the back of the box. As someone who expects perfection, this is clearly disappointing.', 3);
-// } catch (e) {
-//     console.log(e.message);
-// }
-
-// try {
-//     const thisIsWhatsUp = await reviews.createReview(albertEinstein._id.toString(), luke._id.toString(), 'Exquisite product. Makes me think about the theory of relativity.', 5);
-// } catch (e) {
-//     console.log(e.message);
-// }
-
-
 console.log("\n\n-----INSERTING TRANSACTIONS-----\n\n");
 //Working example (ONLY WITH A LISTING ID THAT YOU KNOW WILL BE IN THERE)
 try {
-    const goodTransaction = await (transactions.createTransaction(validListing._id.toString(), luke._id.toString()));
+    const goodTransaction = await (transactions.createTransaction(validListing5._id.toString(), luke._id.toString()));
     console.log(goodTransaction);
 } catch(e) {
     console.log(e.message);
 }
 
+try {
+    const buyItAgain = await (transactions.createTransaction(validListing5._id.toString(), luke._id.toString()));
+    console.log(buyItAgain);
+} catch(e) {
+    console.log(e.message);
+}
 
-console.log('\n---INSERTING REVIEWS---\n')
+try {
+    const goodTransaction2 = await (transactions.createTransaction(validListing6._id.toString(), mrKing._id.toString()));
+} catch (e) {
+    console.log(e.message);
+}
+
+
+
+
+console.log('\n---INSERTING INVALID REVIEWS---\n')
 
 try {
     const personalGrudge = await reviews.createReview(mrKing._id.toString(), alien._id.toString(), 'I have a personal grudge against you, so I will give you a bad review.', 1);
@@ -567,24 +539,30 @@ try {
     console.log(e.message);
 }
 
+
+console.log('\n---INSERTING VALID REVIEWS---\n');
+
 try {
-    const goodReview = await reviews.createReview(luke._id.toString(), patrick._id.toString(), 'My delivery came in on time and my product was in perfect shape. I am very happy.', 4);
+    const review1 = await reviews.createReview(luke._id.toString(), ark._id.toString(), 'Thank you!', 5);
+    console.log(review1);
 } catch (e) {
     console.log(e.message);
 }
 
 try {
-    const goodReview2 = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'Good buyer, no complaints. -PH', 5);
+    const review2 = await reviews.createReview(ark._id.toString(), mrKing._id.toString(), 'I have no complaints', 4);
+    console.log(review2);
 } catch (e) {
     console.log(e.message);
 }
 
 try {
-    const repeatedReview = await reviews.createReview(patrick._id.toString(), luke._id.toString(), 'I like breaking things; therefore, I will try reviewing you again!', 4);
-    console.log('This message should NOT be displayed!');
+    const review3 = await reviews.createReview()
 } catch (e) {
     console.log(e.message);
 }
+
+
 
 
 
