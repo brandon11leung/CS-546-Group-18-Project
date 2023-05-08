@@ -30,7 +30,7 @@ export const createTransaction = async (
 
     //Find listing
     let listing = await listingCollection.findOne({_id: new ObjectId(listingId)});
-    if (listing === null) { throw new Error('Review not found in database'); }
+    if (listing === null) { throw new Error('Listing not found in database'); }
     
     if (listing.open === false) { throw new Error('The listing is not open'); }
 
@@ -48,11 +48,16 @@ export const createTransaction = async (
             seller: listing.posterId,
             buyer: new ObjectId(buyerOrSeller)
         }
+
+        let userData = await users();
+        let userInfo = await userData.findOne({_id: new ObjectId(buyerOrSeller)});
+        let userInfo2 = await userData.findOne({_id: new ObjectId(listing.posterId)});
+        
         //Update purchaseHistory for buyer
         let updatedUser = {
-            $push: { purchaseHistory: {_id: new ObjectId(listingId), title: listing.title, price: listing.price}}
+            $push: { purchaseHistory: {_id: new ObjectId(listingId), username: userInfo2.username, title: listing.title, price: listing.price}}
         }
-        let userData = await users();
+
         let updatedInfo = await userData.findOneAndUpdate(
             {_id: new ObjectId(buyerOrSeller)},
             updatedUser,
@@ -62,7 +67,7 @@ export const createTransaction = async (
 
         //Update salesHistory for seller
         updatedUser = {
-            $push: { salesHistory: {_id: new ObjectId(listingId), title: listing.title, price: listing.price}}
+            $push: { salesHistory: {_id: new ObjectId(listingId), username: userInfo.username, title: listing.title, price: listing.price}}
         }
         userData = await users();
         updatedInfo = await userData.findOneAndUpdate(
@@ -82,24 +87,27 @@ export const createTransaction = async (
             buyer: listing.posterId
         }
         //Update purchaseHistory for buyer
-        let updatedUser = {
-            $push: { purchaseHistory: new ObjectId(listingId) }
-        }
         let userData = await users();
+        let userInfo = await userData.findOne({_id: new ObjectId(buyerOrSeller)});
+        let userInfo2 = await userData.findOne({_id: new ObjectId(listing.posterId)});
+        let updatedUser = {
+            $push: { purchaseHistory: {_id: new ObjectId(listingId), username: userInfo2.username, title: listing.title, price: listing.price} }
+        }
         let updatedInfo = await userData.findOneAndUpdate(
-            {_id: new ObjectId(listing.posterId)},
+            {_id: new ObjectId(buyerOrSeller)},
             updatedUser,
             {returnDocument: 'after'})
         if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the user info.")}
             updatedInfo.value._id = updatedInfo.value._id.toString();
 
         //Update salesHistory for seller
+        
         updatedUser = {
-            $push: { salesHistory: [new ObjectId(listingId), listing.title, listing.price] }
+            $push: { salesHistory: {_id: new ObjectId(listingId), username: userInfo.username, title: listing.title, price: listing.price} }
         }
         userData = await users();
         updatedInfo = await userData.findOneAndUpdate(
-            {_id: new ObjectId(buyerOrSeller)},
+            {_id: new ObjectId(listing.posterId)},
             updatedUser,
             {returnDocument: 'after'})
         if (updatedInfo.lastErrorObject.n === 0) {throw new Error("Error: unable to update the user info.")}
