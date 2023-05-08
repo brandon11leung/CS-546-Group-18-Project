@@ -85,7 +85,7 @@ router.route('/sellinglistings').get(async (req, res) => {
 router.route('/transaction/:id').get(async (req, res) => {
     try {
         let List = await listings.get(req.params.id); 
-        res.render('transaction', {title: "Checkout", pic: 'public/images/Credit-Card-Logos-high-resolution.png', link: `/transaction/${List._id}`});
+        res.render('transaction', {title: "Checkout", pic: '../public/images/Credit-Card-Logos-high-resolution.png', link: `/transaction/${List._id}`});
     } catch (e) {
         res.status(500).json({error: e});
     }})
