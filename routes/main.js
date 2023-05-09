@@ -258,7 +258,7 @@ router.route('/offer/:id').get(async (req, res) => {
                             }
                             }
                         });
-                res.redirect('/account');
+                res.redirect('/');
             } catch (e) {
                 res.status(500).json({error: e});
             }
