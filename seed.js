@@ -327,13 +327,13 @@ try {
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
 
-const validListing1 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Box"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, "Shipping", "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing2 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Box"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, "Shipping", "Has a scratch but otherwise in good condition", "No Returns", "USD", 32913);
-const validListing3 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, "Shipping", "i only want the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing4 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Box"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, "Shipping", "Just need the case, and bam! My collection will be complete.", "No Returns", "USD", 32913);
-const validListing5 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Box", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, "Shipping", "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing6 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, "Shipping", "Cartridge. Nothing more.", "60 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing7 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Box"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, "Shipping", "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing1 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Box"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, "Shipping", "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 37433);
+const validListing2 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Box"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, "Shipping", "Has a scratch but otherwise in good condition", "No Returns", "USD", 35765);
+const validListing3 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, "Shipping", "i only want the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 4775);
+const validListing4 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Box"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, "Shipping", "Just need the case, and bam! My collection will be complete.", "No Returns", "USD", 9888);
+const validListing5 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Box", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, "Shipping", "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 6289);
+const validListing6 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, "Shipping", "Cartridge. Nothing more.", "60 Day Returns (Buyer pays for return shipping)", "USD", 3780);
+const validListing7 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Box"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, "Shipping", "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 19409);
 
 
 try {
@@ -402,6 +402,19 @@ try {
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431660/uleyglenjtx36l0palp2.jpg',
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431660/o025r4vc2ighzsfjqcgy.jpg'
     ], ["Attack on Titan 2: Final Battle Switch"], 0, "Both Shipping and Local Meetup", "Console does work. Includes stylus. Will be factory reset.", "No Returns", "USD", 31254);
+
+    const DKC = await listings.create(mrKing._id, "Donkey Kong Country", "Sell", "New", ["Box", "Cartridge", "Manual"], 750, [
+        'https://i.ebayimg.com/images/g/V08AAOSw4upkOao2/s-l1600.png'
+    ], ["Nintendo 3DS"], 10, "Both Shipping and Local Meetup", "I hope you enjoy!", "No Returns", "USD", 6900);
+
+    const SS = await listings.create(albertEinstein._id, "Skyward Sword", "Buy", "Used", ["Case", "Disc", "Manual"], 30, [
+        'https://images-na.ssl-images-amazon.com/images/I/91oL98JUm9L._AC_UL210_SR210,210_.jpg',
+        'https://i.ebayimg.com/images/g/wkIAAOSwR4VjAn7w/s-l1600.jpg'
+    ], ["Mario Kart 8 Deluxe"], 5, "Shipping", "I very much want this exquisite game, in particular - at a divine price. Thank you.", "No returns", "USD", 32355);
+
+    const kirby = await listings.create(luke._id, "Kirby and the Forgotten Land", "Buy", "Used", ["Case", "Cartridge"], 45, [
+        'https://m.media-amazon.com/images/I/71bSke9MDHL._SY500_.jpg'
+    ], [], 0, "Shipping", "I want this game but don't want to pay $60.", "No returns", "USD", 3305915);
 
     const attackOnTitan = await listings.create(modkop._id, "Attack on Titan 2: Final Battle for Switch", "Buy", "New", ["Box", "Cartridge"], 85, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431661/b03pljnaafokjgnywnmo.jpg'
