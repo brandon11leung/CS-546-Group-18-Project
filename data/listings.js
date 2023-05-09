@@ -12,7 +12,7 @@ import * as helpers from '../helpers.js';
 import * as pricecharting from '../utils/pricecharting.js'
 import timestamp from "time-stamp";
 const validMainConditionArr = ["New", "Graded", "Like New/Open Box", "Used", "For Parts or Not Working"];
-const validSecondaryConditionArr = ["Cartridge", "Box", "Case", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code", "Other", "Outer Box"];
+const validSecondaryConditionArr = ["Cartridge", "Box", "Manual", "Console", "Controller", "Disc", "Cables", "Redemption Code", "Other", "Outer Box"];
 const validListingTypeArr = ["Buy", "Sell", "Trade"];
 const validShippingMethodsArr = ["Shipping", "Local Meetup", "Both Shipping and Local Meetup"];
 const validReturnPolicyArr = ["No Returns", 
@@ -451,20 +451,14 @@ export const sortByElement = async (listings, element, order) => {
 				}
 			}
 		}
-		
+		sortedArr = sortedArr.reverse();
 	}
 	if (element == "By Price") {
 		let priceArr = [];
-		console.log(listings)
-		console.log("//////////////////////////////////////////////")
 		for (let i = 0; i < listings.length; i++) {
 			priceArr.push(listings[i].price + listings[i].shippingPrice);
 		}
-		console.log(priceArr)
-		console.log("//////////////////////////////////////////////")
 		priceArr = helpers.stupidSort(priceArr);
-		console.log(priceArr)
-		console.log("//////////////////////////////////////////////")
 		for (let i = 0; i < priceArr.length; i++) {
 			for (let j = 0; j < listings.length; j++) {
 				if (priceArr[i] == listings[j].price + listings[j].shippingPrice) {
