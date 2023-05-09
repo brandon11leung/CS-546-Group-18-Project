@@ -224,7 +224,7 @@ export const isValidPrice = (arg, argName) => {
     if (arg > 999999999.99) {throw new Error(`Error: the ${argName} parameter cannot be above 999,999,999.99.`)}
     return arg
 }
-console.log(isValidPrice(1000000000))
+// console.log(isValidPrice(1000000000))
 
 export const stupidSort = (arr) => {
     let sortedArr = [];
