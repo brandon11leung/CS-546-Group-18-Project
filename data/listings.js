@@ -320,8 +320,6 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.freeShipping == false && listings[i].shippingPrice == 0 && listings[i].listingType == "Sell") {
 			matchFilter = false;
 		}
-		console.log(listings[i].title)
-		console.log(listings[i].returnPolicy)
 		if (elements.returnPolicy == false && listings[i].returnPolicy != "No Returns") {
 			matchFilter = false;
 
@@ -338,7 +336,7 @@ export const filterByElements = async (listings, elements) => {
 }
 
 export const sortByElement = async (listings, element, order) => {
-	console.log(listings)
+
 	const validElementArr = ["Default", "By Alphabetically", "By Newest", "By Price"]
 	let sortedArr = []
 	if (validElementArr.includes(element) == false) {
@@ -357,24 +355,18 @@ export const sortByElement = async (listings, element, order) => {
 		const multiplier1 = 1.5;
 		
 		for (let i = 0; i < listings.length; i++) {
-			console.log("{")
-			console.log(listings[i].title)
+		
 			if (listings[i].listingType == "Buy") {
 				tier1.push(listings[i]);
 				continue;
 			}
-			console.log("{{")
-			console.log(listings[i].title)
+	
 			let tempShippingPrice = listings[i].shippingPrice;
 			if (listings[i].shippingPrice > 25) {
 				tempShippingPrice = 25;
 			}
-			console.log("{{{")
-			console.log(listings[i].title)
 			let pricechartingData = await pricecharting.searchByID(listings[i].pricechartingID);
 			let comp;
-			console.log("{{{{")
-			console.log(listings[i].title)
 			if (listings[i].mainCondition == "New") {
 				comp = pricechartingData.newPrice;
 			} else if (listings[i].mainCondition == "Graded") {
@@ -406,8 +398,7 @@ export const sortByElement = async (listings, element, order) => {
 				tier3.push(listings[i]);
 				continue; 
 			}
-			console.log("{{{{{")
-			console.log(listings[i].title)
+		
 			if (listings[i].price + tempShippingPrice <= comp * multiplier1) {
 				tier1.push(listings[i]);
 			} else if (listings[i].price + tempShippingPrice <= comp * multiplier0) {
@@ -445,6 +436,7 @@ export const sortByElement = async (listings, element, order) => {
 		}
 	}
 	if (element == "By Newest") {
+		
 		let timestampArr = [];
 		for (let i = 0; i < listings.length; i++) {
 			timestampArr.push(listings[i].timeStampUpdated);
@@ -454,25 +446,35 @@ export const sortByElement = async (listings, element, order) => {
 			for (let j = 0; j < listings.length; j++) {
 				if (timestampArr[i] == listings[j].timeStampUpdated) {
 					sortedArr[i] = listings[j];
+					listings.splice(listings.indexOf(listings[j]), 1)
 					break;
 				}
 			}
 		}
+		
 	}
 	if (element == "By Price") {
 		let priceArr = [];
+		console.log(listings)
+		console.log("//////////////////////////////////////////////")
 		for (let i = 0; i < listings.length; i++) {
 			priceArr.push(listings[i].price + listings[i].shippingPrice);
 		}
+		console.log(priceArr)
+		console.log("//////////////////////////////////////////////")
 		priceArr = helpers.stupidSort(priceArr);
+		console.log(priceArr)
+		console.log("//////////////////////////////////////////////")
 		for (let i = 0; i < priceArr.length; i++) {
 			for (let j = 0; j < listings.length; j++) {
 				if (priceArr[i] == listings[j].price + listings[j].shippingPrice) {
 					sortedArr[i] = listings[j];
+					listings.splice(listings.indexOf(listings[j]), 1)
 					break;
 				}
 			}
 		}
+		console.log(sortedArr)
 	}
 	if (order == 1) {
 		sortedArr = sortedArr.reverse();

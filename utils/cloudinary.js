@@ -88,6 +88,13 @@ export const uploadImage = async (imageArr) => {
 // const RT = ["./images/Rhythm Thief Loose/stockPhoto.jpg"];
 // const SWRC = ["./images/Star Wars Republic Commando Collectors Edition CIB/stockPhoto.jpg"];
 // const PW2 = ["./images/Pokemon White 2 Box Manual Only/stockPhoto.jpg"];
+// const EOS = ["./images/Pokemon MD EoS/617iOqW0EkL.png"]
+
+// const PFR = ["./images/Pokemon Firered/1 - iMCzAfu.jpg",
+//              "./images/Pokemon Firered/2 - TnQZ9c3.jpg",
+//              "./images/Pokemon Firered/3 - 8rVIMZ1.jpg",
+//              "./images/Pokemon Firered/4 - ftP8Rar.jpg"
+// ];
 
 // console.log("Pokemon Soulsilver");
 // console.log(await uploadImage(SS));
@@ -123,3 +130,7 @@ export const uploadImage = async (imageArr) => {
 // console.log(await uploadImage(SWRC));
 // console.log("Pokemon White 2")
 // console.log(await uploadImage(PW2));
+// console.log("Pokemon Mystery Dungeon Explorers of Sky")
+// console.log(await uploadImage(EOS))
+// console.log("Pokemon Firered")
+// console.log(await uploadImage(PFR))//

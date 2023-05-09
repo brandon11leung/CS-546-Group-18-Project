@@ -409,15 +409,15 @@ try {
 
     const white2 = await listings.create(modkop._id, "Pokemon White 2 Box and Manual", "Buy", "Used", ["Box", "Manual"], 25, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683445726/hrxghym9jyqw9leqbrz7.jpg'
-    ], [], 0, "Both Shipping and Local Meetup", "I own the cartridge, just trying to make it CIB. Thanks.", "No Preference", "USD", 33362);
+    ], [], 0, "Both Shipping and Local Meetup", "I own the cartridge, just trying to make it CIB. Thanks.", "30 Day Returns (Buyer pays for return shipping)", "USD", 33362);
 
     const fossilLeague = await listings.create(modkop._id, "Fossil League CIB", "Buy", "Used", ["Cartridge", "Box", "Manual"], 20, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431662/yq7ko38w5gzip71h9cgs.jpg'
-    ], [], 0, "Both Shipping and Local Meetup", "Looking for a clean copy. Thanks.", "No Preference", "USD", 11811);
+    ], [], 0, "Both Shipping and Local Meetup", "Looking for a clean copy. Thanks.", "30 Day Returns (Buyer pays for return shipping)", "USD", 11811);
 
     const marioKart8Deluxe = await listings.create(raye._id, "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Box"], 50, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431662/nc4pli1uw20xtd0olr2b.jpg'
-    ], [], 0, "Local Meetup", "Mario Kart 8 Deluxe", "No Preference", "USD", 37433);
+    ], [], 0, "Local Meetup", "Mario Kart 8 Deluxe", "30 Day Returns (Buyer pays for return shipping)", "USD", 37433);
 
     const n64JungleGreen = await listings.create(echo._id, "Nintendo N64 Jungle Green", "Buy", "Used", ["Console", "Controller"], 165, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431663/u08co8d0ml3dyxiep4cp.jpg'
@@ -425,20 +425,32 @@ try {
 
     const pokemonConquest = await listings.create(sasha._id, "Pokemon Conquest CIB", "Buy", "Used", ["Cartridge", "Box", "Manual"], 85, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431663/wfeazz1kupfcudvazdmp.jpg'
-    ], [], 0, "Both Shipping and Local Meetup", "Looking for a good condition copy. Thanks.", "No Preference", "USD", 32859);
+    ], [], 0, "Both Shipping and Local Meetup", "Looking for a good condition copy. Thanks.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32859);
 
     const pokemonCrystal = await listings.create(modkop._id, "Pokemon Crystal Loose", "Buy", "Used", ["Cartridge"], 100, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431664/fgp2kdhk5xddx7wdjzn2.jpg'
-    ], [], 0, "Both Shipping and Local Meetup", "Looking for a good condition copy. Thanks.", "No Preference", "USD", 2980);
+    ], [], 0, "Both Shipping and Local Meetup", "Looking for a good condition copy. Thanks.", "30 Day Returns (Buyer pays for return shipping)", "USD", 2980);
 
     const rhythmThief = await listings.create(sasha._id, "Rhythm Thief & the Emperor's Treasure", "Buy", "Used", ["Cartridge", "Box", "Manual"], 220, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431664/ff0brdf5zipw6f4maomw.jpg'
-    ], [], 0, "Both Shipping and Local Meetup", "Looking for a good condition copy. Thanks.", "No Preference", "USD", 32913);
+    ], [], 0, "Both Shipping and Local Meetup", "Looking for a good condition copy. Thanks.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 
-    const republicCommando = await listings.create(sasha._id, "Star Wars Republic Commando Collectors Edition for Switch", "Buy", "New", ["Cartridge", "Box", "Manual", "Other"], 90, [
+    const republicCommando = await listings.create(modkop._id, "Star Wars Republic Commando Collectors Edition for Switch", "Buy", "New", ["Cartridge", "Box", "Manual", "Other"], 90, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431664/y2ur0b5to4mgak2szgnc.jpg'
-    ], [], 0, "Both Shipping and Local Meetup", "Looking for a new copy of this. Thanks.", "No Preference", "USD", 2183061);
+    ], [], 0, "Both Shipping and Local Meetup", "Looking for a new copy of this. Thanks.", "No Returns", "USD", 2183061);
    
+    const firered = await listings.create(echo._id, "Pokemon Firered Loose", "Sell", "Used", ["Cartridge"], 120, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683656815/fatqyrie3npy39qmxyoh.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683656816/nfhkuhdyegepfiwoh1no.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683656817/kiljmwbhlbv1jdxzjqij.jpg',
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683656817/yd3bmjcr9zd2dles1o0f.jpg'
+    ], ["Pokemon Crystal"], 0, "Both Shipping and Local Meetup", "Tested and works.", "60 Day Returns (Seller pays for return shipping)", "USD", 2456);
+
+    const explorersOfSky = await listings.create(sasha._id, "Pokemon Mystery Dungeon: Explorers of Sky", "Buy", "Used", ["Cartridge", "Box", "Manual"], 145, [
+        'http://res.cloudinary.com/joystick-junction/image/upload/v1683657046/nvtpj2zwytqdwzkiomwj.jpg'
+    ], [], 0, "Shipping", "Looking for clean copy of this to replay.", "30 Day Returns (Buyer pays for return shipping)", "USD", 19755);
+
+
 } catch (e) {
     console.log(e.message)
 }
