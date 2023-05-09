@@ -34,9 +34,14 @@ export const create = async (posterId, title, listingType, mainCondition, second
 	if (!pricechartingID == false) {
 		helpers.isValidNumber(pricechartingID);
 	}
-	for (let i = 0; i < trades.length; i++) {
-		trades[i] = helpers.isValidString(trades[i])
+	if(trades.length === 1 && trades[0] === ''){
 	}
+	else{
+		for (let i = 0; i < trades.length; i++) {
+			trades[i] = helpers.isValidString(trades[i])
+		}
+	}
+	
 	helpers.isValidArray(secondaryCondition);
 	for (let i = 0; i < secondaryCondition.length; i++) {
 		secondaryCondition[i] = helpers.isValidString(secondaryCondition[i]);
