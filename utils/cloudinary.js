@@ -22,6 +22,11 @@ export const uploadImage = async (imageArr) => {
     }
 };
 
+const DKC = ["./images/dkc1.jpg", "./images/dkc2.jpg"];
+const Kirby = ['./images/kirby1.jpg'];
+const Skyward = ['./images/zelda.jpg', './images/zelda2.jpg', './images/zelda3.jpg'];
+
+
 // const SS = ["./images/Pokemon Soulsilver Big Box CIB/1 - sjYs7He.jpg",
 //             "./images/Pokemon Soulsilver Big Box CIB/2 - xHrMU9U.jpg",
 //             "./images/Pokemon Soulsilver Big Box CIB/3 - K2r6Qnc.jpg",
