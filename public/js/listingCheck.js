@@ -217,12 +217,6 @@ if (form) {
             errorShipPrice.innerHTML = 'Shipping Price must be a number above 0.';
         }
 
-        if (!validString(tradesInput.value)) {
-            event.preventDefault();
-            errorTrades.hidden = false;
-            errorTrades.innerHTML = 'Trades must be a valid string';
-        }
-
         if (!validString(listingDesc.value)) {
             event.preventDefault();
             errorDesc.hidden = false;
