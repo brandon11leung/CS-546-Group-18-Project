@@ -175,7 +175,6 @@ export const update = async (id, open, title, listingType, mainCondition, second
 
     const listingCollection = await listings();
     const originalInfo = await listingCollection.findOne({_id: new ObjectId(id)});
-    console.log(originalInfo)
     helpers.isValidArray(attachments);
     returnPolicy = helpers.isValidString(returnPolicy);
     helpers.isValidPrice(shippingPrice);
@@ -209,17 +208,22 @@ export const update = async (id, open, title, listingType, mainCondition, second
 };
 
 export const searchByTitle = async (searchQuery) => {
-    searchQuery = helpers.isValidString(searchQuery, "Search Query").toLowerCase();
+    //searchQuery = helpers.isValidString(searchQuery, "Search Query").toLowerCase();
     const listingCollection = await listings();
     const allListings = await getAll();
     let matchedListings = [];
-    for (let i = 0; i < allListings.length; i++) {
-        let currListingTitle = allListings[i].title.toLowerCase();
-        if (currListingTitle.indexOf(searchQuery) > -1 || currListingTitle.includes(searchQuery)) {
-            // matchedListings.push(allListings[i]._id);
-            matchedListings.push(allListings[i]);
-        }
-    }
+	searchQuery = searchQuery.trim().toLowerCase();
+	if (searchQuery != "") {
+		for (let i = 0; i < allListings.length; i++) {
+			let currListingTitle = allListings[i].title.toLowerCase();
+			if (currListingTitle.indexOf(searchQuery) > -1 || currListingTitle.includes(searchQuery)) {
+				// matchedListings.push(allListings[i]._id);
+				matchedListings.push(allListings[i]);
+			}
+		}
+	} else {
+		matchedListings = allListings
+	}
     return matchedListings;
 }
 
@@ -235,54 +239,52 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.open == true && listings[i].open == false) {
 			matchFilter = false;
 		}
-		if (elements.consoles.length > 0) {
+		if (elements.console != null) {
 			if (listings[i].pricechartingID == null) {
 				matchFilter = false;
 			} else {
-				for (let j = 0; j < elements.consoles.length; j++) {
-					if (pricecharting.ntscConsoleArr.includes(elements.consoles[j]) == false) {
-						throw new Error("Error: Invalid Console.");
-					}
-					let listingConsole = await pricecharting.searchByID(listings[i].pricechartingID)
-					listingConsole = listingConsole.consoleName 
-					if (elements.consoles.includes(listingConsole) == false) {
-						matchFilter = false;
-					}
+				if (pricecharting.ntscConsoleArr.includes(elements.console) == false) {
+					throw new Error("Error: Invalid Console.");
 				}
-				
-			}
-		}
-		if ((validMainConditionArr.includes(elements.mainCondition) == false || validMainConditionArr.includes(listings[i].mainCondition) == false) && elements.mainCondition != null) {
-			throw new Error("Error: Invalid Main Condition.");
-		}
-		if (elements.mainCondition == "New" && listings[i].mainCondition != "New") {
-			matchFilter = false;
-		} else if (elements.mainCondition == "Graded" && listings[i].mainCondition != "Graded") {
-			matchFilter = false;
-		} else if (elements.mainCondition == "Like New/Open Box" && listings[i].mainCondition != "Like New/Open Box") {
-			matchFilter = false;
-		} else if (elements.mainCondition == "Used" && listings[i].mainCondition != "Used") {
-			matchFilter = false;
-		} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
-			matchFilter = false;
-		}
-		if (elements.secondaryCondition.length > 0 && listings[i].secondaryCondition.length > 0) {
-			let check = false;
-			for (let j = 0; j < elements.secondaryCondition.length; j++) {
-				if (validSecondaryConditionArr.includes(elements.secondaryCondition[j]) == false && validSecondaryConditionArr.includes(listings[i].secondaryCondition[j]) == false) {
-					throw new Error("Error: Invalid Secondary Condition.");
-				}
-				// if (elements.secondaryCondition.includes(listings[i].secondaryCondition[j])) {
-				// 	check = true;
-				// }
-				if (listings[i].secondaryCondition.includes(elements.secondaryCondition[j]) == false) {
-					check = true;
+				let listingConsole = await pricecharting.searchByID(listings[i].pricechartingID)
+				listingConsole = listingConsole.consoleName;
+				if (elements.console.includes(listingConsole) == false) {
+					matchFilter = false;
 				}
 			}
-			if (check == true) {
-				matchFilter = false;
+		}
+	
+	if ((validMainConditionArr.includes(elements.mainCondition) == false || validMainConditionArr.includes(listings[i].mainCondition) == false) && elements.mainCondition != null) {
+		throw new Error("Error: Invalid Main Condition.");
+	}
+	if (elements.mainCondition == "New" && listings[i].mainCondition != "New") {
+		matchFilter = false;
+	} else if (elements.mainCondition == "Graded" && listings[i].mainCondition != "Graded") {
+		matchFilter = false;
+	} else if (elements.mainCondition == "Like New/Open Box" && listings[i].mainCondition != "Like New/Open Box") {
+		matchFilter = false;
+	} else if (elements.mainCondition == "Used" && listings[i].mainCondition != "Used") {
+		matchFilter = false;
+	} else if (elements.mainCondition == "For Parts or Not Working" && listings[i].mainCondition != "For Parts or Not Working") {
+		matchFilter = false;
+	}
+	if (elements.secondaryCondition.length > 0 && listings[i].secondaryCondition.length > 0) {
+		let check = false;
+		for (let j = 0; j < elements.secondaryCondition.length; j++) {
+			if (validSecondaryConditionArr.includes(elements.secondaryCondition[j]) == false && validSecondaryConditionArr.includes(listings[i].secondaryCondition[j]) == false) {
+				throw new Error("Error: Invalid Secondary Condition.");
+			}
+			// if (elements.secondaryCondition.includes(listings[i].secondaryCondition[j])) {
+			// 	check = true;
+			// }
+			if (listings[i].secondaryCondition.includes(elements.secondaryCondition[j]) == false) {
+				check = true;
 			}
 		}
+		if (check == true) {
+			matchFilter = false;
+		}
+	}
 		if ((validListingTypeArr.includes(elements.listingType) == false || validListingTypeArr.includes(listings[i].listingType) == false) && elements.listingType != null) {
 			throw new Error("Error: Invalid Listing Type.");
 		}
@@ -297,14 +299,14 @@ export const filterByElements = async (listings, elements) => {
 		if (elements.trades == true && listings[i].trades.length == 0) {
 			matchFilter = false;
 		}
-		for (let j = 0; j < elements.shippingMethods.length; j++) {
-			if (validShippingMethodsArr.includes(elements.shippingMethods[j]) == false && elements.shippingMethods != null) {
-				throw new Error("Error: Invalid Shipping Method.");
-			}
-			if (listings[i].shippingMethods.includes(elements.shippingMethods[j]) == false) {
-				matchFilter = false;
-			}
+		
+		if (validShippingMethodsArr.includes(elements.shippingMethods) == false && elements.shippingMethods != null) {
+			throw new Error("Error: Invalid Shipping Method.");
 		}
+		if (((listings[i].shippingMethods != elements.shippingMethods) && elements.shippingMethods != null) && (listings[i].shippingMethods != "Both Shipping and Local Meetup")) {
+			matchFilter = false;
+		} 
+		
 		if (typeof elements.freeShipping !== "boolean" && elements.freeShipping !== null) {
 			throw new Error("Error: Free Shipping is not a boolean.");
 		}
@@ -313,21 +315,14 @@ export const filterByElements = async (listings, elements) => {
 		} else if (elements.freeShipping == false && listings[i].shippingPrice == 0 && listings[i].listingType == "Sell") {
 			matchFilter = false;
 		}
+		console.log(listings[i].title)
+		console.log(listings[i].returnPolicy)
+		if (elements.returnPolicy == false && listings[i].returnPolicy != "No Returns") {
+			matchFilter = false;
 
-		if (elements.returnPolicy == "No Returns" && listings[i].returnPolicy != "No Returns") {
+		} else if (elements.returnPolicy == true && listings[i].returnPolicy == "No Returns") {
 			matchFilter = false;
-		} else if (elements.returnPolicy == "30 Day Returns (Buyer pays for return shipping)" && listings[i].returnPolicy != "30 Day Returns (Buyer pays for return shipping)") {
-			matchFilter = false;
-		} else if (elements.returnPolicy == "30 Day Returns (Seller pays for return shipping)" && listings[i].returnPolicy != "30 Day Returns (Seller pays for return shipping)") {
-			matchFilter = false;
-		} else if (elements.returnPolicy == "60 Day Returns (Buyer pays for return shipping)" && listings[i].returnPolicy != "60 Day Returns (Buyer pays for return shipping)") {
-			matchFilter = false;
-		} else if (elements.returnPolicy == "60 Day Returns (Seller pays for return shipping)" && listings[i].returnPolicy != "60 Day Returns (Seller pays for return shipping)") {
-			matchFilter = false;
-		} else if (elements.returnPolicy == "90 Day Returns (Buyer pays for return shipping)" && listings[i].returnPolicy != "90 Day Returns (Buyer pays for return shipping)") {
-			matchFilter = false;
-		} else if (elements.returnPolicy == "90 Day Returns (Seller pays for return shipping)" && listings[i].returnPolicy != "90 Day Returns (Seller pays for return shipping)") {
-			matchFilter = false;
+	
 		}
 
 		if (matchFilter == true) {
@@ -338,6 +333,7 @@ export const filterByElements = async (listings, elements) => {
 }
 
 export const sortByElement = async (listings, element, order) => {
+	console.log(listings)
 	const validElementArr = ["Default", "By Alphabetically", "By Newest", "By Price"]
 	let sortedArr = []
 	if (validElementArr.includes(element) == false) {
@@ -346,7 +342,6 @@ export const sortByElement = async (listings, element, order) => {
 	if ((order == 0 || order == 1) == false) {
 		throw new Error("Error: invalid order parameter.");
 	}
-
 	if (element == "Default") {
 		let tier0 = []; // Below Market Price
 		let tier1 = []; // At Market Price
@@ -357,15 +352,24 @@ export const sortByElement = async (listings, element, order) => {
 		const multiplier1 = 1.5;
 		
 		for (let i = 0; i < listings.length; i++) {
+			console.log("{")
+			console.log(listings[i].title)
 			if (listings[i].listingType == "Buy") {
+				tier1.push(listings[i]);
 				continue;
 			}
+			console.log("{{")
+			console.log(listings[i].title)
 			let tempShippingPrice = listings[i].shippingPrice;
 			if (listings[i].shippingPrice > 25) {
 				tempShippingPrice = 25;
 			}
+			console.log("{{{")
+			console.log(listings[i].title)
 			let pricechartingData = await pricecharting.searchByID(listings[i].pricechartingID);
 			let comp;
+			console.log("{{{{")
+			console.log(listings[i].title)
 			if (listings[i].mainCondition == "New") {
 				comp = pricechartingData.newPrice;
 			} else if (listings[i].mainCondition == "Graded") {
@@ -397,6 +401,8 @@ export const sortByElement = async (listings, element, order) => {
 				tier3.push(listings[i]);
 				continue; 
 			}
+			console.log("{{{{{")
+			console.log(listings[i].title)
 			if (listings[i].price + tempShippingPrice <= comp * multiplier1) {
 				tier1.push(listings[i]);
 			} else if (listings[i].price + tempShippingPrice <= comp * multiplier0) {

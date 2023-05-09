@@ -1,4 +1,175 @@
 <h1>Buying Bazaar</h1>
+    <div class="search-container">
+        <form method="POST" action="/buyinglistings">
+        
+            <input type="text" id="searchBarTextInput" placeholder="Search..." name="searchBarTextInput"><br><br>
+            <label for="mainCondition">Main Condition:</label>
+                <select id="mainConditionDropdown" name="mainConditionDropdown">
+                    <option value="">Select a Main Condition</option>
+                    <option value="New">New</option>
+                    <option value="Like New/Open Box">Like New/Open Box</option>
+                    <option value="Used">Used</option>
+                    <option value="Graded">Graded</option>
+                    <option value="For Parts or Not Working">For Parts or Not Working</option>
+                </select><br><br>
+            
+                    <label class="secondaryCondition">Secondary Conditions:</label>
+                    <label for="secondaryCondition1">
+                    <input type="checkbox" id="secondaryCondition1" name="secondaryCondition" value="Cartridge" />Cartridge</label>
+                    <label for="secondaryCondition2">
+                    <input type="checkbox" id="secondaryCondition2" name="secondaryCondition" value="Disc" />Disc</label>
+                    <label for="secondaryCondition3">
+                    <input type="checkbox" id="secondaryCondition3" name="secondaryCondition" value="Console" />Console</label>
+                    <label for="secondaryCondition4">
+                    <input type="checkbox" id="secondaryCondition4" name="secondaryCondition" value="Box" />Box</label>
+                    <label for="secondaryCondition5">
+                    <input type="checkbox" id="secondaryCondition5" name="secondaryCondition" value="Case" />Case</label>    
+                    <label for="secondaryCondition6">
+                    <input type="checkbox" id="secondaryCondition6" name="secondaryCondition" value="Manual" />Manual</label>
+                    <label for="secondaryCondition7">
+                    <input type="checkbox" id="secondaryCondition7" name="secondaryCondition" value="Redemption Code" />Redemption Code</label>  
+                    <label for="secondaryCondition8">
+                    <input type="checkbox" id="secondaryCondition8" name="secondaryCondition" value="Controller" />Controller</label>
+                    <label for="secondaryCondition9">
+                    <input type="checkbox" id="secondaryCondition9" name="secondaryCondition" value="Cables" />Cables</label>  
+                    <label for="secondaryCondition10">
+                    <input type="checkbox" id="secondaryCondition10" name="secondaryCondition" value="Other" />Other</label>  
+                <br>
+
+            <label for="console">Console:</label>
+                <select id="console" name="console">
+                    <option value="">Select a Console</option>
+                    <option value="3DO">3DO</option>
+                    <option value="Action Max">Action Max</option>
+                    <option value="Amiga">Amiga</option>
+                    <option value="Amiga CD32">Amiga CD32</option>
+                    <option value="Arcadia 2001">Arcadia 2001</option>
+                    <option value="Atari 2600">Atari 2600</option>
+                    <option value="Atari 400">Atari 400</option>
+                    <option value="Atari 5200">Atari 5200</option>
+                    <option value="Atari 7800">Atari 7800</option>
+                    <option value="Atari Lynx">Atari Lynx</option>
+                    <option value="Atari ST">Atari ST</option>
+                    <option value="Bally Astrocade">Bally Astrocade</option>
+                    <option value="CD-i">CD-i</option>
+                    <option value="Colecovision">Colecovision</option>
+                    <option value="Commodore 16">Commodore 16</option>
+                    <option value="Commodore 64">Commodore 64</option>
+                    <option value="Evercade">Evercade</option>
+                    <option value="FM Towns Marty">FM Towns Marty</option>
+                    <option value="Fairchild Channel F">Fairchild Channel F</option>
+                    <option value="Game & Watch">Game & Watch</option>
+                    <option value="Game Wave">Game Wave</option>
+                    <option value="Game.Com">Game.Com</option>
+                    <option value="GameBoy">GameBoy</option>
+                    <option value="GameBoy Advance">GameBoy Advance</option>
+                    <option value="GameBoy Color">GameBoy Color</option>
+                    <option value="Gamecube">Gamecube</option>
+                    <option value="Gizmondo">Gizmondo</option>
+                    <option value="HyperScan">HyperScan</option>
+                    <option value="Intellivision">Intellivision</option>
+                    <option value="Jaguar">Jaguar</option>
+                    <option value="Magnavox Odyssey">Magnavox Odyssey</option>
+                    <option value="Magnavox Odyssey 2">Magnavox Odyssey 2</option>
+                    <option value="Magnavox Odyssey 300">Magnavox Odyssey 300</option>
+                    <option value="Mattel Aquarius">Mattel Aquarius</option>
+                    <option value="Microvision">Microvision</option>
+                    <option value="Mini Arcade">Mini Arcade</option>
+                    <option value="N-Gage">N-Gage</option>
+                    <option value="NES">NES</option>
+                    <option value="Neo Geo">Neo Geo</option>
+                    <option value="Neo Geo AES">Neo Geo AES</option>
+                    <option value="Neo Geo CD">Neo Geo CD</option>
+                    <option value="Neo Geo Pocket Color">Neo Geo Pocket Color</option>
+                    <option value="Nintendo 3DS">Nintendo 3DS</option>
+                    <option value="Nintendo 64">Nintendo 64</option>
+                    <option value="Nintendo DS">Nintendo DS</option>
+                    <option value="Nintendo Switch">Nintendo Switch</option>
+                    <option value="PC FX">PC FX</option>
+                    <option value="PC Games">PC Games</option>
+                    <option value="PSP">PSP</option>
+                    <option value="Pippin">Pippin</option>
+                    <option value="Playstation">Playstation</option>
+                    <option value="Playstation 2">Playstation 2</option>
+                    <option value="Playstation 3">Playstation 3</option>
+                    <option value="Playstation 4">Playstation 4</option>
+                    <option value="Playstation 5">Playstation 5</option>
+                    <option value="Playstation Vita">Playstation Vita</option>
+                    <option value="Sega 32X">Sega 32X</option>
+                    <option value="Sega CD">Sega CD</option>
+                    <option value="Sega Dreamcast">Sega Dreamcast</option>
+                    <option value="Sega Game Gear">Sega Game Gear</option>
+                    <option value="Sega Genesis">Sega Genesis</option>
+                    <option value="Sega Master System">Sega Master System</option>
+                    <option value="Sega Pico">Sega Pico</option>
+                    <option value="Sega Saturn">Sega Saturn</option>
+                    <option value="Sharp X68000">Sharp X68000</option>
+                    <option value="Super Nintendo">Super Nintendo</option>
+                    <option value="Supervision">Supervision</option>
+                    <option value="TI-99">TI-99</option>
+                    <option value="Tapwave Zodiac">Tapwave Zodiac</option>
+                    <option value="Tiger R-Zone">Tiger R-Zone</option>
+                    <option value="TurboGrafx CD">TurboGrafx CD</option>
+                    <option value="TurboGrafx-16">TurboGrafx-16</option>
+                    <option value="VTech Socrates">VTech Socrates</option>
+                    <option value="Vectrex">Vectrex</option>
+                    <option value="Vic-20">Vic-20</option>
+                    <option value="Virtual Boy">Virtual Boy</option>
+                    <option value="Wii">Wii</option>
+                    <option value="Wii U">Wii U</option>
+                    <option value="WonderSwan">WonderSwan</option>
+                    <option value="WonderSwan Color">WonderSwan Color</option>
+                    <option value="Xbox">Xbox</option>
+                    <option value="Xbox 360">Xbox 360</option>
+                    <option value="Xbox One">Xbox One</option>
+                    <option value="Xbox Series X">Xbox Series X</option>
+                    <option value="ZX Spectrum">ZX Spectrum</option>
+                </select><br><br>
+            <label for="deliveryMethodDropdown">Delivery Method:</label>
+                <select id="deliveryMethodDropdown" name="deliveryMethodDropdown">
+                    <option value="">Select a Delivery Method</option>
+                    <option value="Shipping">Shipping</option>
+                    <option value="Local Meetup">Local Meetup</option>
+                    <option value="Both">Both</option>
+                </select><br>
+            <label for="acceptsTradesDropdown">Accepts Trades:</label>
+                <select id="acceptsTradesDropdown" name="acceptsTradesDropdown">
+                    <option value="">Default</option>
+                    <option value=true>Accepts Trades</option>
+                    <option value=false>Does Not Accept Trades</option>
+                </select><br>
+            <label for="acceptsReturnsDropdown">Accepts Returns:</label>
+                <select id="acceptsReturnsDropdown" name="acceptsReturnsDropdown">
+                    <option value="">Default</option>
+                    <option value=true>Accepts Returns</option>
+                    <option value=false>Does Not Accept Returns</option>
+                </select><br>
+            <label for="freeShippingDropdown">Offers Free Shipping</label>
+                <select id="freeShippingDropdown" name="freeShippingDropdown">
+                    <option value="">Default</option>
+                    <option value=true>Offers Free Shipping</option>
+                    <option value=false>Does Not Offer Free Shipping</option>
+                </select><br>
+            
+            <input type="checkbox" id="closedCheckbox" name="closedCheckbox" value=false>
+            <label for="closedCheckbox"> Closed Listings</label><br>
+
+
+
+
+            <input type="submit">
+            {{!-- <button type="submit">Submit</button> --}}
+            <label for="sortBy"></label>
+                <select id="sortBy" name="sortBy">
+                    <option value="Default">Sort by Best Match</option>
+                    <option value="By Alphabetically">Sort by Alphabetical Order</option>
+                    <option value="By Newest">Sort by Newest</option>
+                    <option value="By Price">Sort by Price</option>
+                </select>
+            <input type="checkbox" id="sortReverseCheckbox" name="sortReverseCheckbox" value=1>
+            <label for="sortReverseCheckbox"> Reverse</label><br>
+        </form>
+    </div>
     {{#each listings}}
                 {{#if listing.open}}
                 <div class="items"> 
