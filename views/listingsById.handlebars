@@ -61,9 +61,10 @@
                     {{/if}}
                 </div><br>
 </div>
+
 {{#if ownPoster}}
     <div class="btn-group">
-    <button class="purchase" onclick="window.location.href = 'http://localhost:3000/transaction/{{listings._id}}'">{{type}}</button>
+    <button class="purchase" onclick="window.location.href = 'http://localhost:3000/choice/{{listings._id}}'">{{type}}</button>
     </div>
 {{else}}
 {{/if}}
