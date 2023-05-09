@@ -6,6 +6,7 @@ const validString = (str) => {
 }
 
 const validRating = (rating) => {
+    console.log(rating);
     rating = Number(rating);
     if (rating < 1 || rating > 5 || rating % 1 !== 0) {
         return false;

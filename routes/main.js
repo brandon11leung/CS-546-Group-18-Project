@@ -4,6 +4,7 @@ const router = Router();
 import * as helpers from '../helpers.js';
 import * as users from '../data/users.js'
 import * as listings from '../data/listings.js'
+import * as reviews from '../data/reviews.js'
 import * as charting from '../utils/pricecharting.js'
 import * as cloud from '../utils/cloudinary.js'
 import * as transactions from '../data/transactions.js'
@@ -537,6 +538,36 @@ router.route('/logout').get(async (req, res) => {
     res.render('logout');
 });
 
+router.route('/review/:id').get(async (req, res) => {
+    try {
+        res.render('createReview');
+    } catch (e) {
+        res.status(500).json({error: e});
+    }
+}).post(async (req, res) => {
+    req.body.contentInput = xss(req.body.contentInput);
+    req.body.rating = xss(req.body.rating);
+    
+    if (typeof req.body.contentInput !== 'string') { res.status(400).render('createReview', {error: 'Review is not a string.'}); }
+    req.body.contentInput = req.body.contentInput.trim();
+    if (req.body.contentInput.length < 10 || req.body.contentInput.length > 5000) { 
+        res.status(400).render('createReview', {error: 'Content must be between 10 and 5000 characters.'}); 
+    }
+
+    if (!helpers.validRating(req.body.rating)) {
+        res.status(400).render('createReview', {error: 'Invalid rating.'});
+    }
+
+    try {
+        const insertedReview = await reviews.createReview(req.session.user.id, req.params.id, req.body.contentInput, req.body.rating);
+        res.redirect('/');
+    } catch (e) {
+        res.status(500).render('createReview', {error: e});
+    }
+    /* Insert review into database */
+
+});
+
 router.route('/ProfilePage/:username').get(async (req, res) => {
     try {
         let info = await users.getUserByUsername(req.params.username);
@@ -552,4 +583,6 @@ router.route('/ProfilePage/:username').get(async (req, res) => {
     } catch (e) {
         res.status(500).json({error: e});
     }});
+
+
  export default router;

@@ -174,6 +174,16 @@ export const validState = (state) => {
  
 } 
 
+
+export const validRating = (rating) => {
+    rating = Number(rating);
+    console.log(rating);
+    if (rating < 1 || rating > 5 || rating % 1 !== 0) {
+        return false;
+    }
+    return true;
+}
+
 export const isValidString = (arg, argName) => { // Universal
     if (!isValidString) {throw new Error(`Error: the ${argName} parameter does not exist.`)}
     if (typeof arg === "undefined" || !arg) {throw new Error(`Error: the ${argName} parameter is undefined.`)}
