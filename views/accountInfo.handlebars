@@ -8,7 +8,9 @@
         <p>City: {{user.city}}</p>
         <p>State: {{user.state}}</p>
         <p>Biography: {{user.biography}}</p>
-        <div>
+        <h2>Overall Rating: {{user.overallRating}}</h2>
+        <div class="row">
+        <div class="column">
             <h3>Purchase History</h3>
             <ul class="search">
         {{#each user.purchaseHistory}}
@@ -24,6 +26,8 @@
             </li>
         {{/each}}
             </ul>
+        </div>
+        <div class="column">
             <h3>Sales History</h3>
             <ul class="search">
         {{#each user.salesHistory}}
@@ -35,8 +39,18 @@
         {{/each}}
             </ul>
         </div>
-        <h2>Overall Rating: {{user.overallRating}}</h2>
+        </div>
+         {{#if reviews}}
+         <h3>Reviews</h3>
+        <ol>
+        {{#each reviews}}
+        <li class="container">
+        <p>{{this.name}}: {{this.message}}</p>
+        <p>Rating Given: {{this.rating}}</p>
+        </li>
+        {{/each}}
+        </ol>
+        {{else}}
+        <p>No Reviews Left</p>
+        {{/if}}
     </div>
-    
-
-    <button style="width:25%" onclick="window.location.href = 'http://localhost:3000/PriceChartSearch'">Create Listing</button>
