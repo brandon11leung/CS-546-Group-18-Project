@@ -62,7 +62,11 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
         let priceChartData = await charting.searchByID(List.pricechartingID.toString());
         let user = await users.getUserById(List.posterId.toString())
         let username = user.username;
-        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true});
+        let tradeCheck = true;
+            if(List.trades.length === 1 && List.trades[0] === ''){
+                tradeCheck = false;
+            }
+        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck});
         } catch (e) {
         res.status(500).json({error: e});
     }})
@@ -99,7 +103,90 @@ router.route('/sellinglistings').get(async (req, res) => {
         } catch (e) {
             console.log(e);
         res.status(500).json({error: e});
-    }});
+    }})
+    .post(async (req, res) => {
+             
+                
+
+           
+        try {
+            let sfsData = req.body;
+            sfsData.searchBarTextInput = req.body.searchBarTextInput || ""
+            sfsData.mainConditionDropdown = req.body.mainConditionDropdown || null
+            sfsData.console = req.body.console || null
+            sfsData.deliveryMethodDropdown = req.body.deliveryMethodDropdown || null
+            sfsData.acceptsTradesDropdown = req.body.acceptsTradesDropdown || null
+            sfsData.acceptsReturnsDropdown = req.body.acceptsReturnsDropdown || null
+            sfsData.freeShippingDropdown = req.body.freeShippingDropdown || null
+            sfsData.sortBy = req.body.sortBy || 'Default'
+            sfsData.secondaryCondition = req.body.secondaryCondition || []
+            sfsData.closedCheckbox = req.body.closedCheckbox || true
+            sfsData.sortReverseCheckbox = req.body.sortReverseCheckbox || 0
+
+            if (sfsData.acceptsTradesDropdown == "true") {
+                sfsData.acceptsTradesDropdown = true;
+            } else if (sfsData.acceptsTradesDropdown == "false") {
+                sfsData.acceptsTradesDropdown = false;
+            }
+
+            if (sfsData.acceptsReturnsDropdown == "true") {
+                sfsData.acceptsReturnsDropdown = true;
+            } else if (sfsData.acceptsReturnsDropdown == "false") {
+                sfsData.acceptsReturnsDropdown = false;
+            }
+
+            if (sfsData.freeShippingDropdown == "true") {
+                sfsData.freeShippingDropdown = true;
+            } else if (sfsData.freeShippingDropdown == "false") {
+                sfsData.freeShippingDropdown = false;
+            }
+
+            if (sfsData.closedCheckbox == "false") {
+                sfsData.closedCheckbox = false;
+            } 
+
+            if (sfsData.sortReverseCheckbox == "1") {
+                sfsData.sortReverseCheckbox = 1;
+            } 
+
+            if (sfsData.deliveryMethodDropdown == "Both") {
+                sfsData.deliveryMethodDropdown = "Both Shipping and Local Meetup"
+            }
+            
+            if (Array.isArray(sfsData.secondaryCondition) == false) {
+                sfsData.secondaryCondition = [sfsData.secondaryCondition]
+            }
+
+            const elements = {
+                open: sfsData.closedCheckbox,
+                console: sfsData.console,
+                mainCondition: sfsData.mainConditionDropdown,
+                secondaryCondition: sfsData.secondaryCondition,
+                listingType: "Sell",
+                trades: sfsData.acceptsTradesDropdown,
+                shippingMethods: sfsData.deliveryMethodDropdown,
+                freeShipping: sfsData.freeShippingDropdown,
+                returnPolicy: sfsData.acceptsReturnsDropdown
+            }
+            
+            let Ready = []
+            let sfsListings = await listings.sortByElement(await listings.filterByElements(await listings.searchByTitle(sfsData.searchBarTextInput), elements), sfsData.sortBy, sfsData.sortReverseCheckbox)
+            for (let x of sfsListings){
+                if(x.listingType === "Sell"){
+                    let listinguser = await users.getUserById(x.posterId.toString())
+                    let lplusI;
+                    if (listinguser.overallRating === 0){
+                        lplusI = {listing: x,img: x.attachments[0], user: listinguser, rating: "User not Rated"}
+                    }
+                    else{ lplusI = {listing: x,img: x.attachments[0], user: listinguser, rating: listinguser.overallRating};}
+                    Ready.push(lplusI);
+                }
+            } 
+            res.render('sellingListings', {title: "Selling Station",listings: Ready});
+                } catch (e) {
+                res.status(500).json({error: e});
+                }
+        });;
 
 router.route('/transaction/:id').get(async (req, res) => {
     try {
@@ -124,7 +211,11 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
             let priceChartData = await charting.searchByID(List.pricechartingID.toString());
             let user = await users.getUserById(List.posterId.toString())
             let username = user.username;
-            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false});
+            let tradeCheck = true;
+            if(List.trades.length === 1 && List.trades[0] === ''){
+                tradeCheck = false;
+            }
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck});
             } catch (e) {
             res.status(500).json({error: e});
         }})
@@ -163,40 +254,7 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
                 res.status(500).json({error: e});
             }})
             .post(async (req, res) => {
-    
-           
-                // let sfsData = req.body;
-                // // sfsData.searchBarTextInput = req.body.searchBarTextInput || null
-                // // sfsData.mainConditionDropdown = req.body.mainConditionDropdown || null
-                // // sfsData.console = req.body.console || null
-                // // sfsData.deliveryMethodDropdown = req.body.deliveryMethodDropdown || null
-                // // sfsData.acceptsTradesDropdown = req.body.acceptsTradesDropdown || null
-                // // sfsData.acceptsReturnsDropdown = req.body.acceptsReturnsDropdown || null
-                // // sfsData.freeShippingDropdown = req.body.freeShippingDropdown || null
-                // // sfsData.sortBy = req.body.sortBy || 'Default'
-                // // sfsData.secondaryCondition = req.body.secondaryCondition || []
-                // // sfsData.closedCheckbox = req.body.closedCheckbox || true
-                // // sfsData.sortReverseCheckbox = req.body.sortReverseCheckbox || 0
-                // console.log(sfsData)
-                // try {
-                //     const allListings = await listings.getAll();
-                //     let sfsListings = [];
-                    
-                //     const elements = {
-                //         open: searchBarTextInput,
-                //         console: null,
-                //         mainCondition: "Used",
-                //         secondaryCondition: [],
-                //         listingType: null,
-                //         trades: null,
-                //         shippingMethods: "Shipping",
-                //         freeShipping: null,
-                //         returnPolicy: null
-                //     }
-    
-    
-                //     res.render('buyingListings', {title: "Buying Bazaar",listings: sfsListings});
-             
+            try {
                 let sfsData = req.body;
                 sfsData.searchBarTextInput = req.body.searchBarTextInput || ""
                 sfsData.mainConditionDropdown = req.body.mainConditionDropdown || null
@@ -239,15 +297,12 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
                 if (sfsData.deliveryMethodDropdown == "Both") {
                     sfsData.deliveryMethodDropdown = "Both Shipping and Local Meetup"
                 }
-
-
-
+                if (Array.isArray(sfsData.secondaryCondition) == false) {
+                    sfsData.secondaryCondition = [sfsData.secondaryCondition]
+                }
                 console.log(sfsData)
-           
-            try {
+                
                 let allListings = await listings.getAll();
-                
-                
 
                 const elements = {
                     open: sfsData.closedCheckbox,
@@ -260,7 +315,6 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
                     freeShipping: sfsData.freeShippingDropdown,
                     returnPolicy: sfsData.acceptsReturnsDropdown
                 }
-                console.log(elements)
                 
                 let Ready = []
                 let sfsListings = await listings.sortByElement(await listings.filterByElements(await listings.searchByTitle(sfsData.searchBarTextInput), elements), sfsData.sortBy, sfsData.sortReverseCheckbox)
@@ -275,8 +329,6 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
                         Ready.push(lplusI);
                     }
                 } 
-
-
                 res.render('buyingListings', {title: "Buying Bazaar",listings: Ready});
                     } catch (e) {
                     res.status(500).json({error: e});
@@ -462,22 +514,28 @@ router.route('/login').get(async (req, res) => {
                 let paths = [];
                 let Allimages = req.files.imageInput;
                 let validTrades = req.body.tradesInput;
-                validTrades = validTrades.split(",");
+                if(validTrades){
+                    validTrades = [];
+                }
+                else{
+                    validTrades = validTrades.split(",");
+                }
+                
                 if (typeof(Allimages) !== "object"){
                     for(let x of req.files.imageInput){
                         const image = x;
                         const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
                         paths.push(path.join(__dirname, '..', 'uploads', image.name));
-                        writeStream.write(image.data);
-                        writeStream.end();
+                        await writeStream.write(image.data);
+                        await writeStream.end();
                     }
                 }
                 else{
                         const image = Allimages;
                         const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
                         paths.push(path.join(__dirname, '..', 'uploads', image.name));
-                        writeStream.write(image.data);
-                        writeStream.end();
+                        await writeStream.write(image.data);
+                        await writeStream.end();
                 }
                 let images = await cloud.uploadImage(paths);
                 if(req.body.listingTypeInput === 'Buy'){
