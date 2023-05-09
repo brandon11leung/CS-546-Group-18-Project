@@ -67,7 +67,15 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
             if(List.trades.length === 1 && List.trades[0] === ''){
                 tradeCheck = false;
             }
-        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck});
+        if (req.session.user) {
+            if (username === req.session.user.username) {
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false});
+            } else {
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: true});
+            }
+        } else {
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false});
+        }
         } catch (e) {
         res.status(500).json({error: e});
     }})
@@ -283,7 +291,15 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
             if(List.trades.length === 1 && List.trades[0] === ''){
                 tradeCheck = false;
             }
-            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck});
+            if (req.session.user) {
+                if (username === req.session.user.username) {
+                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false});
+                } else {
+                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: true});
+                }
+            } else {
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false});
+            }
             } catch (e) {
             res.status(500).json({error: e});
         }})
