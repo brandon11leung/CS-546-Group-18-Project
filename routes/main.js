@@ -546,10 +546,12 @@ router.route('/login').get(async (req, res) => {
                         fs.readdir(pathway, (err, files) => {
                             if (err) throw err;
                             for( let x of files){
+                                if (x != "258.png"){
                                 let filepath = path.join(pathway, x);
                                 fs.unlink(filepath, err => {
                                     if (err) throw err;
                                 });
+                            }
                             }
                         });
                         res.redirect('/');
@@ -568,10 +570,12 @@ router.route('/login').get(async (req, res) => {
                         fs.readdir(pathway, (err, files) => {
                             if (err) throw err;
                             for( let x of files){
+                                if (x != "258.png"){
                                 let filepath = path.join(pathway, x);
                                 fs.unlink(filepath, err => {
                                     if (err) throw err;
                                 });
+                            }
                             }
                         });
                         res.redirect('/');

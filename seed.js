@@ -311,7 +311,7 @@ try {
 }
 
 try {
-    const missingGameName = await listings.create(patrick._id.toString(), "Sell", "Used", ["Cartridge", "Case", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
+    const missingGameName = await listings.create(patrick._id.toString(), "Sell", "Used", ["Cartridge", "Box", "Manual"], 240, ["http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/reerc8i3tjznvmqhlqjs.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157468/oemwvopsiu2iimargiyo.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/egxvogoclhmgy8wj5imd.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157469/c9s0cvrpziyqofisaltb.jpg", "http://res.cloudinary.com/joystick-junction/image/upload/v1683157470/rjkgsuh7hl0g6gztaubj.jpg"], ["Pokemon HeartGold Loose", "Pokemon HeartGold CIB"], 10, ["USPS Priority"], "Good and clean copy, tested working, refer to images for condition.", "No returns", "USD", 38623)
 } catch (e) {
     console.log(e.message);
 }
@@ -327,18 +327,18 @@ try {
 console.log("\n\n-----INSERTING LISTINGS------\n\n");
 
 
-const validListing1 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Case"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, "Shipping", "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing2 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Case"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, "Shipping", "Has a scratch but otherwise in good condition", "No Returns", "USD", 32913);
+const validListing1 = await listings.create(luke._id.toString(), "Mario Kart 8 Deluxe", "Buy", "New", ["Cartridge", "Box"], 60, ['https://i.ebayimg.com/images/g/-~gAAOSw8-lgZNLn/s-l500.jpg'], [], 0, "Shipping", "Comes with case", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing2 = await listings.create(ark._id.toString(), "Splatoon", "Sell", "Used", ["Disc", "Box"], 17, ['https://i.ebayimg.com/images/g/2dIAAOSwxVRkVFXi/s-l1600.jpg', 'https://i.ebayimg.com/images/g/O7wAAOSwHS5kVFXj/s-l1600.jpg'], [], 2.99, "Shipping", "Has a scratch but otherwise in good condition", "No Returns", "USD", 32913);
 const validListing3 = await listings.create(mrKing._id.toString(), "Star Wars Dark Forces", "Buy", "Used", ["Disc"], 12, ['https://i.ebayimg.com/images/g/EzQAAOSwmxFkVp-e/s-l1600.jpg'], [], 5, "Shipping", "i only want the disk", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing4 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Case"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, "Shipping", "Just need the case, and bam! My collection will be complete.", "No Returns", "USD", 32913);
-const validListing5 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Case", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, "Shipping", "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing4 = await listings.create(handymanny._id.toString(), "Super Mario All Stars + Super Mario World", "Buy", "Used", ["Box"], 14, ['https://i.ebayimg.com/images/g/fw4AAOSwVjhjkoH9/s-l1600.jpg'], [], 0, "Shipping", "Just need the case, and bam! My collection will be complete.", "No Returns", "USD", 32913);
+const validListing5 = await listings.create(alien._id.toString(), "Halo 2", "Sell", "Used", ["Box", "Disc", "Manual"], 12, ['https://i.ebayimg.com/images/g/05MAAOSwl8xkRJrr/s-l1600.jpg', 'https://i.ebayimg.com/images/g/~DIAAOSw~JhkRJrx/s-l1600.jpg', 'https://i.ebayimg.com/images/g/CE8AAOSwY6dkRJr2/s-l1600.jpg'], [], 7, "Shipping", "Complete in box - perfect for collectors.", "30 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 const validListing6 = await listings.create(luke._id.toString(), "Goldeneye 007", "Buy", "Used", ["Cartridge"], 21, ['https://i.ebayimg.com/images/g/9I0AAOSwc0lj4LXa/s-l1600.jpg'], [], 0, "Shipping", "Cartridge. Nothing more.", "60 Day Returns (Buyer pays for return shipping)", "USD", 32913);
-const validListing7 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Case"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, "Shipping", "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32913);
+const validListing7 = await listings.create(luke._id.toString(), "Wii Sports Resort", "Sell", "New", ["Disc", "Box"], 56, ['https://i.ebayimg.com/images/g/neIAAOSwq69kUsZ4/s-l1600.jpg', 'https://i.ebayimg.com/images/g/YfMAAOSwI6tkUsaL/s-l1600.jpg'], [], 0, "Shipping", "Huge nostalgia rush! Deal of a lifetime.", "90 Day Returns (Buyer pays for return shipping)", "USD", 32913);
 
 
 try {
 
-    const soulsilver = await listings.create(modkop._id, "Pokemon Soulsilver Big Box CIB", "Sell", "Used", ["Cartridge", "Manual", "Case", "Outer Box", "Other"], 250, [
+    const soulsilver = await listings.create(modkop._id, "Pokemon Soulsilver Big Box CIB", "Sell", "Used", ["Cartridge", "Manual", "Box", "Outer Box", "Other"], 250, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431639/orkbvk22sxozt4uulzwa.jpg',
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431639/cv0tmqgdfcrtxfxkdgzs.jpg',
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431640/iqnrslkdmuznagvt9wvs.jpg',
