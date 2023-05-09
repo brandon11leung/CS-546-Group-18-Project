@@ -1,10 +1,16 @@
 <h1>Price Chart Search</h1>
 <p>Get game details from Price Charts</p>
                 <form method="POST" id="search-form" action="">
-                <label for="searchInput">Search for a game:</label><br>
-                <textarea id="searchInput" type="text" name="searchInput"></textarea><br>
+                <label for="searchInput">Input the Game Title:</label><br>
+                <textarea id="searchInput" type="text" name="searchInput" required></textarea><br>
+
+                <label for="listingTypeInput">Listing type:</label>
+                <select id="listingTypeInput" name="listingTypeInput" required>
+                    <option value="">Select a state</option>
+                    <option value="Buy">Buying</option>
+                    <option value="Sell">Selling</option>
+                </select><br><br>
                 <button type="submit">Submit</button>
                 </form>
-                <a href="/createListing">Click here to skip gathering data.</a>
                 <p id="errorSearch" hidden></p>
                         <script type='module' src="../public/js/searchCheck.js"></script>

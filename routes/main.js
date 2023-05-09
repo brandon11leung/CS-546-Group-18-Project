@@ -42,7 +42,15 @@ router.route('/aboutUs').get(async (req, res) => {
 router.route('/account').get(async (req, res) => {
     try {
         let user = await users.getUserById(req.session.user.id);
-        res.render('accountInfo', {title: "Account", user: user});
+        let reviews;
+        if(user.reviewedBy.length > 0){
+            reviews = [];
+            for (let x of user.reviewedBy){
+                let rev = {name: x[1], message: x[2], rating: x[3]};
+                reviews.push(rev);
+            }
+        }
+        res.render('accountInfo', {title: "Account", user: user, reviews: reviews});
         } catch (e) {
         res.status(500).json({error: e});
     }});
@@ -53,7 +61,7 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
         let priceChartData = await charting.searchByID(List.pricechartingID.toString());
         let user = await users.getUserById(List.posterId.toString())
         let username = user.username;
-        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username});
+        res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true});
         } catch (e) {
         res.status(500).json({error: e});
     }})
@@ -115,7 +123,7 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
             let priceChartData = await charting.searchByID(List.pricechartingID.toString());
             let user = await users.getUserById(List.posterId.toString())
             let username = user.username;
-            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username});
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false});
             } catch (e) {
             res.status(500).json({error: e});
         }})
@@ -381,10 +389,16 @@ router.route('/login').get(async (req, res) => {
         }})
         .post(async (req, res) => {
             req.body.searchInput = xss(req.body.searchInput);
+            req.body.listingTypeInput = xss(req.body.listingTypeInput);
             if(req.body.searchInput){
                 try {
                     let chart = await charting.searchByTerm(req.body.searchInput);
-                    res.render('createListing', {title: 'Create a Listing', chart: chart});
+                    if(req.body.listingTypeInput === "Buy"){
+                        res.render('createBuyingListing', {title: 'Create a Buying Listing', chart: chart});
+                    }
+                    else{
+                        res.render('createListing', {title: 'Create a Selling Listing', chart: chart});
+                    }
                 } catch (e) {
                     console.log(e.message);
                     res.status(500).render('priceCharting', {title: 'Search for a game', error: 'Invalid search'})
@@ -396,9 +410,7 @@ router.route('/login').get(async (req, res) => {
                 req.body.pcIdInput = xss(req.body.pcIdInput);
                 req.body.conditionInput = xss(req.body.conditionInput);
                 req.body.priceInput = xss(req.body.priceInput);
-                req.body.shippingPriceInput = xss(req.body.shippingPriceInput);
                 req.body.descriptionInput = xss(req.body.descriptionInput);
-                req.body.returnPolicyInput = xss(req.body.returnPolicyInput);
                 req.body.imageInput = xss(req.body.imageInput);
                 req.body.shipMethodInput = xss(req.body.shipMethodInput);
                 req.body.tradesInput = xss(req.body.tradesInput);
@@ -467,24 +479,49 @@ router.route('/login').get(async (req, res) => {
                         writeStream.end();
                 }
                 let images = await cloud.uploadImage(paths);
-                try {
-                    let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, validTrades, req.body.shippingPriceInput, req.body.shipMethodInput,  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
-                    let pathway = path.join(__dirname, '..', 'uploads');
-                    console.log(listing);
-                    fs.readdir(pathway, (err, files) => {
-                        if (err) throw err;
-                        for( let x of files){
-                            let filepath = path.join(pathway, x);
-                            fs.unlink(filepath, err => {
-                                if (err) throw err;
-                            });
-                        }
-                    });
-                    res.redirect('/');
-                } catch (e) {
-                    console.log(e.message);
-                    res.status(500).render('createListing', {title: 'Create a Listing', error: 'Invalid Listing'})
+                if(req.body.listingTypeInput === 'Buy'){
+                    try {
+                        let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, validTrades, "0", req.body.shipMethodInput,  req.body.descriptionInput, "No Returns", "USD", req.body.pcIdInput);
+                        let pathway = path.join(__dirname, '..', 'uploads');
+                        console.log(listing);
+                        fs.readdir(pathway, (err, files) => {
+                            if (err) throw err;
+                            for( let x of files){
+                                let filepath = path.join(pathway, x);
+                                fs.unlink(filepath, err => {
+                                    if (err) throw err;
+                                });
+                            }
+                        });
+                        res.redirect('/');
+                    } catch (e) {
+                        console.log(e.message);
+                        res.status(500).render('createListing', {title: 'Create a Listing', error: 'Invalid Listing'})
+                    }
                 }
+                else{
+                    req.body.shippingPriceInput = xss(req.body.shippingPriceInput);
+                    req.body.returnPolicyInput = xss(req.body.returnPolicyInput);
+                    try {
+                        let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, validTrades, req.body.shippingPriceInput, req.body.shipMethodInput,  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
+                        let pathway = path.join(__dirname, '..', 'uploads');
+                        console.log(listing);
+                        fs.readdir(pathway, (err, files) => {
+                            if (err) throw err;
+                            for( let x of files){
+                                let filepath = path.join(pathway, x);
+                                fs.unlink(filepath, err => {
+                                    if (err) throw err;
+                                });
+                            }
+                        });
+                        res.redirect('/');
+                    } catch (e) {
+                        console.log(e.message);
+                        res.status(500).render('createListing', {title: 'Create a Listing', error: 'Invalid Listing'})
+                    }
+                }
+                
             }
         });
 

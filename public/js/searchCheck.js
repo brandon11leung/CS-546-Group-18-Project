@@ -7,13 +7,28 @@ const validString = (str) => {
     if (str.length === 0) { return false; }
     return true;
 }
+const validType = (typ) => {
+
+    const typArray = ['Buy', 'Sell'];
+    //Check state
+    if (!typArray.includes(typ)) { return false; }
+
+    return true;
+ 
+}
 
 let form = document.getElementById('search-form');
 let search = document.getElementById('searchInput');
+let listingTypeInput = document.getElementById('listingTypeInput');
 let errorSearch= document.getElementById('errorSearch');
 
 if (form) {
     form.addEventListener('submit', async (event) => {
+        if (!validType(listingType.value)) {
+            event.preventDefault();
+            errorType.hidden = false;
+            errorType.innerHTML = 'Type must be either a Buying or Selling listing.';
+        }
         try {
         validString(search.value);
         errorSearch.hidden = true;

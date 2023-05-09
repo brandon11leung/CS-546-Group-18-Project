@@ -21,8 +21,11 @@
                             </li><br>
                             <li class="search">Description: {{listings.description}}</li><br>
                             <li class="search">Price: ${{listings.price}}</li><br>
-                            <li class="search">Shipping: ${{listings.shippingPrice}}</li><br>
-                            <li class="search">Shipping Methods: {{listings.shippingMethods}}</li><br>
+                            {{#if check}}
+                                <li class="search">Shipping: ${{listings.shippingPrice}}</li><br>
+                                <li class="search">Shipping Methods: {{listings.shippingMethods}}</li><br>
+                            {{else}}
+                            {{/if}}
                             {{#if listings.trades}}
                             <li class="search">
                                 Viable Trade Options:

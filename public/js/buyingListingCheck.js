@@ -96,16 +96,14 @@ let Cartridge = document.getElementById('Cartridge');
 let Box = document.getElementById('Box');
 let Case = document.getElementById('Case');
 let Manual = document.getElementById('Manual');
-let Consoles = document.getElementById('Console');
+let Console = document.getElementById('Console');
 let Controller = document.getElementById('Controller');
 let Disc = document.getElementById('Disc');
 let Cables = document.getElementById('Cables');
 let RedemptionCode = document.getElementById('RedemptionCode');
 let Other = document.getElementById('Other');
 let listingPrice = document.getElementById('priceInput');
-let listingShippingPrice = document.getElementById('shippingPriceInput');
 let listingDesc = document.getElementById('descriptionInput');
-let listingRetPolicy = document.getElementById('returnPolicyInput');
 let imageInput = document.getElementById('imageInput');
 let shipMethodInput = document.getElementById('shipMethodInput');
 let tradesInput = document.getElementById('tradesInput');
@@ -119,9 +117,7 @@ let errorTitle = document.getElementById('errorTitle');
 let errorPCID = document.getElementById('errorPCID');
 let errorMainCond = document.getElementById('errorMainCond');
 let errorPrice = document.getElementById('errorPrice');
-let errorShipPrice = document.getElementById('errorShipPrice');
 let errorDesc = document.getElementById('errorDesc');
-let errorRetPol = document.getElementById('errorRetPol');
 let errorImgs = document.getElementById('errorImgs');
 let errorShipMethod  = document.getElementById('errorShipMethod');
 let errorTrades  = document.getElementById('errorTrades');
@@ -136,9 +132,7 @@ if (form) {
         errorPCID.hidden = true;
         errorMainCond.hidden = true;
         errorPrice.hidden = true;
-        errorShipPrice.hidden = true;
         errorDesc.hidden = true;
-        errorRetPol.hidden = true;
         errorImgs.hidden = true;
         let secCond = [];
         if (!validType(listingType.value)) {
@@ -181,8 +175,8 @@ if (form) {
             secCond.push(Manual.value);
         }
 
-        if(validSecCond(Consoles.value)){
-            secCond.push(Consoles.value);
+        if(validSecCond(Console.value)){
+            secCond.push(Console.value);
         }
 
         if(validSecCond(Controller.value)){
@@ -211,12 +205,6 @@ if (form) {
             errorPrice.innerHTML = 'Price must be a number above 0.';
         }
 
-        if (!validPrice(listingShippingPrice.value)) {
-            event.preventDefault();
-            errorShipPrice.hidden = false;
-            errorShipPrice.innerHTML = 'Shipping Price must be a number above 0.';
-        }
-
         if (!validString(tradesInput.value)) {
             event.preventDefault();
             errorTrades.hidden = false;
@@ -235,11 +223,6 @@ if (form) {
             errorShipMethod.innerHTML = 'Shipping Methods must be a valid string';
         }
 
-        if (!validString(listingRetPolicy.value)) {
-            event.preventDefault();
-            errorRetPol.hidden = false;
-            errorRetPol.innerHTML = 'Return Policy must be a valid string';
-        }
         for(let x of imageInput.value){
             if (!validImg(x)) {
                 event.preventDefault();
