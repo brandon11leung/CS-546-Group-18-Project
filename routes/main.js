@@ -8,6 +8,7 @@ import * as reviews from '../data/reviews.js'
 import * as charting from '../utils/pricecharting.js'
 import * as cloud from '../utils/cloudinary.js'
 import * as transactions from '../data/transactions.js'
+import * as offers from '../data/offers.js'
 import xss from 'xss';
 import fs from 'fs';
 import path from 'path';
@@ -188,10 +189,77 @@ router.route('/sellinglistings').get(async (req, res) => {
                 }
         });;
 
-router.route('/transaction/:id').get(async (req, res) => {
+router.route('/choice/:id').get(async (req, res) => {
     try {
-        let List = await listings.get(req.params.id); 
-        res.render('transaction', {title: "Checkout", pic: '../public/images/Credit-Card-Logos-high-resolution.png', link: `/transaction/${List._id}`});
+            let List = await listings.get(req.params.id); 
+            res.render('choice', {title: "Transaction Method", id: List._id})
+    } catch (e) {
+        res.status(500).json({error: e});
+    }});
+
+router.route('/offer/:id').get(async (req, res) => {
+        try {
+            let List = await listings.get(req.params.id); 
+                res.render('trade', {title: "Make an Offer", id: List._id})
+        } catch (e) {
+            res.status(500).json({error: e});
+        }})
+        .post(async (req, res) => {
+            try {
+                req.body.TitleInput = xss(req.body.TitleInput);
+                req.body.descriptionInput = xss(req.body.descriptionInput);
+                req.body.imageInput = xss(req.body.imageInput);
+                let List = await listings.get(req.params.id); 
+                let paths = [];
+                let Allimages = req.files.imageInput;
+                let validTrades = req.body.tradesInput;
+                if(validTrades){
+                    validTrades = [];
+                }
+                else{
+                    validTrades = validTrades.split(",");
+                }
+                
+                if (typeof(Allimages) !== "object"){
+                    for(let x of req.files.imageInput){
+                        const image = x;
+                        const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
+                        paths.push(path.join(__dirname, '..', 'uploads', image.name));
+                        await writeStream.write(image.data);
+                        await writeStream.end();
+                    }
+                }
+                else{
+                        const image = Allimages;
+                        const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
+                        paths.push(path.join(__dirname, '..', 'uploads', image.name));
+                        await writeStream.write(image.data);
+                        await writeStream.end();
+                }
+                let images = await cloud.uploadImage(paths);
+                let offer = await offers.create(List._id, req.session.user.id, req.body.TitleInput, req.body.descriptionInput, images);
+                let pathway = path.join(__dirname, '..', 'uploads');
+                        fs.readdir(pathway, (err, files) => {
+                            if (err) throw err;
+                            for( let x of files){
+                                if (x != "258.png"){
+                                let filepath = path.join(pathway, x);
+                                fs.unlink(filepath, err => {
+                                    if (err) throw err;
+                                });
+                            }
+                            }
+                        });
+                res.redirect('/account');
+            } catch (e) {
+                res.status(500).json({error: e});
+            }
+        });
+
+router.route('/transaction/:id').get(async (req, res) => {
+        try {
+         let List = await listings.get(req.params.id); 
+         res.render('transaction', {title: "Checkout", pic: '../public/images/Credit-Card-Logos-high-resolution.png', link: `/transaction/${List._id}`});
     } catch (e) {
         res.status(500).json({error: e});
     }})
@@ -510,7 +578,7 @@ router.route('/login').get(async (req, res) => {
                 if(req.body.Other){
                     secCond.push(req.body.Other);
                 }   
-                console.log(req.files);
+                //console.log(req.files);
                 let paths = [];
                 let Allimages = req.files.imageInput;
                 let validTrades = req.body.tradesInput;
@@ -542,7 +610,7 @@ router.route('/login').get(async (req, res) => {
                     try {
                         let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, validTrades, "0", req.body.shipMethodInput,  req.body.descriptionInput, "No Returns", "USD", req.body.pcIdInput);
                         let pathway = path.join(__dirname, '..', 'uploads');
-                        console.log(listing);
+                        //console.log(listing);
                         fs.readdir(pathway, (err, files) => {
                             if (err) throw err;
                             for( let x of files){
@@ -557,7 +625,7 @@ router.route('/login').get(async (req, res) => {
                         res.redirect('/');
                     } catch (e) {
                         console.log(e.message);
-                        res.status(500).render('createListing', {title: 'Create a Listing', error: 'Invalid Listing'})
+                        res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Listing'})
                     }
                 }
                 else{
@@ -566,7 +634,7 @@ router.route('/login').get(async (req, res) => {
                     try {
                         let listing = await listings.create(req.session.user.id, req.body.TitleInput, req.body.listingTypeInput, req.body.conditionInput, secCond, req.body.priceInput, images, validTrades, req.body.shippingPriceInput, req.body.shipMethodInput,  req.body.descriptionInput, req.body.returnPolicyInput, "USD", req.body.pcIdInput);
                         let pathway = path.join(__dirname, '..', 'uploads');
-                        console.log(listing);
+                        //console.log(listing);
                         fs.readdir(pathway, (err, files) => {
                             if (err) throw err;
                             for( let x of files){
@@ -581,7 +649,7 @@ router.route('/login').get(async (req, res) => {
                         res.redirect('/');
                     } catch (e) {
                         console.log(e.message);
-                        res.status(500).render('createListing', {title: 'Create a Listing', error: 'Invalid Listing'})
+                        res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Listing'})
                     }
                 }
                 

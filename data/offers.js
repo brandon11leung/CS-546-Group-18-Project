@@ -10,21 +10,11 @@ import {listings} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 
-export const create = async (listingId, posterId, type, amount, trade, attachments) => { // Good?
+export const create = async (listingId, posterId, title, desc, attachments) => { // Good?
     listingId = helpers.isValidID(listingId);
     posterId = helpers.isValidID(posterId);
-    if (type == 2) {
-        trade = helpers.isValidString(trade);
-        amount = helpers.isValidPrice(amount);
-    } else if (type == 1) {
-        trade = helpers.isValidString(trade);
-        amount = 0;
-    } else if (type == 0) {
-        amount = helpers.isValidPrice(amount);
-        trade = null;
-    } else {
-        throw new Error("Error: invalid offer type.");
-    }
+    title = helpers.isValidString(title);
+    desc = helpers.isValidPrice(desc);
     const offerId = new ObjectId();
     helpers.isValidTradeArray(attachments);
     for (let i = 0; i < attachments.length; i++) {
@@ -34,8 +24,8 @@ export const create = async (listingId, posterId, type, amount, trade, attachmen
         _id: offerId,
 		listingId: new ObjectId(listingId),
         posterId: new ObjectId(posterId),
-        amount: amount,
-        trade: trade,
+        title: title,
+        desc: desc,
         attachments: attachments
 	};
 

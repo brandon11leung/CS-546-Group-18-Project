@@ -1,62 +1,16 @@
 <form method="POST" action="" id="trade-form">
     <label for="titleInput">Title</label>
-    <select id="titleInput" name="titleInput" required>
-        <option value="">Select title</option>
-    </select>
-    <label for="conditionInput">Listing's Main Condition:</label>
-    <select id="conditionInput" name="conditionInput" required>
-        <option value="">Select a Condition</option>
-        <option value="Brand New">Brand New</option>
-        <option value="Like New/Open Box">Like New/Open Box</option>
-        <option value="Used">Used</option>
-        <option value="For Parts or Not Working">For Parts or Not Working</option>
-    </select><br><br>
-    
-    <label>Listing's Secondary Conditions:</label><br>
-    <label for="Cartridge">Cartridge</label>
-    <input id="Cartridge" type="checkbox" name="Cartridge" value="Cartridge"><br>
-    <label for="Box">Box</label>
-    <input id="Box" type="checkbox" name="Box" value="Box"><br>
-    <label for="Case">Case</label>
-    <input id="Case" type="checkbox" name="Case" value="Case"><br>
-    <label for="Manual">Manual</label>
-    <input id="Manual" type="checkbox" name="Manual" value="Manual"><br>
-    <label for="Console">Console</label>
-    <input id="Console" type="checkbox" name="Console" value="Console"><br>
-    <label for="Controller">Controller</label>
-    <input id="Controller" type="checkbox" name="Controller" value="Controller"><br>
-    <label for="Disc">Disc</label>
-    <input id="Disc" type="checkbox" name="Disc" value="Disc"><br>
-    <label for="Cables">Cables</label>
-    <input id="Cables" type="checkbox" name="Cables" value="Cables"><br>
-    <label for="RedemptionCode">Redemption Code</label>
-    <input id="RedemptionCode" type="checkbox" name="RedemptionCode" value="RedemptionCode"><br>
-    <label for="Other">Other</label>
-    <input id="Other" type="checkbox" name="Other" value="Other"><br><br>
-
-    <label for="priceInput">Price:</label>
-    <input id="priceInput" type="number" name="priceInput"><br><br>
-
-    <label for="shippingPriceInput">Shipping Price:</label>
-    <input id="shippingPriceInput" type="number" name="shippingPriceInput"><br><br>
-
-    <label for="shippingMethodInput">Shipping Method:</label>
-    <select id="shippingMethodInput" name="shippingMethodInput" required>
-        <option value="">Select shipping method</option>
-        <option value="Shipping">Shipping</option>
-        <option value="Local Meetup">Local Meetup</option>
-    </select>
-
+    <textarea id="titleInput" type="text" name="titleInput" required></textarea><br><br>  
 
     <label for="descriptionInput">Description:</label>
-    <textarea id="descriptionInput" type="text" name="descriptionInput"></textarea><br><br>    
+    <textarea id="descriptionInput" type="text" name="descriptionInput" required></textarea><br><br>    
+
+    <label for="imageInput">Submit images here:</label>
+    <input type="file" id="imageInput" name="imageInput" multiple required><br><br>
+
+     <button type="submit">Make Offer</button>
 </form>
 
 <p id="errorTitle" hidden></p>
-<p id="errorMainCond" hidden></p>
-<p id="errorSecCond" hidden></p>
-<p id="errorPrice" hidden></p>
-<p id="errorShipPrice" hidden></p>
 <p id="errorDesc" hidden></p>
-<p id="errorRetPol" hidden></p>
 <p id="errorImgs" hidden></p>

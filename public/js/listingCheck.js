@@ -21,6 +21,20 @@ const validPrice = (num) => {
             }
         }
     }
+    if(Number(num) > 999999999){
+        return false
+    }
+    return true;
+}
+
+const validID = (num) => {
+    if (num.length <= 0) { return false; }
+    if (num.length === 1 && num[0] === '0') { return false; }
+    for (let x of num.split('')){
+        if (!nums.includes(x)){
+                return false
+        }
+    }
     return true;
 }
 
@@ -153,7 +167,7 @@ if (form) {
             errorTitle.innerHTML = 'Title must be a valid string';
         }
 
-        if (!validPrice(pcID.value)) {
+        if (!validID(pcID.value)) {
             event.preventDefault();
             errorPCID.hidden = false;
             errorPCID.innerHTML = 'Price Charts ID must be a number above 0.';
