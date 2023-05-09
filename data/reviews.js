@@ -83,7 +83,8 @@ export const createReview = async (
   const updatedUser = await userCollection.findOne({_id: new ObjectId(userAbout)});
 
   let len = updatedUser.reviewedBy.length;
-  let newRating = Number(((updatedUser.overallRating * (len - 1) + newReview.rating) / len).toFixed(1))
+
+  let newRating = Number((((updatedUser.overallRating * (len - 1)) + Number(newReview.rating)) / len)).toFixed(1)
   
 
   const updateRating = await userCollection.findOneAndUpdate({_id: new ObjectId(userAbout)}, {$set: {overallRating: newRating}});

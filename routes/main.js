@@ -558,14 +558,15 @@ router.route('/review/:id').get(async (req, res) => {
         res.status(400).render('createReview', {error: 'Invalid rating.'});
     }
 
+    /* Insert review into database */
+    
     try {
         const insertedReview = await reviews.createReview(req.session.user.id, req.params.id, req.body.contentInput, req.body.rating);
-        res.redirect('/');
+        res.redirect('/account'); 
     } catch (e) {
         res.status(500).render('createReview', {error: e});
     }
-    /* Insert review into database */
-
+    
 });
 
 router.route('/ProfilePage/:username').get(async (req, res) => {

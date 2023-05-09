@@ -69,31 +69,26 @@ app.use('/PriceChartSearch', (req, res, next) => {
   }
 });
 
-app.use('/createListing', async(req, res, next) => {
+app.use('/createListing', (req, res, next) => {
   if (!req.session.user) {
     res.redirect('/login')
   } else {
     next();
   }
 });
-// app.use('/createListing', async(req, res, next) => {
-//   if (req.session.user) {
-//     res.redirect('/login')
-//   } else {
-//     next();
-//   }
-// });
 
 
-
-
-
-
-
+app.use('/ProfilePage', (req, res, next) => {
+  if (!req.session.user) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+});
 
 configRoutes(app);
 
 app.listen(3000, () => {
-  console.log("We've now got a server!");
+  console.log("Joystick Junction is up and running!");
   console.log('Your routes will be running on http://localhost:3000');
 });
