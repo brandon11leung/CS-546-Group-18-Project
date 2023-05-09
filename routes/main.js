@@ -15,12 +15,22 @@ const __filename = fileURLToPath(import.meta.url);
 import {dirname} from 'path';
 const __dirname = dirname(__filename);
 
-router.route('/').get(async (req, res) => {
-    try {
-        res.render('homepage', {title: "Joystick Junction"});
-      } catch (e) {
-        res.status(500).json({error: e});
-    }});
+router.route('/').get(async (req, res, next) => {
+    if (!req.session.user) {
+        try {
+            return res.render('homepage', {title: "Joystick Junction"});
+          } catch (e) {
+            return res.status(500).json({error: e});
+        }
+      } else {
+        try {
+            return res.render('homepage2', {title: "Joystick Junction"});
+          } catch (e) {
+            return res.status(500).json({error: e});
+        }
+      }
+      next();
+   });
 
 router.route('/aboutUs').get(async (req, res) => {
     try {
