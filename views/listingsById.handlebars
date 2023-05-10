@@ -20,8 +20,8 @@
                                 </ul> 
                             </li><br>
                             <li class="search">Description: {{listings.description}}</li><br>
-                            <li class="search">Price: ${{listings.price}}</li><br>
                             {{#if check}}
+                                <li class="search">Price: ${{listings.price}}</li><br>
                                 <li class="search">Shipping: ${{listings.shippingPrice}}</li><br>
                                 <li class="search">Shipping Methods: {{listings.shippingMethods}}</li><br>
                             {{else}}
@@ -76,19 +76,11 @@
         <li class="search">
             <h3>Offer From User: {{this.username}}</h3>
             <p>Offer Product: {{this.title}}</p>
-            <p>Offer Description: {{this.description}}</p>
-            <P>Offer Images:</P>
-            {{#each this.attachments}}
-                <img alt="img" src="{{this}}">
-            {{/each}} 
+            <p>Offer Description: {{this.desc}}</p>
             {{#if ownPoster}}
             
             {{else}}
-            <form method="POST" action="" id="accept-offer-form">
-                <label for="acceptOfferInput">Confirm to make listing</label>
-                <input id="acceptOfferInput" type="checkbox" name="acceptOfferInput" value="True" required><br><br>
-                <button type="submit" >Take Offer</button>
-            </form>
+                <button onclick="window.location.href = 'http://localhost:3000/takeOffer/{{this.listingId}}'">Take Offer</button>
             {{/if}}
         </li>
         {{/each}}

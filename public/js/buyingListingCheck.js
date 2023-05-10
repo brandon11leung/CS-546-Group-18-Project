@@ -102,7 +102,6 @@ let Disc = document.getElementById('Disc');
 let Cables = document.getElementById('Cables');
 let RedemptionCode = document.getElementById('RedemptionCode');
 let Other = document.getElementById('Other');
-let listingPrice = document.getElementById('priceInput');
 let listingDesc = document.getElementById('descriptionInput');
 let imageInput = document.getElementById('imageInput');
 let shipMethodInput = document.getElementById('shipMethodInput');
@@ -197,12 +196,6 @@ if (form) {
 
         if(validSecCond(Other.value)){
             secCond.push(Other.value);
-        }
-
-        if (!validPrice(listingPrice.value)) {
-            event.preventDefault();
-            errorPrice.hidden = false;
-            errorPrice.innerHTML = 'Price must be a number above 0.';
         }
 
         if (!validString(listingDesc.value)) {
