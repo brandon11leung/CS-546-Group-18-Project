@@ -66,17 +66,21 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
         let username = user.username;
         let tradeCheck = true;
         let offer = await offers.getAll(req.params.id);
+        let ownerccheck = false;
+        if (List.posterId.toString() === req.session.user.id){
+            ownerccheck= true;
+        }
             if(List.trades.length === 1 && List.trades[0] === ''){
                 tradeCheck = false;
             }
         if (req.session.user) {
             if (username === req.session.user.username) {
-                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false, offers: offer, owner: ownerccheck});
             } else {
-                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: true, offers: offer});
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: true, offers: offer, owner: ownerccheck});
             }
         } else {
-            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false, offers: offer, owner: ownerccheck});
         }
         } catch (e) {
         res.status(500).json({error: e});
@@ -255,17 +259,21 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
             let username = user.username;
             let tradeCheck = true;
             let offer = await offers.getAll(req.params.id);
+            let ownerccheck = false;
+            if (List.posterId.toString() === req.session.user.id){
+                ownerccheck= true;
+            }
             if(List.trades.length === 1 && List.trades[0] === ''){
                 tradeCheck = false;
             }
             if (req.session.user) {
                 if (username === req.session.user.username) {
-                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
+                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false, offers: offer, owner: ownerccheck});
                 } else {
-                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: true, offers: offer});
+                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: true, offers: offer, owner: ownerccheck});
                 }
             } else {
-                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false, offers: offer, owner: ownerccheck});
             }
             } catch (e) {
             res.status(500).json({error: e});
