@@ -51,10 +51,10 @@
                 <input id="shippingPriceInput" type="number" name="shippingPriceInput" required><br><br>
                 
                 <label for="tradesInput">Please Input items you're willing to trade for (seperate the items by a comma), Can be Left empty:</label>
-                <textarea id="tradesInput" type="text" name="tradesInput"></textarea><br><br>
+                <textarea id="tradesInput" name="tradesInput"></textarea><br><br>
                 
                 <label for="descriptionInput">Description:</label>
-                <textarea id="descriptionInput" type="text" name="descriptionInput" required></textarea><br><br>
+                <textarea id="descriptionInput" name="descriptionInput" required></textarea><br><br>
 
                 <label for="shipMethodInput">Shipping Method:</label>
                 <select id="shipMethodInput" name="shipMethodInput" required>
@@ -107,19 +107,19 @@
                         {{#each chart}}
                         <li>
                         <ul class="search">
-                            <li class="search">Product Name: {{this.title}}</li><br>
-                            <li class="search">Release Date: {{this.releaseDate}}</li><br>
-                            <li class="search">Console Name: {{this.consoleName}}</li><br>
-                            <li class="search">Genre: {{this.genre}}</li><br>
-                            <li class="search">Price Chart ID: {{this.id}}</li><br>
-                            <li class="search">Box Only Price: ${{this.boxPrice}}</li><br>
-                            <li class="search">Complete in Box Price: ${{this.cibPrice}}</li><br>
-                            <li class="search">Game Only Price: ${{this.loosePrice}}</li><br>
-                            <li class="search">Manual Only Price: ${{this.manualPrice}}</li><br>
-                            <li class="search">New in Box Price: ${{this.newPrice}}</li><br>
-                            <li class="search">Graded Price: ${{this.gradedPrice}}</li><br>
+                            <li class="search">Product Name: {{this.title}}</li>
+                            <li class="search">Release Date: {{this.releaseDate}}</li>
+                            <li class="search">Console Name: {{this.consoleName}}</li>
+                            <li class="search">Genre: {{this.genre}}</li>
+                            <li class="search">Price Chart ID: {{this.id}}</li>
+                            <li class="search">Box Only Price: ${{this.boxPrice}}</li>
+                            <li class="search">Complete in Box Price: ${{this.cibPrice}}</li>
+                            <li class="search">Game Only Price: ${{this.loosePrice}}</li>
+                            <li class="search">Manual Only Price: ${{this.manualPrice}}</li>
+                            <li class="search">New in Box Price: ${{this.newPrice}}</li> 
+                            <li class="search">Graded Price: ${{this.gradedPrice}}</li>
                         </ul>
-                        </li><br>
+                        </li>
                         {{/each}}
                     </ol>
                     {{else}}

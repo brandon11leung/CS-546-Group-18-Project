@@ -7,10 +7,10 @@
 </div>
 <div class="row">
 <div class="column">   
-    <ul class="search"> <h1>Listing Information</h1>  
-                            <li class="search">Product Name: {{listings.title}}</li><br>
-                            <li class="search">Lisitng type: {{listings.listingType}}</li><br>
-                            <li class="search">Condition: {{listings.mainCondition}}</li><br>
+    <h1>Listing Information</h1> <ul class="search">  
+                            <li class="search">Product Name: {{listings.title}}</li>
+                            <li class="search">Lisitng type: {{listings.listingType}}</li>
+                            <li class="search">Condition: {{listings.mainCondition}}</li>
                             <li class="search">
                                 Secondary conditions:
                                 <ul>
@@ -18,12 +18,12 @@
                                     <li>{{this}}</li>
                                 {{/each}}
                                 </ul> 
-                            </li><br>
-                            <li class="search">Description: {{listings.description}}</li><br>
+                            </li>
+                            <li class="search">Description: {{listings.description}}</li>
                             {{#if check}}
-                                <li class="search">Price: ${{listings.price}}</li><br>
-                                <li class="search">Shipping: ${{listings.shippingPrice}}</li><br>
-                                <li class="search">Shipping Methods: {{listings.shippingMethods}}</li><br>
+                                <li class="search">Price: ${{listings.price}}</li>
+                                <li class="search">Shipping: ${{listings.shippingPrice}}</li>
+                                <li class="search">Shipping Methods: {{listings.shippingMethods}}</li>
                             {{else}}
                             {{/if}}
                             {{#if tradeCheck}}
@@ -34,28 +34,28 @@
                                     <li>{{this}}</li>
                                 {{/each}}
                                 </ul>   
-                            </li><br>
+                            </li>
                             {{else}}
-                            <li class="search">No Trade Options Given</li><br>
+                            <li class="search">No Trade Options Given</li>
                             {{/if}}
-                            <li class="search">Return Policy: {{listings.returnPolicy}}</li><br>
-                            <li class="search">Last time updated: {{listings.timeStampUpdated}}</li><br>
+                            <li class="search">Return Policy: {{listings.returnPolicy}}</li>
+                            <li class="search">Last time updated: {{listings.timeStampUpdated}}</li>
                         </ul>
 </div>
 <div class="column">
                     {{#if chart}}
-                        <ul class="search"><h1>Game listing on Price Charts</h1>
-                            <li class="search">Product Name: {{chart.title}}</li><br>
-                            <li class="search">Release Date: {{chart.releaseDate}}</li><br>
-                            <li class="search">Console Name: {{chart.consoleName}}</li><br>
-                            <li class="search">Genre: {{chart.genre}}</li><br>
-                            <li class="search">Price Chart ID: {{chart.id}}</li><br>
-                            <li class="search">Box Only Price: ${{chart.boxPrice}}</li><br>
-                            <li class="search">Complete in Box Price: ${{chart.cibPrice}}</li><br>
-                            <li class="search">Game Only Price: ${{chart.loosePrice}}</li><br>
-                            <li class="search">Manual Only Price: ${{chart.manualPrice}}</li><br>
-                            <li class="search">New in Box Price: ${{chart.newPrice}}</li><br>
-                            <li class="search">Graded Price: ${{chart.gradedPrice}}</li><br>
+                        <h1>Game listing on Price Charts</h1><ul class="search">
+                            <li class="search">Product Name: {{chart.title}}</li>
+                            <li class="search">Release Date: {{chart.releaseDate}}</li>
+                            <li class="search">Console Name: {{chart.consoleName}}</li>
+                            <li class="search">Genre: {{chart.genre}}</li>
+                            <li class="search">Price Chart ID: {{chart.id}}</li>
+                            <li class="search">Box Only Price: ${{chart.boxPrice}}</li>
+                            <li class="search">Complete in Box Price: ${{chart.cibPrice}}</li>
+                            <li class="search">Game Only Price: ${{chart.loosePrice}}</li>
+                            <li class="search">Manual Only Price: ${{chart.manualPrice}}</li>
+                            <li class="search">New in Box Price: ${{chart.newPrice}}</li>
+                            <li class="search">Graded Price: ${{chart.gradedPrice}}</li>
                         </ul><br>
                     {{else}}
                     {{/if}}
@@ -74,7 +74,7 @@
         <ul class="search">
         {{#each offers}}
         <li class="search">
-            <h3>Offer From User: {{this.username}}</h3>
+            <p>Offer From User: {{this.username}}</p>
             <p>Offer Product: {{this.title}}</p>
             <p>Offer Description: {{this.desc}}</p>
         </li>
@@ -97,9 +97,9 @@
     <h3>No Comments</h3>
 {{/if}}
 <p id="errorComment" hidden></p>
-<form method="POST" id="comment-form" action="">
+<form method="POST" id="comment-form">
 <label for="commentInput">Leave a comment:</label>
- <textarea id="commentInput" type="text" name="commentInput"></textarea><br>
+ <textarea id="commentInput" name="commentInput"></textarea><br>
   <button type="submit">Submit</button>
  </form>
 <script src="../public/js/commentCheck.js"></script>

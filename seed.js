@@ -407,14 +407,14 @@ try {
         'https://i.ebayimg.com/images/g/V08AAOSw4upkOao2/s-l1600.png'
     ], ["Nintendo 3DS"], 10, "Both Shipping and Local Meetup", "I hope you enjoy!", "No Returns", "USD", 6900);
 
-    const SS = await listings.create(albertEinstein._id, "Skyward Sword", "Buy", "Used", ["Case", "Disc", "Manual"], 30, [
+    const SS = await listings.create(albertEinstein._id, "Skyward Sword", "Buy", "Used", ["Box", "Disc", "Manual"], 30, [
         'https://images-na.ssl-images-amazon.com/images/I/91oL98JUm9L._AC_UL210_SR210,210_.jpg',
         'https://i.ebayimg.com/images/g/wkIAAOSwR4VjAn7w/s-l1600.jpg'
-    ], ["Mario Kart 8 Deluxe"], 5, "Shipping", "I very much want this exquisite game, in particular - at a divine price. Thank you.", "No returns", "USD", 32355);
+    ], ["Mario Kart 8 Deluxe"], 5, "Shipping", "I very much want this exquisite game, in particular - at a divine price. Thank you.", "No Returns", "USD", 32355);
 
-    const kirby = await listings.create(luke._id, "Kirby and the Forgotten Land", "Buy", "Used", ["Case", "Cartridge"], 45, [
+    const kirby = await listings.create(luke._id, "Kirby and the Forgotten Land", "Buy", "Used", ["Box", "Cartridge"], 45, [
         'https://m.media-amazon.com/images/I/71bSke9MDHL._SY500_.jpg'
-    ], [], 0, "Shipping", "I want this game but don't want to pay $60.", "No returns", "USD", 3305915);
+    ], [], 0, "Shipping", "I want this game but don't want to pay $60.", "No Returns", "USD", 3305915);
 
     const attackOnTitan = await listings.create(modkop._id, "Attack on Titan 2: Final Battle for Switch", "Buy", "New", ["Box", "Cartridge"], 85, [
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683431661/b03pljnaafokjgnywnmo.jpg'
