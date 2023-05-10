@@ -463,6 +463,13 @@ try {
         'http://res.cloudinary.com/joystick-junction/image/upload/v1683657046/nvtpj2zwytqdwzkiomwj.jpg'
     ], [], 0, "Shipping", "Looking for clean copy of this to replay.", "30 Day Returns (Buyer pays for return shipping)", "USD", 19755);
 
+    console.log('\n\n---INSERTING OFFERS---\n\n');
+
+    const offer1 = offers.create(kirby._id.toString(), ark._id.toString(), ark.username, "Kirby Star Allies", "I want this game!!!!! I'll trade it with Kirby Star Allies");
+    const offer2 = offers.create(explorersOfSky._id.toString(), mrKing._id.toString(), mrKing.username, "Pokemon Diamond", "Pokemon Diamond, nuff' said.");
+    const offer3 = offers.create(republicCommando._id.toString(), luke._id.toString(), luke.username, "DKC Tropical Freeze", "I can give Donkey Kong Country: Tropical Freeze new sealed");
+
+
 
 } catch (e) {
     console.log(e.message)
@@ -558,13 +565,6 @@ try {
 try {
     const review3 = await reviews.createReview(mrKing._id.toString(), luke._id.toString(), 'No problems here besides my delivery arriving one day late', 4);
     console.log(review3);
-} catch (e) {
-    console.log(e.message);
-}
-
-try {
-    const review4 = await reviews.createReview(albertEinstein._id.toString(), ark._id.toString(), 'Why in the world did this have a scratch? Unacceptable?', 2);
-    console.log(review4);
 } catch (e) {
     console.log(e.message);
 }
