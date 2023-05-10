@@ -633,7 +633,7 @@ router.route('/login').get(async (req, res) => {
                 if (typeof(Allimages) !== "object"){
                     for(let x of req.files.imageInput){
                         if(x.mimetype !== "image/jpeg" || x.mimetype !== "image/png" || x.mimetype !== "image/jpg" || x.mimetype !== "jpeg/jpg" || x.mimetype !== "jpg/jpeg"){
-                            res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Image Type'})
+                            res.status(500).render('priceCharting', {title: 'Search for a game', error: 'Invalid Image Type'})
                         }
                         const image = x;
                         const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
@@ -644,7 +644,7 @@ router.route('/login').get(async (req, res) => {
                 }
                 else{
                     if(Allimages.mimetype !== "image/jpeg" || Allimages.mimetype !== "image/png" || Allimages.mimetype !== "image/jpg" || Allimages.mimetype !== "jpeg/jpg" || Allimages.mimetype !== "jpg/jpeg"){
-                        res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Image Type'})
+                        res.status(500).render('priceCharting', {title: 'Search for a game', error: 'Invalid Image Type'})
                     }
                         const image = Allimages;
                         const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
@@ -672,7 +672,7 @@ router.route('/login').get(async (req, res) => {
                         res.redirect('/');
                     } catch (e) {
                         console.log(e.message);
-                        res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Listing'})
+                        res.status(500).render('priceCharting', {title: 'Search for a game', error: 'Invalid Listing'})
                     }
                 }
                 else{
@@ -696,7 +696,7 @@ router.route('/login').get(async (req, res) => {
                         res.redirect('/');
                     } catch (e) {
                         console.log(e.message);
-                        res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Listing'})
+                        res.status(500).render('priceCharting', {title: 'Search for a game', error: 'Invalid Listing'})
                     }
                 }
                 
