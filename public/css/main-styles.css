@@ -139,3 +139,7 @@ p {
   display: inline-block;
   padding: 20px;
 }
+
+.error{
+  color: red;
+}
