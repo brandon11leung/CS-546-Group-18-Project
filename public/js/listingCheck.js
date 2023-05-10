@@ -101,6 +101,7 @@ const validSecCond = (cond) => {
     return true;
 }
 
+let imgcheck = false;
 let form = document.getElementById('listing-form');
 let listingType = document.getElementById('listingTypeInput');
 let listingTitle = document.getElementById('TitleInput');
@@ -255,5 +256,29 @@ if (form) {
                 errorImgs.innerHTML = 'Please chosse jpg/png/jpeg files only.';
             }
        }
+       if(imgcheck){
+        event.preventDefault();
+                errorImgs.hidden = false;
+                errorImgs.innerHTML = 'Please chosse jpg/png/jpeg files only.';
+       }
     });
 }
+
+imageInput.addEventListener('change', function() {
+    const file = imageInput.files[0];
+    const reader = new FileReader();
+  
+    reader.addEventListener('load', function() {
+      // Check the MIME type
+      if (reader.result.startsWith('data:image/')) {
+        imgcheck = false;
+        errorImgs.hidden = true;;
+      } else {
+        imgcheck = true;
+        errorImgs.hidden = false;
+        errorImgs.innerHTML = 'Please chosse jpg/png/jpeg files only.';
+      }
+    });
+  
+    reader.readAsDataURL(file);
+  });

@@ -10,10 +10,11 @@ import {listings} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 
-export const create = async (listingId, posterId, title, desc, attachments) => { // Good?
+export const create = async (listingId, posterId, username, title, desc, attachments) => { // Good?
     listingId = helpers.isValidID(listingId);
     posterId = helpers.isValidID(posterId);
     title = helpers.isValidString(title);
+	username = username.isValidString(username);
     desc = helpers.isValidPrice(desc);
     const offerId = new ObjectId();
     helpers.isValidTradeArray(attachments);
@@ -24,6 +25,7 @@ export const create = async (listingId, posterId, title, desc, attachments) => {
         _id: offerId,
 		listingId: new ObjectId(listingId),
         posterId: new ObjectId(posterId),
+		username: username,
         title: title,
         desc: desc,
         attachments: attachments
@@ -72,3 +74,5 @@ export const remove = async (offerId) => {
 	if (listingObj === null) {throw new Error("Error: there is no offer with that id.")}
 	return listingObj.value;
 };
+
+export default {create, get, getAll, remove}
