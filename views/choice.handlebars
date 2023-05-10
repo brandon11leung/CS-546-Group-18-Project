@@ -1,5 +1,8 @@
 <h1>Select Transaction Method</h1>
 
 <p>Will you pay with cash or offer a trade item?</p>
+{{#if buyCheck}}
 <button onclick="window.location.href ='http://localhost:3000/transaction/{{id}}'">Cash/Credit</button>
+{{else}}
+{{/if}}
 <button onclick="window.location.href ='http://localhost:3000/offer/{{id}}'">Trade Item</button>

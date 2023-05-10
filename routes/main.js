@@ -64,17 +64,18 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
         let user = await users.getUserById(List.posterId.toString())
         let username = user.username;
         let tradeCheck = true;
+        let offer = await offers.getAll(req.params.id);
             if(List.trades.length === 1 && List.trades[0] === ''){
                 tradeCheck = false;
             }
         if (req.session.user) {
             if (username === req.session.user.username) {
-                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false});
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
             } else {
-                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: true});
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: true, offers: offer});
             }
         } else {
-            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false});
+            res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Buy Now", username: username, check: true, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
         }
         } catch (e) {
         res.status(500).json({error: e});
@@ -84,6 +85,16 @@ router.route('/sellinglistings/:id').get(async (req, res) => {
             res.redirect('/login');
         }
         req.body.commentInput = xss(req.body.commentInput);
+        req.body.acceptOfferInput = xss(req.body.acceptOfferInput);
+            if(req.body.acceptOfferInput === 'True'){
+                try {
+                    await transactions.createTransaction(req.params.id, req.session.user.id);
+                    res.redirect('/');
+                } catch (e) {
+                    console.log(e.message);
+                    res.status(500).render('login', {title: 'Login', error: 'Either the email or password are incorrect'})
+                }
+            }
         try {
             await listings.addComment(req.params.id, req.session.user.username, req.session.user.id, req.body.commentInput);
             res.redirect('/sellinglistings/'+ req.params.id);
@@ -199,8 +210,12 @@ router.route('/sellinglistings').get(async (req, res) => {
 
 router.route('/choice/:id').get(async (req, res) => {
     try {
-            let List = await listings.get(req.params.id); 
-            res.render('choice', {title: "Transaction Method", id: List._id})
+            let List = await listings.get(req.params.id);
+            let buyCheck = true;
+            if (List.listingType === "Buy"){
+                buyCheck = false;
+            }   
+            res.render('choice', {title: "Transaction Method", id: List._id, buyCheck: buyCheck});
     } catch (e) {
         res.status(500).json({error: e});
     }});
@@ -245,7 +260,7 @@ router.route('/offer/:id').get(async (req, res) => {
                         await writeStream.end();
                 }
                 let images = await cloud.uploadImage(paths);
-                let offer = await offers.create(List._id, req.session.user.id, req.body.TitleInput, req.body.descriptionInput, images);
+                let offer = await offers.create(List._id, req.session.user.id, req.session.user.username, req.body.TitleInput, req.body.descriptionInput, images);
                 let pathway = path.join(__dirname, '..', 'uploads');
                         fs.readdir(pathway, (err, files) => {
                             if (err) throw err;
@@ -288,17 +303,18 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
             let user = await users.getUserById(List.posterId.toString())
             let username = user.username;
             let tradeCheck = true;
+            let offer = await offers.getAll(req.params.id);
             if(List.trades.length === 1 && List.trades[0] === ''){
                 tradeCheck = false;
             }
             if (req.session.user) {
                 if (username === req.session.user.username) {
-                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false});
+                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
                 } else {
-                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: true});
+                    res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: true, offers: offer});
                 }
             } else {
-                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false});
+                res.render('listingsById', {title: List.title,listings: List, chart: priceChartData, type: "Offer Trade", username: username, check: false, tradeCheck: tradeCheck, ownPoster: false, offers: offer});
             }
             } catch (e) {
             res.status(500).json({error: e});
@@ -308,7 +324,16 @@ router.route('/buyinglistings/:id').get(async (req, res) => {
                 res.redirect('/login');
             }
             req.body.commentInput = xss(req.body.commentInput);
-        
+            req.body.acceptOfferInput = xss(req.body.acceptOfferInput);
+            if(req.body.acceptOfferInput === 'True'){
+                try {
+                    await transactions.createTransaction(req.params.id, req.session.user.id);
+                    res.redirect('/');
+                } catch (e) {
+                    console.log(e.message);
+                    res.status(500).render('login', {title: 'Login', error: 'Either the email or password are incorrect'})
+                }
+            }
             try {
                 await listings.addComment(req.params.id, req.session.user.username, req.session.user.id, req.body.commentInput);
                 res.redirect('/buyinglistings/'+ req.params.id);
@@ -607,6 +632,9 @@ router.route('/login').get(async (req, res) => {
                 
                 if (typeof(Allimages) !== "object"){
                     for(let x of req.files.imageInput){
+                        if(x.mimetype !== "image/jpeg" || x.mimetype !== "image/png" || x.mimetype !== "image/jpg" || x.mimetype !== "jpeg/jpg" || x.mimetype !== "jpg/jpeg"){
+                            res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Image Type'})
+                        }
                         const image = x;
                         const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
                         paths.push(path.join(__dirname, '..', 'uploads', image.name));
@@ -615,6 +643,9 @@ router.route('/login').get(async (req, res) => {
                     }
                 }
                 else{
+                    if(Allimages.mimetype !== "image/jpeg" || Allimages.mimetype !== "image/png" || Allimages.mimetype !== "image/jpg" || Allimages.mimetype !== "jpeg/jpg" || Allimages.mimetype !== "jpg/jpeg"){
+                        res.status(500).render('PriceChartSearch', {title: 'Search for a game', error: 'Invalid Image Type'})
+                    }
                         const image = Allimages;
                         const writeStream = fs.createWriteStream(path.join(__dirname, '..', 'uploads', image.name));
                         paths.push(path.join(__dirname, '..', 'uploads', image.name));
