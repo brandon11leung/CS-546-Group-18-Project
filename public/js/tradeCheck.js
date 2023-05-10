@@ -29,18 +29,15 @@ const validImg = (img) => {
 let form = document.getElementById('trade-form');
 let listingTitle = document.getElementById('titleInput');
 let listingDesc = document.getElementById('descriptionInput');
-let imageInput = document.getElementById('imageInput');
 
 
 let errorTitle = document.getElementById('errorTitle');
 let errorDesc = document.getElementById('errorDesc');
-let errorImgs = document.getElementById('errorImgs');
 
 if (form) {
     form.addEventListener('submit', (event) => {
         errorTitle.hidden = true;
         errorDesc.hidden = true;
-        errorImgs.hidden = true;
         if (!validString(listingTitle.value)) {
             event.preventDefault();
             errorTitle.hidden = false;
@@ -51,13 +48,6 @@ if (form) {
             errorDesc.hidden = false;
             errorDesc.innerHTML = 'Description must be a valid string';
         }
-        for(let x of imageInput.value){
-            if (!validImg(x)) {
-                event.preventDefault();
-                errorImgs.hidden = false;
-                errorImgs.innerHTML = 'Please chosse jpg/png/jpeg files only.';
-            }
-       }
 
     });
 }

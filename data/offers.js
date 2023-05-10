@@ -10,25 +10,20 @@ import {listings} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 import * as helpers from '../helpers.js';
 
-export const create = async (listingId, posterId, username, title, desc, attachments) => { // Good?
+export const create = async (listingId, posterId, username, title, desc) => { // Good?
     listingId = helpers.isValidID(listingId);
     posterId = helpers.isValidID(posterId);
     title = helpers.isValidString(title);
-	username = username.isValidString(username);
-    desc = helpers.isValidPrice(desc);
+	username = helpers.isValidString(username);
+    desc = helpers.isValidString(desc);
     const offerId = new ObjectId();
-    helpers.isValidTradeArray(attachments);
-    for (let i = 0; i < attachments.length; i++) {
-        attachments[i] = helpers.isValidString(attachments[i]);
-    }
 	const newOffer = {
         _id: offerId,
 		listingId: new ObjectId(listingId),
         posterId: new ObjectId(posterId),
 		username: username,
         title: title,
-        desc: desc,
-        attachments: attachments
+        desc: desc
 	};
 
 	const listingCollection = await listings();

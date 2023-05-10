@@ -34,7 +34,7 @@ export const createTransaction = async (
     
     if (listing.open === false) { throw new Error('The listing is not open'); }
 
-    if (listing.posterId.equals(new ObjectId(buyerOrSeller))) { throw new Error('Seller/buyer cannot purchase their own listing!'); }
+    //if (listing.posterId.equals(new ObjectId(buyerOrSeller))) { throw new Error('Seller/buyer cannot purchase their own listing!'); }
 
     // console.log(listing);
 
