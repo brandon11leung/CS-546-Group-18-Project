@@ -8,30 +8,6 @@ export const jpConsoleArr = ["Famicom", "Famicom Disk System", "JP GameBoy", "JP
 export const palConsoleArr = ["PAL Amiga CD32", "PAL GameBoy", "PAL GameBoy Advance", "PAL GameBoy Color", "PAL Gamecube", "PAL MSX", "PAL MSX2", "PAL Mega Drive 32X", "PAL NES", "PAL Neo Geo Pocket Color", "PAL Nintendo 3DS", "PAL Nintendo 64", "PAL Nintendo DS", "PAL Nintendo Switch", "PAL PSP", "PAL Playstation", "PAL Playstation 2", "PAL Playstation 3", "PAL Playstation 4", "PAL Playstation 5", "PAL Playstation Vita", "PAL Sega Dreamcast", "PAL Sega Game Gear", "PAL Sega Master System", "PAL Sega Mega CD", "PAL Sega Mega Drive", "PAL Sega Pico", "PAL Sega Saturn", "PAL Super Nintendo", "PAL Vectrex", "PAL Videopac G7000", "PAL Videopac G7400", "PAL Wii", "PAL Wii U", "PAL Xbox", "PAL Xbox 360", "PAL Xbox One", "PAL Xbox Series X"]
 export const otherConsoleArr = ["Amiibo", "Amiibo Cards", "Disney Infinity", "Dreamcast Magazine", "Electronic Gaming Monthly", "Game Informer", "GamePro", "Lego Dimensions", "MegaZone", "Nintendo Power", "PC Gamer", "Pokemon Mini", "Rumble U", "Skylanders", "Starlink", "Stoneheart", "Strategy Guide"]
 
-export const searchByTerm = async (searchItemTerm) => {
-    searchItemTerm = helpers.isValidString(searchItemTerm)
-    const { data } = await axios.get(`https://www.pricecharting.com/api/products?t=${process.env.PRICECHARTING_API_KEY}&q=${searchItemTerm}`);
-    let filteredArr = [];
-    for (let i = 0; i < data.products.length; i++) {
-        if (ntscConsoleArr.includes(data.products[i]["console-name"]) == true) {
-            filteredArr.push(data.products[i]);
-        }
-    }
-    return parseObj(filteredArr, 0);
-    // return filteredArr;
-}
-
-export const searchByID = async (id) => {
-    helpers.isValidNumber(id)
-    const { data } = await axios.get(`https://www.pricecharting.com/api/products?t=${process.env.PRICECHARTING_API_KEY}&id=${id}`);
-    if (data.products[0].id != id) {
-        throw new Error("Error: no product was found with that id.")
-    } else {
-        return parseObj(data.products[0], 1);
-        // return data.products[0]
-    }
-}
-
 export const parseObj = async (objArr, mode) => {
     if ((mode == 0 || mode == 1) == false) {
         throw new Error("Error: invalid mode.")
@@ -107,5 +83,49 @@ export const parseObj = async (objArr, mode) => {
     }
     return parsedArr
 }
+
+export const searchByTerm = async (searchItemTerm) => {
+    searchItemTerm = helpers.isValidString(searchItemTerm)
+    const { data } = await axios.get(`https://www.pricecharting.com/api/products?t=${process.env.PRICECHARTING_API_KEY}&q=${searchItemTerm}`);
+    let filteredArr = [];
+    for (let i = 0; i < data.products.length; i++) {
+        if (ntscConsoleArr.includes(data.products[i]["console-name"]) == true) {
+            filteredArr.push(data.products[i]);
+        }
+    }
+    return parseObj(filteredArr, 0);
+    // return filteredArr;
+}
+
+export const searchByID = async (id) => {
+    helpers.isValidNumber(id)
+    try {
+
+    
+        const { data } = await axios.get(`https://www.pricecharting.com/api/products?t=${process.env.PRICECHARTING_API_KEY}&id=${id}`);
+        return parseObj(data.products[0], 1);
+    } catch (e) {
+        let nullObj = {
+            id: null,
+            title: null,
+            consoleName: null,
+            releaseDate: null,
+            genre: null,
+            newPrice: null,
+            gradedPrice: null,
+            cibPrice: null,
+            loosePrice: null,
+            boxPrice: null,
+            manualPrice: null,
+        }
+        return nullObj;
+    }
+    
+        
+    
+}
+// let delta = await searchByID(32323454366346477)
+// console.log(delta)
+
 // console.log(await searchByTerm("wii sports resort"));
 // console.log(await searchByID(3232477))
