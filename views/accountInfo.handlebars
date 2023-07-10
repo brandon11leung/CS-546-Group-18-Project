@@ -12,7 +12,6 @@
         <div class="row">
         <div class="column">
             <h3>Purchase History</h3>
-            {{#if user.purchaseHistory}}
             <ul class="search">
         {{#each user.purchaseHistory}}
             <li>
@@ -23,11 +22,9 @@
             </li>
         {{/each}}
             </ul>
-            {{/if}}
         </div>
         <div class="column">
             <h3>Sales History</h3>
-            {{#if user.salesHistory}}
             <ul class="search">
         {{#each user.salesHistory}}
             <li>
@@ -37,7 +34,6 @@
             </li>
         {{/each}}
             </ul>
-            {{/if}}
         </div>
         </div>
          {{#if reviews}}

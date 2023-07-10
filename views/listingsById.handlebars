@@ -77,12 +77,13 @@
             <p>Offer From User: {{this.username}}</p>
             <p>Offer Product: {{this.title}}</p>
             <p>Offer Description: {{this.desc}}</p>
+            {{#if ownPoster}}
+            
+            {{else}}
+                <button onclick="window.location.href = 'http://localhost:3000/takeOffer/{{this.listingId}}'">Take Offer</button>
+            {{/if}}
         </li>
         {{/each}}
-        {{#if owner}}
-            <button onclick="window.location.href = 'http://localhost:3000/takeOffer/{{listings._id}}'">Take Offer</button>
-            {{else}}
-            {{/if}}
         </ul>
     {{else}}
     <p>No Offers Currently</p>
