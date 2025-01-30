@@ -163,25 +163,25 @@ try {
     console.log(e.message);
 }
 
-console.log("\n---INVALID DOB---\n");
+// console.log("\n---INVALID DOB (Disabled due to the possibility of a Time Skip Distortion)---\n");
 
-try {
-    const tooOld = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "1922-05-02", "Stevens997*", "Cranford", "NJ");
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const tooOld = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "1922-05-02", "Stevens997*", "Cranford", "NJ");
+// } catch (e) {
+//     console.log(e.message);
+// }
 
-try {
-    const tooYoung = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2005-05-31", "Stevens997*", "Cranford", "NJ");
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const tooYoung = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2005-05-31", "Stevens997*", "Cranford", "NJ");
+// } catch (e) {
+//     console.log(e.message);
+// }
 
-try {
-    const wrongFormat = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002/06/02", "Stevens997*", "Cranford", "NJ");
-} catch (e) {
-    console.log(e.message);
-}
+// try {
+//     const wrongFormat = await users.createUser("Luke", "Muhnicky", "lmuhnick@stevens.edu", "LukeM602", "2002/06/02", "Stevens997*", "Cranford", "NJ");
+// } catch (e) {
+//     console.log(e.message);
+// }
 
 console.log("\n---INVALID CITY---\n");
 

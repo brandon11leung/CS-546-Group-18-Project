@@ -1,4 +1,5 @@
 import {users} from "./../config/mongoCollections.js";
+import * as helpers from '../helpers.js';
 import {MongoClient, ObjectId} from 'mongodb';
 import bcrypt from 'bcrypt';
 const saltRounds = 12;
@@ -114,7 +115,10 @@ export const createUser = async (
     let dayDate = parseInt(splitDate[2]);
 
     /* Check ages */
-    if (yearDate < 1922 || yearDate > 2005) {
+    // if (yearDate < 1922 || yearDate > 2005) {
+    //   throw new Error ('Age must be between 18 and 100.')
+    // }
+    if (helpers.getAge(dob) < 18) { //|| helpers.getAge(dob) > 100) {
       throw new Error ('Age must be between 18 and 100.')
     }
 

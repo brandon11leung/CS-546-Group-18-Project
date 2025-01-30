@@ -105,22 +105,35 @@ export const searchByID = async (id) => {
         const { data } = await axios.get(`https://www.pricecharting.com/api/products?t=${process.env.PRICECHARTING_API_KEY}&id=${id}`);
         return parseObj(data.products[0], 1);
     } catch (e) {
+        // let nullObj = {
+        //     id: null,
+        //     title: null,
+        //     consoleName: null,
+        //     releaseDate: null,
+        //     genre: null,
+        //     newPrice: null,
+        //     gradedPrice: null,
+        //     cibPrice: null,
+        //     loosePrice: null,
+        //     boxPrice: null,
+        //     manualPrice: null,
+        // }
         let nullObj = {
-            id: null,
-            title: null,
-            consoleName: null,
-            releaseDate: null,
-            genre: null,
-            newPrice: null,
-            gradedPrice: null,
-            cibPrice: null,
-            loosePrice: null,
-            boxPrice: null,
-            manualPrice: null,
+            id: "N/A",
+            title: "N/A",
+            consoleName: "N/A",
+            releaseDate: "N/A",
+            genre: "N/A",
+            newPrice: "N/A",
+            gradedPrice: "N/A",
+            cibPrice: "N/A",
+            loosePrice: "N/A",
+            boxPrice: "N/A",
+            manualPrice: "N/A",
         }
         return nullObj;
     }
-    
+     
         
     
 }
